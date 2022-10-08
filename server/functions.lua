@@ -1,116 +1,278 @@
-QRCore = {}
-QRCore.Player = {}
-QRCore.Players = {}
-QRCore.UseableItems = {}
-QRCore.ServerCallbacks = {}
+QRCore.Functions = {}
+QRCore.Player_Buckets = {}
+QRCore.Entity_Buckets = {}
+QRCore.UsableItems = {}
 
-function GetPlayers()
-    local sources = {}
-    for k, v in pairs(QRCore.Players) do
-        sources[#sources+1] = k
-    end
-    return sources
+-- Getters
+-- Get your player first and then trigger a function on them
+-- ex: local player = QRCore.Functions.GetPlayer(source)
+-- ex: local example = player.Functions.functionname(parameter)
+
+function QRCore.Functions.GetCoords(entity)
+    local coords = GetEntityCoords(entity, false)
+    local heading = GetEntityHeading(entity)
+    return vector4(coords.x, coords.y, coords.z, heading)
 end
-exports('GetPlayers', GetPlayers)
 
--- Returns the entire player object
-exports('GetQBPlayers', function()
-    return QRCore.Players
-end)
-
--- Returns a player's specific identifier
--- Accepts steamid, license, discord, xbl, liveid, ip
-function GetIdentifier(source, idtype)
-    if type(idtype) ~= "string" then return print('Invalid usage') end
-    for _, identifier in pairs(GetPlayerIdentifiers(source)) do
+function QRCore.Functions.GetIdentifier(source, idtype)
+    local identifiers = GetPlayerIdentifiers(source)
+    for _, identifier in pairs(identifiers) do
         if string.find(identifier, idtype) then
             return identifier
         end
     end
     return nil
 end
-exports('GetIdentifier', GetIdentifier)
 
--- Returns the object of a single player by ID
-function GetPlayer(source)
-    return QRCore.Players[source]
+function QRCore.Functions.GetQRPlayers()
+    return QRCore.Players
 end
-exports('GetPlayer', GetPlayer)
 
+function QRCore.Functions.GetSource(identifier)
+    for src, _ in pairs(QRCore.Players) do
+        local idens = GetPlayerIdentifiers(src)
+        for _, id in pairs(idens) do
+            if identifier == id then
+                return src
+            end
+        end
+    end
+    return 0
+end
 
--- Returns the object of a single player by Citizen ID
-function GetPlayerByCitizenId(citizenid)
-    for k, v in pairs(QRCore.Players) do
-        local cid = citizenid
-        if QRCore.Players[k].PlayerData.citizenid == cid then
-            return QRCore.Players[k]
+function QRCore.Functions.GetPlayer(source)
+    if type(source) == 'number' then
+        return QRCore.Players[source]
+    else
+        return QRCore.Players[QRCore.Functions.GetSource(source)]
+    end
+end
+
+function QRCore.Functions.GetPlayerByCitizenId(citizenid)
+    for src in pairs(QRCore.Players) do
+        if QRCore.Players[src].PlayerData.citizenid == citizenid then
+            return QRCore.Players[src]
         end
     end
     return nil
 end
-exports('GetPlayerByCitizenId', GetPlayerByCitizenId)
 
---- Gets a list of all on duty players of a specified job and the amount
-exports('GetPlayersOnDuty', function(job)
+function QRCore.Functions.GetOfflinePlayerByCitizenId(citizenid)
+    return QRCore.Player.GetOfflinePlayer(citizenid)
+end
+
+function QRCore.Functions.GetPlayerByPhone(number)
+    for src in pairs(QRCore.Players) do
+        if QRCore.Players[src].PlayerData.charinfo.phone == number then
+            return QRCore.Players[src]
+        end
+    end
+    return nil
+end
+
+function QRCore.Functions.GetPlayers()
+    local sources = {}
+    for k in pairs(QRCore.Players) do
+        sources[#sources+1] = k
+    end
+    return sources
+end
+
+-- Will return an array of QR Player class instances
+-- unlike the GetPlayers() wrapper which only returns IDs
+function QRCore.Functions.GetQRPlayers()
+    return QRCore.Players
+end
+
+--- Gets a list of all on duty players of a specified job and the number
+function QRCore.Functions.GetPlayersOnDuty(job)
     local players = {}
     local count = 0
-    for k, v in pairs(QRCore.Players) do
-        if v.PlayerData.job.name == job then
-            if v.PlayerData.job.onduty then
-                players[#players + 1] = k
-                count = count + 1
+    for src, Player in pairs(QRCore.Players) do
+        if Player.PlayerData.job.name == job then
+            if Player.PlayerData.job.onduty then
+                players[#players + 1] = src
+                count += 1
             end
         end
     end
     return players, count
-end)
+end
 
 -- Returns only the amount of players on duty for the specified job
-exports('GetDutyCount', function(job)
+function QRCore.Functions.GetDutyCount(job)
     local count = 0
-    for k, v in pairs(QRCore.Players) do
-        if v.PlayerData.job.name == job then
-            if v.PlayerData.job.onduty then
-                count = count + 1
+    for _, Player in pairs(QRCore.Players) do
+        if Player.PlayerData.job.name == job then
+            if Player.PlayerData.job.onduty then
+                count += 1
             end
         end
     end
     return count
-end)
+end
 
--- Callbacks
+-- Routing buckets (Only touch if you know what you are doing)
 
-function CreateCallback(name, cb)
+-- Returns the objects related to buckets, first returned value is the player buckets, second one is entity buckets
+function QRCore.Functions.GetBucketObjects()
+    return QRCore.Player_Buckets, QRCore.Entity_Buckets
+end
+
+-- Will set the provided player id / source into the provided bucket id
+function QRCore.Functions.SetPlayerBucket(source --[[ int ]], bucket --[[ int ]])
+    if source and bucket then
+        local plicense = QRCore.Functions.GetIdentifier(source, 'license')
+        SetPlayerRoutingBucket(source, bucket)
+        QRCore.Player_Buckets[plicense] = {id = source, bucket = bucket}
+        return true
+    else
+        return false
+    end
+end
+
+-- Will set any entity into the provided bucket, for example peds / vehicles / props / etc.
+function QRCore.Functions.SetEntityBucket(entity --[[ int ]], bucket --[[ int ]])
+    if entity and bucket then
+        SetEntityRoutingBucket(entity, bucket)
+        QRCore.Entity_Buckets[entity] = {id = entity, bucket = bucket}
+        return true
+    else
+        return false
+    end
+end
+
+-- Will return an array of all the player ids inside the current bucket
+function QRCore.Functions.GetPlayersInBucket(bucket --[[ int ]])
+    local curr_bucket_pool = {}
+    if QRCore.Player_Buckets and next(QRCore.Player_Buckets) then
+        for _, v in pairs(QRCore.Player_Buckets) do
+            if v.bucket == bucket then
+                curr_bucket_pool[#curr_bucket_pool + 1] = v.id
+            end
+        end
+        return curr_bucket_pool
+    else
+        return false
+    end
+end
+
+-- Will return an array of all the entities inside the current bucket (not for player entities, use GetPlayersInBucket for that)
+function QRCore.Functions.GetEntitiesInBucket(bucket --[[ int ]])
+    local curr_bucket_pool = {}
+    if QRCore.Entity_Buckets and next(QRCore.Entity_Buckets) then
+        for _, v in pairs(QRCore.Entity_Buckets) do
+            if v.bucket == bucket then
+                curr_bucket_pool[#curr_bucket_pool + 1] = v.id
+            end
+        end
+        return curr_bucket_pool
+    else
+        return false
+    end
+end
+
+-- Server side vehicle creation with optional callback
+-- the CreateVehicle RPC still uses the client for creation so players must be near
+function QRCore.Functions.SpawnVehicle(source, model, coords, warp)
+    local ped = GetPlayerPed(source)
+    model = type(model) == 'string' and joaat(model) or model
+    if not coords then coords = GetEntityCoords(ped) end
+    local veh = CreateVehicle(model, coords.x, coords.y, coords.z, coords.w, true, true)
+    while not DoesEntityExist(veh) do Wait(0) end
+    if warp then
+        while GetVehiclePedIsIn(ped) ~= veh do
+            Wait(0)
+            TaskWarpPedIntoVehicle(ped, veh, -1)
+        end
+    end
+    while NetworkGetEntityOwner(veh) ~= source do Wait(0) end
+    return veh
+end
+
+-- Server side vehicle creation with optional callback
+-- the CreateAutomobile native is still experimental but doesn't use client for creation
+-- doesn't work for all vehicles!
+function QRCore.Functions.CreateVehicle(source, model, coords, warp)
+    model = type(model) == 'string' and joaat(model) or model
+    if not coords then coords = GetEntityCoords(GetPlayerPed(source)) end
+    local CreateAutomobile = `CREATE_AUTOMOBILE`
+    local veh = Citizen.InvokeNative(CreateAutomobile, model, coords, coords.w, true, true)
+    while not DoesEntityExist(veh) do Wait(0) end
+    if warp then TaskWarpPedIntoVehicle(GetPlayerPed(source), veh, -1) end
+    return veh
+end
+
+-- Paychecks (standalone - don't touch)
+function PaycheckInterval()
+    if next(QRCore.Players) then
+        for _, Player in pairs(QRCore.Players) do
+            if Player then
+                local payment = QRShared.Jobs[Player.PlayerData.job.name]['grades'][tostring(Player.PlayerData.job.grade.level)].payment
+                if not payment then payment = Player.PlayerData.job.payment end
+                if Player.PlayerData.job and payment > 0 and (QRShared.Jobs[Player.PlayerData.job.name].offDutyPay or Player.PlayerData.job.onduty) then
+                    if QRCore.Config.Money.PayCheckSociety then
+                        local account = exports['qb-management']:GetAccount(Player.PlayerData.job.name)
+                        if account ~= 0 then -- Checks if player is employed by a society
+                            if account < payment then -- Checks if company has enough money to pay society
+                                TriggerClientEvent('QRCore:Notify', Player.PlayerData.source, Lang:t('error.company_too_poor'), 'error')
+                            else
+                                Player.Functions.AddMoney('bank', payment)
+                                exports['qb-management']:RemoveMoney(Player.PlayerData.job.name, payment)
+                                TriggerClientEvent('QRCore:Notify', Player.PlayerData.source, Lang:t('info.received_paycheck', {value = payment}))
+                            end
+                        else
+                            Player.Functions.AddMoney('bank', payment)
+                            TriggerClientEvent('QRCore:Notify', Player.PlayerData.source, Lang:t('info.received_paycheck', {value = payment}))
+                        end
+                    else
+                        Player.Functions.AddMoney('bank', payment)
+                        TriggerClientEvent('QRCore:Notify', Player.PlayerData.source, Lang:t('info.received_paycheck', {value = payment}))
+                    end
+                end
+            end
+        end
+    end
+    SetTimeout(QRCore.Config.Money.PayCheckTimeOut * (60 * 1000), PaycheckInterval)
+end
+
+-- Callback Functions --
+
+-- Client Callback
+function QRCore.Functions.TriggerClientCallback(name, source, cb, ...)
+    QRCore.ClientCallbacks[name] = cb
+    TriggerClientEvent('QRCore:Client:TriggerClientCallback', source, name, ...)
+end
+
+-- Server Callback
+function QRCore.Functions.CreateCallback(name, cb)
     QRCore.ServerCallbacks[name] = cb
 end
-exports('CreateCallback', CreateCallback)
 
-function TriggerCallback(name, source, cb, ...)
+function QRCore.Functions.TriggerCallback(name, source, cb, ...)
     if not QRCore.ServerCallbacks[name] then return end
     QRCore.ServerCallbacks[name](source, cb, ...)
 end
-exports('TriggerCallback', TriggerCallback)
 
 -- Items
 
--- Creates an item as usable
-exports('CreateUseableItem', function(item, cb)
-    QRCore.UseableItems[item] = cb
-end)
+function QRCore.Functions.CreateUseableItem(item, data)
+    QRCore.UsableItems[item] = data
+end
 
--- Checks if an item can be used
-exports('CanUseItem', function(item)
-    return QRCore.UseableItems[item]
-end)
+function QRCore.Functions.CanUseItem(item)
+    return QRCore.UsableItems[item]
+end
 
--- Uses an item
-exports('UseItem', function(source, item)
-    QRCore.UseableItems[item.name](source, item)
-end)
+function QRCore.Functions.UseItem(source, item)
+    if GetResourceState('qr-inventory') == 'missing' then return end
+    exports['qr-inventory']:UseItem(source, item)
+end
 
--- Kick Player with reason
-exports('KickPlayer', function(source, reason, setKickReason, deferrals)
-    reason = '\n' .. reason .. '\n🔸 Check our Discord for further information: ' .. QBConfig.Discord
+-- Kick Player
+
+function QRCore.Functions.Kick(source, reason, setKickReason, deferrals)
+    reason = '\n' .. reason .. '\n🔸 Check our Discord for further information: ' .. QRCore.Config.Server.Discord
     if setKickReason then
         setKickReason(reason)
     end
@@ -122,12 +284,10 @@ exports('KickPlayer', function(source, reason, setKickReason, deferrals)
         if source then
             DropPlayer(source, reason)
         end
-        local i = 0
-        while (i <= 4) do
-            i = i + 1
+        for _ = 0, 4 do
             while true do
                 if source then
-                    if (GetPlayerPing(source) >= 0) then
+                    if GetPlayerPing(source) >= 0 then
                         break
                     end
                     Wait(100)
@@ -139,75 +299,122 @@ exports('KickPlayer', function(source, reason, setKickReason, deferrals)
             Wait(5000)
         end
     end)
-end)
+end
+
+-- Check if player is whitelisted, kept like this for backwards compatibility or future plans
+
+function QRCore.Functions.IsWhitelisted(source)
+    if not QRCore.Config.Server.Whitelist then return true end
+    if QRCore.Functions.HasPermission(source, QRCore.Config.Server.WhitelistPermission) then return true end
+    return false
+end
 
 -- Setting & Removing Permissions
 
-function AddPermission(source, permission)
-    local src = source
-    local license = GetIdentifier(src, 'license')
-    ExecuteCommand(('add_principal identifier.%s QRCore.%s'):format(license, permission))
-    RefreshCommands(src)
+function QRCore.Functions.AddPermission(source, permission)
+    if not IsPlayerAceAllowed(source, permission) then
+        ExecuteCommand(('add_principal player.%s QRcore.%s'):format(source, permission))
+        QRCore.Commands.Refresh(source)
+    end
 end
-exports('AddPermission', AddPermission)
 
-function RemovePermission(source, permission)
-    local src = source
-    local license = GetIdentifier(src, 'license')
+function QRCore.Functions.RemovePermission(source, permission)
     if permission then
-        if IsPlayerAceAllowed(src, permission) then
-            ExecuteCommand(('remove_principal identifier.%s QRCore.%s'):format(license, permission))
-            RefreshCommands(src)
+        if IsPlayerAceAllowed(source, permission) then
+            ExecuteCommand(('remove_principal player.%s QRcore.%s'):format(source, permission))
+            QRCore.Commands.Refresh(source)
         end
     else
-        for k,v in pairs(QBConfig.Permissions) do
-            if IsPlayerAceAllowed(src, v) then
-                ExecuteCommand(('remove_principal identifier.%s QRCore.%s'):format(license, v))
-                RefreshCommands(src)
+        for _, v in pairs(QRCore.Config.Server.Permissions) do
+            if IsPlayerAceAllowed(source, v) then
+                ExecuteCommand(('remove_principal player.%s QRcore.%s'):format(source, v))
+                QRCore.Commands.Refresh(source)
             end
         end
     end
 end
-exports('RemovePermission', RemovePermission)
 
 -- Checking for Permission Level
 
-function HasPermission(source, permission)
-    local src = source
-    if IsPlayerAceAllowed(src, permission) then return true end
+function QRCore.Functions.HasPermission(source, permission)
+    if type(permission) == "string" then
+        if IsPlayerAceAllowed(source, permission) then return true end
+    elseif type(permission) == "table" then
+        for _, permLevel in pairs(permission) do
+            if IsPlayerAceAllowed(source, permLevel) then return true end
+        end
+    end
+
     return false
 end
-exports('HasPermission', HasPermission)
 
-function GetPermissions(source)
+function QRCore.Functions.GetPermission(source)
     local src = source
     local perms = {}
-    for k,v in pairs (QBConfig.Permissions) do
+    for _, v in pairs (QRCore.Config.Server.Permissions) do
         if IsPlayerAceAllowed(src, v) then
             perms[v] = true
         end
     end
     return perms
 end
-exports('GetPermissions', GetPermissions)
 
 -- Opt in or out of admin reports
 
-function IsOptin(source)
-    local src = source
-    local license = GetIdentifier(src, 'license')
-    if not license or not HasPermission(src, 'admin') then return false end
-    local Player = GetPlayer(src)
-    return Player.PlayerData.metadata['optin']
+function QRCore.Functions.IsOptin(source)
+    local license = QRCore.Functions.GetIdentifier(source, 'license')
+    if not license or not QRCore.Functions.HasPermission(source, 'admin') then return false end
+    local Player = QRCore.Functions.GetPlayer(source)
+    return Player.PlayerData.optin
 end
-exports('IsOptin', IsOptin)
 
-function ToggleOptin(source)
-    local src = source
-    local license = GetIdentifier(src, 'license')
-    if not license or not HasPermission(src, 'admin') then return end
-    local Player = GetPlayer(src)
-    Player.PlayerData.metadata['optin'] = not Player.PlayerData.metadata['optin']
-    Player.Functions.SetMetaData('optin', Player.PlayerData.metadata['optin'])
+function QRCore.Functions.ToggleOptin(source)
+    local license = QRCore.Functions.GetIdentifier(source, 'license')
+    if not license or not QRCore.Functions.HasPermission(source, 'admin') then return end
+    local Player = QRCore.Functions.GetPlayer(source)
+    Player.PlayerData.optin = not Player.PlayerData.optin
+    Player.Functions.SetPlayerData('optin', Player.PlayerData.optin)
 end
-exports('ToggleOptin', ToggleOptin)
+
+-- Check if player is banned
+
+function QRCore.Functions.IsPlayerBanned(source)
+    local plicense = QRCore.Functions.GetIdentifier(source, 'license')
+    local result = MySQL.single.await('SELECT * FROM bans WHERE license = ?', { plicense })
+    if not result then return false end
+    if os.time() < result.expire then
+        local timeTable = os.date('*t', tonumber(result.expire))
+        return true, 'You have been banned from the server:\n' .. result.reason .. '\nYour ban expires ' .. timeTable.day .. '/' .. timeTable.month .. '/' .. timeTable.year .. ' ' .. timeTable.hour .. ':' .. timeTable.min .. '\n'
+    else
+        MySQL.query('DELETE FROM bans WHERE id = ?', { result.id })
+    end
+    return false
+end
+
+-- Check for duplicate license
+
+function QRCore.Functions.IsLicenseInUse(license)
+    local players = GetPlayers()
+    for _, player in pairs(players) do
+        local identifiers = GetPlayerIdentifiers(player)
+        for _, id in pairs(identifiers) do
+            if string.find(id, 'license') then
+                if id == license then
+                    return true
+                end
+            end
+        end
+    end
+    return false
+end
+
+-- Utility functions
+
+function QRCore.Functions.HasItem(source, items, amount)
+    if GetResourceState('qr-inventory') == 'missing' then return end
+    return exports['qr-inventory']:HasItem(source, items, amount)
+end
+
+function QRCore.Functions.Notify(source, text, type, length)
+    TriggerClientEvent('QRCore:Notify', source, text, type, length)
+end

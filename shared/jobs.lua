@@ -1,6 +1,8 @@
-QBShared = QBShared or {}
-QBShared.ForceJobDefaultDutyAtLogin = true -- true: Force duty state to jobdefaultDuty | false: set duty state from database last saved
-QBShared.Jobs = {
+QRShared = QRShared or {}
+
+QRShared.ForceJobDefaultDutyAtLogin = true -- true: Force duty state to jobdefaultDuty | false: set duty state from database last saved
+
+QRShared.Jobs = {
 	['unemployed'] = {
 		label = 'Civilian',
 		defaultDuty = true,
@@ -9,6 +11,26 @@ QBShared.Jobs = {
             ['0'] = {
                 name = 'Freelancer',
                 payment = 10
+            },
+        },
+	},
+	['railroad'] = {
+		label = 'Railroad',
+		defaultDuty = true,
+		offDutyPay = false,
+		grades = {
+            ['0'] = {
+                name = 'Conductor',
+                payment = 25
+            },
+			['1'] = {
+                name = 'Driver',
+                payment = 50
+            },
+			['2'] = {
+                name = 'Station Master',
+				isboss = true,
+                payment = 75
             },
         },
 	},

@@ -1,0 +1,4 @@
+QRShared.Locations = {
+    -- add here
+
+}

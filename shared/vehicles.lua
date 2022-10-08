@@ -1,5 +1,6 @@
-QBShared = QBShared or {}
-QBShared.Vehicles = {
+QRShared = QRShared or {}
+
+QRShared.Vehicles = {
 	['CART01'] = {
 		['name'] = 'Wooden Cart 1',
 		['brand'] = '?',

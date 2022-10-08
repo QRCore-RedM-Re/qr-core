@@ -1,112 +1,65 @@
-QBConfig = {}
-QBConfig.MaxPlayers = GetConvarInt('sv_maxclients', 48) -- Gets max players from config file, default 48
-QBConfig.DefaultSpawn = vector4(-1035.71, -2731.87, 12.86, 0.0)
-QBConfig.UpdateInterval = 5 -- how often to update player data in minutes
-QBConfig.StatusInterval = 5000 -- how often to check hunger/thirst status in ms
-QBConfig.EnablePVP = true -- Enable or disable pvp on the server (Ability to shoot other players)
-QBConfig.Discord = "" -- Discord invite link
-QBConfig.ServerClosed = false -- Set server closed (no one can join except people with ace permission 'qbadmin.join')
-QBConfig.ServerClosedReason = "Server Closed" -- Reason for server being closed
-QBConfig.UseConnectQueue = true -- Use connectqueue resource for queue system
-QBConfig.Permissions = {'god', 'admin', 'mod'} -- Add as many groups as you want here after creating them in your server.cfg
+QRConfig = {}
 
-QBConfig.Money = {}
-QBConfig.Money.MoneyTypes = {['cash'] = 2, ['bank'] = 40} -- ['type']=startamount - Add or remove money types for your server (for ex. ['blackmoney']=0), remember once added it will not be removed from the database!
-QBConfig.Money.DontAllowMinus = {'cash'} -- Money that is not allowed going in minus
-QBConfig.Money.PayCheckTimeOut = 10 -- The time in minutes that it will give the paycheck
-QBConfig.Money.PayCheckSociety = false -- If true paycheck will come from the society account that the player is employed at, requires qr-bossmenu
+QRConfig.MaxPlayers = GetConvarInt('sv_maxclients', 48) -- Gets max players from config file, default 48
+QRConfig.DefaultSpawn = vector4(-1035.71, -2731.87, 12.86, 0.0)
+QRConfig.UpdateInterval = 5 -- how often to update player data in minutes
+QRConfig.StatusInterval = 5000 -- how often to check hunger/thirst status in milliseconds
 
-QBConfig.Player = {}
-QBConfig.Player.RevealMap = true
-QBConfig.Player.MaxWeight = 120000 -- Max weight a player can carry (currently 120kg, written in grams)
-QBConfig.Player.MaxInvSlots = 41 -- Max inventory slots for a player
-QBConfig.Player.HungerRate = 4.2 -- Rate at which hunger goes down.
-QBConfig.Player.ThirstRate = 3.8 -- Rate at which thirst goes down.
-QBConfig.Player.Bloodtypes = {
-    "A+",
-    "A-",
-    "B+",
-    "B-",
-    "AB+",
-    "AB-",
-    "O+",
-    "O-",
+QRConfig.Money = {}
+QRConfig.Money.MoneyTypes = { cash = 500, bank = 5000, bloodmoney = 0 } -- type = startamount - Add or remove money types for your server (for ex. blackmoney = 0), remember once added it will not be removed from the database!
+QRConfig.Money.DontAllowMinus = { 'cash', 'bloodmoney' } -- Money that is not allowed going in minus
+QRConfig.Money.PayCheckTimeOut = 10 -- The time in minutes that it will give the paycheck
+QRConfig.Money.PayCheckSociety = false -- If true paycheck will come from the society account that the player is employed at, requires qb-management
+
+QRConfig.Player = {}
+QRConfig.Player.RevealMap = true
+QRConfig.Player.HungerRate = 4.2 -- Rate at which hunger goes down.
+QRConfig.Player.ThirstRate = 3.8 -- Rate at which thirst goes down.
+QRConfig.Player.Bloodtypes = {
+    "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-",
 }
 
--- Left side is level right side xp needed, you just have to add the skill here and in the metadata in servers/player.lua
--- You dont have to use this if you dont want to, just leave as is
-QBConfig.Levels = {
-    ["main"] = {
-        [0] = 0,
-        [1] = 50,
-        [2] = 100,
-        [3] = 150,
-        [4] = 200,
-        [5] = 250,
-        [6] = 300,
-        [7] = 350,
-        [8] = 400,
-        [9] = 450,
-        [10] = 500,
-        [11] = 550,
-        [12] = 600,
-        [13] = 650,
-        [14] = 700,
-        [15] = 750,
-        [16] = 800,
-        [17] = 850,
-        [18] = 900,
-        [19] = 950,
-        [20] = 1000
-    },
-    ["mining"] = {
-        [0] = 0,
-        [1] = 50,
-        [2] = 100,
-        [3] = 150,
-        [4] = 200,
-        [5] = 250,
-        [6] = 300,
-        [7] = 350,
-        [8] = 400,
-        [9] = 450,
-        [10] = 500,
-        [11] = 550,
-        [12] = 600,
-        [13] = 650,
-        [14] = 700,
-        [15] = 750,
-        [16] = 800,
-        [17] = 850,
-        [18] = 900,
-        [19] = 950,
-        [20] = 1000
-    },
-    ["herbalism"] = {
-        [0] = 0,
-        [1] = 50,
-        [2] = 100,
-        [3] = 150,
-        [4] = 200,
-        [5] = 250,
-        [6] = 300,
-        [7] = 350,
-        [8] = 400,
-        [9] = 450,
-        [10] = 500,
-        [11] = 550,
-        [12] = 600,
-        [13] = 650,
-        [14] = 700,
-        [15] = 750,
-        [16] = 800,
-        [17] = 850,
-        [18] = 900,
-        [19] = 950,
-        [20] = 1000
-    },
+QRConfig.Server = {} -- General server config
+QRConfig.Server.Closed = false -- Set server closed (no one can join except people with ace permission 'qbadmin.join')
+QRConfig.Server.ClosedReason = "Server Closed" -- Reason message to display when people can't join the server
+QRConfig.Server.Uptime = 0 -- Time the server has been up.
+QRConfig.Server.Whitelist = false -- Enable or disable whitelist on the server
+QRConfig.Server.WhitelistPermission = 'admin' -- Permission that's able to enter the server when the whitelist is on
+QRConfig.Server.PVP = true -- Enable or disable pvp on the server (Ability to shoot other players)
+QRConfig.Server.Discord = "" -- Discord invite link
+QRConfig.Server.CheckDuplicateLicense = true -- Check for duplicate rockstar license on join
+QRConfig.Server.Permissions = { 'god', 'admin', 'mod' } -- Add as many groups as you want here after creating them in your server.cfg
+
+QRConfig.Notify = {}
+
+QRConfig.Notify.NotificationStyling = {
+    group = false, -- Allow notifications to stack with a badge instead of repeating
+    position = "right", -- top-left | top-right | bottom-left | bottom-right | top | bottom | left | right | center
+    progress = true -- Display Progress Bar
 }
 
-exports('GetConfig', function()
-    return QBConfig
-end)
+-- These are how you define different notification variants
+-- The "color" key is background of the notification
+-- The "icon" key is the css-icon code, this project uses `Material Icons` & `Font Awesome`
+QRConfig.Notify.VariantDefinitions = {
+    success = {
+        classes = 'success',
+        icon = 'done'
+    },
+    primary = {
+        classes = 'primary',
+        icon = 'info'
+    },
+    error = {
+        classes = 'error',
+        icon = 'dangerous'
+    },
+    police = {
+        classes = 'police',
+        icon = 'local_police'
+    },
+    ambulance = {
+        classes = 'ambulance',
+        icon = 'fas fa-ambulance'
+    }
+}

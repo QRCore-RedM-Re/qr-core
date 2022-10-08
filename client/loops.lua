@@ -1,27 +1,24 @@
-local isLoggedIn = false
-AddStateBagChangeHandler('isLoggedIn', nil, function(bagName, key, value)
-    isLoggedIn = value
-end)
-
 CreateThread(function()
     while true do
-        Wait(0)
-        if isLoggedIn then
-            Wait((1000 * 60) * QBConfig.UpdateInterval)
+        local sleep = 0
+        if LocalPlayer.state.isLoggedIn then
+            sleep = (1000 * 60) * QRCore.Config.UpdateInterval
             TriggerServerEvent('QRCore:UpdatePlayer')
         end
+        Wait(sleep)
     end
 end)
 
 CreateThread(function()
     while true do
-        Wait(QBConfig.StatusInterval)
-        if isLoggedIn then
-            if QRCore.PlayerData.metadata['hunger'] <= 0 or QRCore.PlayerData.metadata['thirst'] <= 0 then
+        if LocalPlayer.state.isLoggedIn then
+            if (QRCore.PlayerData.metadata['hunger'] <= 0 or QRCore.PlayerData.metadata['thirst'] <= 0) and not QRCore.PlayerData.metadata['isdead'] then
                 local ped = PlayerPedId()
                 local currentHealth = GetEntityHealth(ped)
-                SetEntityHealth(ped, currentHealth - math.random(5, 10))
+                local decreaseThreshold = math.random(5, 10)
+                SetEntityHealth(ped, currentHealth - decreaseThreshold)
             end
         end
+        Wait(QRCore.Config.StatusInterval)
     end
 end)

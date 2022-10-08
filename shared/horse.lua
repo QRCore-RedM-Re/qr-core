@@ -1,5 +1,6 @@
-QBShared = QBShared or {}
-QBShared.Horses = {
+QRShared = QRShared or {}
+
+QRShared.Horses = {
 	['Donkey'] = {
 		['name'] = 'Donkey',
 		['model'] = `A_C_Donkey_01`,
