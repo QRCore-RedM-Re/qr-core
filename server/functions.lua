@@ -24,10 +24,6 @@ function QRCore.Functions.GetIdentifier(source, idtype)
     return nil
 end
 
-function QRCore.Functions.GetQRPlayers()
-    return QRCore.Players
-end
-
 function QRCore.Functions.GetSource(identifier)
     for src, _ in pairs(QRCore.Players) do
         local idens = GetPlayerIdentifiers(src)
