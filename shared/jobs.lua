@@ -27,6 +27,11 @@ QRShared.Jobs = {
                 name = 'Driver',
                 payment = 50
             },
+			['2'] = {
+                name = 'Station Manager',
+				isboss = true,
+                payment = 75
+            },
         },
 	},
 	['police'] = {

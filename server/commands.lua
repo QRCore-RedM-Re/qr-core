@@ -9,7 +9,7 @@ CreateThread(function() -- Add ace to node for perm checking
     local permissions = QRConfig.Server.Permissions
     for i=1, #permissions do
         local permission = permissions[i]
-        ExecuteCommand(('add_ace QRcore.%s %s allow'):format(permission, permission))
+        ExecuteCommand(('add_ace qrcore.%s %s allow'):format(permission, permission))
     end
 end)
 
@@ -38,14 +38,14 @@ function QRCore.Commands.Add(name, help, arguments, argsrequired, callback, perm
         permission = extraPerms
         for i = 1, permission.n do
             if not QRCore.Commands.IgnoreList[permission[i]] then -- only create aces for extra perm levels
-                ExecuteCommand(('add_ace QRcore.%s command.%s allow'):format(permission[i], name))
+                ExecuteCommand(('add_ace qrcore.%s command.%s allow'):format(permission[i], name))
             end
         end
         permission.n = nil
     else
         permission = tostring(permission:lower())
         if not QRCore.Commands.IgnoreList[permission] then -- only create aces for extra perm levels
-            ExecuteCommand(('add_ace QRcore.%s command.%s allow'):format(permission, name))
+            ExecuteCommand(('add_ace qrcore.%s command.%s allow'):format(permission, name))
         end
     end
 
