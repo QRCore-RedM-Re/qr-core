@@ -127,13 +127,29 @@ function QRCore.Player.CheckPlayerData(source, PlayerData)
 			["hasRecord"] = false,
 			["date"] = nil,
 		}
-	PlayerData.metadata["licences"] = PlayerData.metadata["licences"]
-		or {
-			["driver"] = true,
-			["business"] = false,
-			["weapon"] = false,
-		}
-	PlayerData.metadata["inside"] = PlayerData.metadata["inside"]
+
+    PlayerData.metadata['xp'] = PlayerData.metadata['xp'] or {
+		['main'] = 0,
+		['herbalism'] = 0,
+		['mining'] = 0,
+        ['cooking'] = 0,
+        ['crafting'] = 0,
+	}
+
+    PlayerData.metadata['licences'] = PlayerData.metadata['licences'] or {
+        ['weapon'] = false
+    }
+
+	PlayerData.metadata['levels'] = PlayerData.metadata['levels'] or {
+		['main'] = 0,
+		['herbalism'] = 0,
+		['mining'] = 0,
+        ['cooking'] = 0,
+        ['crafting'] = 0,
+	}
+
+
+    PlayerData.metadata["inside"] = PlayerData.metadata["inside"]
 		or {
 			house = nil,
 			apartment = {
@@ -141,11 +157,7 @@ function QRCore.Player.CheckPlayerData(source, PlayerData)
 				apartmentId = nil,
 			},
 		}
-	PlayerData.metadata["phonedata"] = PlayerData.metadata["phonedata"]
-		or {
-			SerialNumber = QRCore.Player.CreateSerialNumber(),
-			InstalledApps = {},
-		}
+
 	-- Job
 	if PlayerData.job and PlayerData.job.name and not QRCore.Shared.Jobs[PlayerData.job.name] then
 		PlayerData.job = nil
@@ -313,6 +325,68 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
 			+ amount
 		self.Functions.UpdatePlayerData()
 	end
+
+    self.Functions.AddXp = function(skill, amount)
+		local skill = skill:lower()
+		local amount = tonumber(amount)
+		if self.PlayerData.metadata['xp'][skill] and amount > 0 then
+			self.PlayerData.metadata['xp'][skill] = self.PlayerData.metadata['xp'][skill] + amount
+			self.Functions.UpdateLevelData(skill)
+			self.Functions.UpdatePlayerData()
+			TriggerEvent('qr-log:server:CreateLog', 'levels', 'AddXp', 'lightgreen', '**'..GetPlayerName(self.PlayerData.source) .. ' (citizenid: '..self.PlayerData.citizenid..' | id: '..self.PlayerData.source..')** has received: '..amount..'xp in the skill: '..skill..'. Their current xp amount is: '..self.PlayerData.metadata['xp'][skill])
+			return true
+		end
+		return false
+	end
+
+	self.Functions.RemoveXp = function(skill, amount)
+		local skill = skill:lower()
+		local amount = tonumber(amount)
+		if self.PlayerData.metadata['xp'][skill] and amount > 0 then
+			self.PlayerData.metadata['xp'][skill] = self.PlayerData.metadata['xp'][skill] - amount
+			self.Functions.UpdateLevelData(skill)
+			self.Functions.UpdatePlayerData()
+			TriggerEvent('qr-log:server:CreateLog', 'levels', 'RemoveXp', 'lightgreen', '**'..GetPlayerName(self.PlayerData.source) .. ' (citizenid: '..self.PlayerData.citizenid..' | id: '..self.PlayerData.source..')** was stripped of: '..amount..'xp in the skill: '..skill..'. Their current xp amount is: '..self.PlayerData.metadata['xp'][skill])
+			return true
+		end
+		return false
+	end
+
+    self.Functions.AddLevel = function(level, amount)
+		local level = level:lower()
+		local amount = tonumber(amount)
+		if self.PlayerData.metadata['levels'][level] and amount > 0 then
+			self.PlayerData.metadata['levels'][level] = self.PlayerData.metadata['levels'][level] + amount
+			self.Functions.UpdateLevelData(level)
+			self.Functions.UpdatePlayerData()
+			TriggerEvent('qr-log:server:CreateLog', 'levels', 'AddXp', 'lightgreen', '**'..GetPlayerName(self.PlayerData.source) .. ' [CitizenID: '..self.PlayerData.citizenid..' | id: '..self.PlayerData.source..']** got '..level..' levels '..amount..' [current level: '..self.PlayerData.metadata['levels'][level])
+			return true
+		end
+		return false
+	end
+
+	self.Functions.RemoveLevel = function(level, amount)
+		local level = level:lower()
+		local amount = tonumber(amount)
+		if self.PlayerData.metadata['levels'][level] and amount > 0 then
+			self.PlayerData.metadata['levels'][level] = self.PlayerData.metadata['levels'][level] - amount
+			self.Functions.UpdateLevelData(level)
+			self.Functions.UpdatePlayerData()
+			TriggerEvent('qr-log:server:CreateLog', 'levels', 'RemoveXp', 'lightgreen', '**'..GetPlayerName(self.PlayerData.source) .. ' [CitizenID: '..self.PlayerData.citizenid..' | id: '..self.PlayerData.source..']** lost '..level..' levels '..amount..' current level: '..self.PlayerData.metadata['levels'][level])
+			return true
+		end
+		return false
+	end
+
+    self.Functions.UpdateLevelData = function(skill, vall)
+        local skill = skill:lower()
+        if vall ~= nil then
+            self.PlayerData.metadata[skill] = vall
+            self.Functions.UpdatePlayerData()
+        end
+    end
+
+
 
 	function self.Functions.AddMoney(moneytype, amount, reason)
 		reason = reason or "unknown"
@@ -521,6 +595,8 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
 
 		return true
 	end
+
+
 
 	function self.Functions.GetMoney(moneytype)
 		if not moneytype then
