@@ -243,7 +243,13 @@ QRCore.Commands.Add('setgang', Lang:t("command.setgang.help"), { { name = Lang:t
     end
 end, 'admin')
 
-AddCommand("givexp", "Give A Player Xp (Admin Only)", {{name="id", help="Player ID"},{name="skill", help="Type of skill (mining, etc)"}, {name="amount", help="Amount of xp"}}, true, function(source, args)
+
+QRCore.Commands.Add('gang', Lang:t("command.gang.help"), {}, false, function(source)
+    local PlayerGang = QRCore.Functions.GetPlayer(source).PlayerData.gang
+    TriggerClientEvent('QRCore:Notify', source, Lang:t('info.gang_info', {value = PlayerGang.label, value2 = PlayerGang.grade.name}))
+end, 'admin')
+
+QRCore.Commands.Add("givexp", "Give A Player Xp (Admin Only)", {{name="id", help="Player ID"},{name="skill", help="Type of skill (mining, etc)"}, {name="amount", help="Amount of xp"}}, true, function(source, args)
 	local Player = GetPlayer(tonumber(args[1]))
 	if Player then
 		if Player.PlayerData.metadata["xp"][tostring(args[2])] then
@@ -255,9 +261,9 @@ AddCommand("givexp", "Give A Player Xp (Admin Only)", {{name="id", help="Player 
 	else
 		TriggerClientEvent('QRCore:Notify', source, 9, Lang:t('error.not_online'), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
 	end
-end, 'god')
+end, 'admin')
 
-AddCommand("removexp", "Give A Player Xp (Admin Only)", {{name="id", help="Player ID"},{name="skill", help="Type of skill (mining, etc)"}, {name="amount", help="Amount of xp"}}, true, function(source, args)
+QRCore.Commands.Add("removexp", "Give A Player Xp (Admin Only)", {{name="id", help="Player ID"},{name="skill", help="Type of skill (mining, etc)"}, {name="amount", help="Amount of xp"}}, true, function(source, args)
 	local Player = GetPlayer(tonumber(args[1]))
 	if Player then
 		if Player.PlayerData.metadata["xp"][tostring(args[2])] then
@@ -269,9 +275,9 @@ AddCommand("removexp", "Give A Player Xp (Admin Only)", {{name="id", help="Playe
 	else
 		TriggerClientEvent('QRCore:Notify', source, 9, Lang:t('error.not_online'), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
 	end
-end, 'god')
+end, 'admin')
 
-AddCommand("xp", "Check How Much Xp You Have", {{name="skill", help="Type of skill (mining, etc)"}}, true, function(source, args)
+QRCore.Commands.Add("xp", "Check How Much Xp You Have", {{name="skill", help="Type of skill (mining, etc)"}}, true, function(source, args)
 	local Player = GetPlayer(source)
 	local Xp = Player.PlayerData.metadata["xp"][tostring(args[1])]
 	if Player then
@@ -283,7 +289,7 @@ AddCommand("xp", "Check How Much Xp You Have", {{name="skill", help="Type of ski
 	end
 end, 'user')
 
-AddCommand("givelevel", "Give A Player Level (Admin Only)", {{name="id", help="Player ID"},{name="skill", help="Type of skill (mining, etc)"}, {name="amount", help="Amount of xp"}}, true, function(source, args)
+QRCore.Commands.Add("givelevel", "Give A Player Level (Admin Only)", {{name="id", help="Player ID"},{name="skill", help="Type of skill (mining, etc)"}, {name="amount", help="Amount of xp"}}, true, function(source, args)
 	local Player = GetPlayer(tonumber(args[1]))
 	if Player then
 		if Player.PlayerData.metadata["levels"][tostring(args[2])] then
@@ -295,9 +301,9 @@ AddCommand("givelevel", "Give A Player Level (Admin Only)", {{name="id", help="P
 	else
 		TriggerClientEvent('QRCore:Notify', source, 9, Lang:t('error.not_online'), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
 	end
-end, 'god')
+end, 'admin')
 
-AddCommand("removelevel", "Remove A Player Level (Admin Only)", {{name="id", help="Player ID"},{name="skill", help="Type of skill (mining, etc)"}, {name="amount", help="Amount of xp"}}, true, function(source, args)
+QRCore.Commands.Add("removelevel", "Remove A Player Level (Admin Only)", {{name="id", help="Player ID"},{name="skill", help="Type of skill (mining, etc)"}, {name="amount", help="Amount of xp"}}, true, function(source, args)
 	local Player = GetPlayer(tonumber(args[1]))
 	if Player then
 		if Player.PlayerData.metadata["levels"][tostring(args[2])] then
@@ -309,9 +315,9 @@ AddCommand("removelevel", "Remove A Player Level (Admin Only)", {{name="id", hel
 	else
 		TriggerClientEvent('QBCore:Notify', source, 9, Lang:t('error.not_online'), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
 	end
-end, 'god')
+end, 'admin')
 
-AddCommand("level", "Check Which Level You Are", {{name="skill", help="Type of skill (mining, etc)"}}, true, function(source, args)
+QRCore.Commands.Add("level", "Check Which Level You Are", {{name="skill", help="Type of skill (mining, etc)"}}, true, function(source, args)
 	local Player = GetPlayer(source)
 	local Level = Player.PlayerData.metadata["levels"][tostring(args[1])]
 	if Player then
