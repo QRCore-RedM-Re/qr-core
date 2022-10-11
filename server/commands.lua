@@ -243,6 +243,86 @@ QRCore.Commands.Add('setgang', Lang:t("command.setgang.help"), { { name = Lang:t
     end
 end, 'admin')
 
+AddCommand("givexp", "Give A Player Xp (Admin Only)", {{name="id", help="Player ID"},{name="skill", help="Type of skill (mining, etc)"}, {name="amount", help="Amount of xp"}}, true, function(source, args)
+	local Player = GetPlayer(tonumber(args[1]))
+	if Player then
+		if Player.PlayerData.metadata["xp"][tostring(args[2])] then
+			Player.Functions.AddXp(tostring(args[2]), tonumber(args[3]))
+			TriggerClientEvent('QRCore:Notify', source, 9, Lang:t('info.xp_added'), 5000, 0, 'hud_textures', 'check', 'COLOR_WHITE')
+		else
+			TriggerClientEvent('QRCore:Notify', source, 9, Lang:t('error.no_skill'), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
+		end
+	else
+		TriggerClientEvent('QRCore:Notify', source, 9, Lang:t('error.not_online'), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
+	end
+end, 'god')
+
+AddCommand("removexp", "Give A Player Xp (Admin Only)", {{name="id", help="Player ID"},{name="skill", help="Type of skill (mining, etc)"}, {name="amount", help="Amount of xp"}}, true, function(source, args)
+	local Player = GetPlayer(tonumber(args[1]))
+	if Player then
+		if Player.PlayerData.metadata["xp"][tostring(args[2])] then
+			Player.Functions.RemoveXp(tostring(args[2]), tonumber(args[3]))
+			TriggerClientEvent('QRCore:Notify', source, 9, Lang:t('info.xp_removed'), 5000, 0, 'hud_textures', 'check', 'COLOR_WHITE')
+		else
+			TriggerClientEvent('QRCore:Notify', source, 9, Lang:t('error.no_skill'), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
+		end
+	else
+		TriggerClientEvent('QRCore:Notify', source, 9, Lang:t('error.not_online'), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
+	end
+end, 'god')
+
+AddCommand("xp", "Check How Much Xp You Have", {{name="skill", help="Type of skill (mining, etc)"}}, true, function(source, args)
+	local Player = GetPlayer(source)
+	local Xp = Player.PlayerData.metadata["xp"][tostring(args[1])]
+	if Player then
+		if Xp then
+			TriggerClientEvent('QRCore:Notify', source, 9, Lang:t('info.xp_info', {value = Xp, value2 = tostring(args[1])}), 5000, 0, 'hud_textures', 'check', 'COLOR_WHITE')
+		else
+			TriggerClientEvent('QRCore:Notify', source, 9, Lang:t('error.no_skill'), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
+		end
+	end
+end, 'user')
+
+AddCommand("givelevel", "Give A Player Level (Admin Only)", {{name="id", help="Player ID"},{name="skill", help="Type of skill (mining, etc)"}, {name="amount", help="Amount of xp"}}, true, function(source, args)
+	local Player = GetPlayer(tonumber(args[1]))
+	if Player then
+		if Player.PlayerData.metadata["levels"][tostring(args[2])] then
+			Player.Functions.AddXp(tostring(args[2]), tonumber(args[3]))
+			TriggerClientEvent('QRCore:Notify', source, 9, Lang:t('info.xp_added'), 5000, 0, 'hud_textures', 'check', 'COLOR_WHITE')
+		else
+			TriggerClientEvent('QRCore:Notify', source, 9, Lang:t('error.no_skill'), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
+		end
+	else
+		TriggerClientEvent('QRCore:Notify', source, 9, Lang:t('error.not_online'), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
+	end
+end, 'god')
+
+AddCommand("removelevel", "Remove A Player Level (Admin Only)", {{name="id", help="Player ID"},{name="skill", help="Type of skill (mining, etc)"}, {name="amount", help="Amount of xp"}}, true, function(source, args)
+	local Player = GetPlayer(tonumber(args[1]))
+	if Player then
+		if Player.PlayerData.metadata["levels"][tostring(args[2])] then
+			Player.Functions.RemoveXp(tostring(args[2]), tonumber(args[3]))
+			TriggerClientEvent('QBCore:Notify', source, 9, Lang:t('info.xp_removed'), 5000, 0, 'hud_textures', 'check', 'COLOR_WHITE')
+		else
+			TriggerClientEvent('QBCore:Notify', source, 9, Lang:t('error.no_skill'), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
+		end
+	else
+		TriggerClientEvent('QBCore:Notify', source, 9, Lang:t('error.not_online'), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
+	end
+end, 'god')
+
+AddCommand("level", "Check Which Level You Are", {{name="skill", help="Type of skill (mining, etc)"}}, true, function(source, args)
+	local Player = GetPlayer(source)
+	local Level = Player.PlayerData.metadata["levels"][tostring(args[1])]
+	if Player then
+		if Level then
+			TriggerClientEvent('QBCore:Notify', source, 9, Lang:t('info.level_info', {value = Level, value2 = tostring(args[1])}), 5000, 0, 'hud_textures', 'check', 'COLOR_WHITE')
+		else
+			TriggerClientEvent('QBCore:Notify', source, 9, Lang:t('error.no_skill'), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
+		end
+	end
+end, 'user')
+
 -- Out of Character Chat
 
 QRCore.Commands.Add('ooc', Lang:t("command.ooc.help"), {}, false, function(source, args)
