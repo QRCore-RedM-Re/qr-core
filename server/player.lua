@@ -105,7 +105,6 @@ function QRCore.Player.CheckPlayerData(source, PlayerData)
 	PlayerData.metadata["injail"] = PlayerData.metadata["injail"] or 0
 	PlayerData.metadata["jailitems"] = PlayerData.metadata["jailitems"] or {}
 	PlayerData.metadata["status"] = PlayerData.metadata["status"] or {}
-	PlayerData.metadata["phone"] = PlayerData.metadata["phone"] or {}
 	PlayerData.metadata["fitbit"] = PlayerData.metadata["fitbit"] or {}
 	PlayerData.metadata["commandbinds"] = PlayerData.metadata["commandbinds"] or {}
 	PlayerData.metadata["bloodtype"] = PlayerData.metadata["bloodtype"]
@@ -129,10 +128,9 @@ function QRCore.Player.CheckPlayerData(source, PlayerData)
 		}
 	PlayerData.metadata["licences"] = PlayerData.metadata["licences"]
 		or {
-			["driver"] = true,
-			["business"] = false,
 			["weapon"] = false,
 		}
+
 	PlayerData.metadata["inside"] = PlayerData.metadata["inside"]
 		or {
 			house = nil,
@@ -141,11 +139,29 @@ function QRCore.Player.CheckPlayerData(source, PlayerData)
 				apartmentId = nil,
 			},
 		}
-	PlayerData.metadata["phonedata"] = PlayerData.metadata["phonedata"]
-		or {
-			SerialNumber = QRCore.Player.CreateSerialNumber(),
-			InstalledApps = {},
-		}
+
+    
+    PlayerData.metadata['xp'] = PlayerData.metadata['xp'] or {
+		['main'] = 0,
+		['herbalism'] = 0,
+		['mining'] = 0,
+        ['cooking'] = 0,
+        ['crafting'] = 0,
+	}
+
+    PlayerData.metadata['licences'] = PlayerData.metadata['licences'] or {
+        ['weapon'] = false
+    }
+
+	PlayerData.metadata['levels'] = PlayerData.metadata['levels'] or {
+		['main'] = 0,
+		['herbalism'] = 0,
+		['mining'] = 0,
+        ['cooking'] = 0,
+        ['crafting'] = 0,
+	}
+
+
 	-- Job
 	if PlayerData.job and PlayerData.job.name and not QRCore.Shared.Jobs[PlayerData.job.name] then
 		PlayerData.job = nil
