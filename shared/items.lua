@@ -22,6 +22,12 @@ QRShared.Items = {
 	['poodle']			= {['name'] = 'poodle',			['label'] = 'Poodle',			['weight'] = 500,	['type'] = 'item',	['image'] = 'animal_dog_poodle.png',				['unique'] = true,		['useable'] = true,		['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'Poodle'},
 	['street']			= {['name'] = 'street',			['label'] = 'Street',			['weight'] = 500,	['type'] = 'item',	['image'] = 'animal_dog_street.png',				['unique'] = true,		['useable'] = true,		['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'Street'},
 
+	-- to support indian tobacco
+	['indtobaccoseed']	= {['name'] = 'indtobaccoseed',	['label'] = 'Indian Seed',		['weight'] = 0,		['type'] = 'item',	['image'] = 'indtobaccoseed.png',	['unique'] = false,		['useable'] = true,		['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'indian tobacco seed'},
+	['indtobacco']		= {['name'] = 'indtobacco',		['label'] = 'Indian Tobacco',	['weight'] = 10,	['type'] = 'item',	['image'] = 'indtobacco.png',		['unique'] = false,		['useable'] = true,		['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'indian tobacco'},
+	['fertilizer']		= {['name'] = 'fertilizer',		['label'] = 'Fertilizer',		['weight'] = 100,	['type'] = 'item',	['image'] = 'fertilizer.png',		['unique'] = false,		['useable'] = true,		['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'feed for growing plants'},
+	['indiancigar']		= {['name'] = 'indiancigar',	['label'] = 'Indian Cigar',		['weight'] = 50,	['type'] = 'item',	['image'] = 'indiancigar.png',		['unique'] = false,		['useable'] = true,		['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'indian cigar'},
+
 	--ammo
 	['ammo_repeater']	= {['name'] = 'ammo_repeater',	['label'] = 'Repeater (N)',	['weight'] = 200,	['type'] = 'item',	['image'] = 'ammo_bullet_normal.png',	['unique'] = false,	['useable'] = true,	['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'Repeater Ammo'},
 	['ammo_revolver']	= {['name'] = 'ammo_revolver',	['label'] = 'Revolver (N)',	['weight'] = 200,	['type'] = 'item',	['image'] = 'ammo_bullet_normal.png',	['unique'] = false,	['useable'] = true,	['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'Revolver Ammo'},
