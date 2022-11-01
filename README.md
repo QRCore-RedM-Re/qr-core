@@ -1,3 +1,4 @@
-# qb-core
-
-### [Official QRCore Documentation](https://docs.QRCore.org)
+# qr-core
+ 
+# credits
+- original resouce created by : https://github.com/qbcore-redm-framework
