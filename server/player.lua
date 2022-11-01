@@ -794,10 +794,12 @@ function QRCore.Player.DeleteCharacter(source, citizenid)
 		local query = "DELETE FROM %s WHERE citizenid = ?"
 		local tableCount = #playertables
 		local queries = table.create(tableCount, 0)
+        
 		for i = 1, tableCount do
 			local v = playertables[i]
 			queries[i] = { query = query:format(v.table), values = { citizenid } }
 		end
+        
 		MySQL.transaction(queries, function(result2)
 			if result2 then
 				TriggerEvent(
