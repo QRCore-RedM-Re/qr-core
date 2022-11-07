@@ -197,7 +197,7 @@ function QRCore.Functions.GetClosestPed(coords, ignoreList)
         coords = GetEntityCoords(ped)
     end
     local ignoreList = ignoreList or {}
-    local peds = exports['redx-core']:GetPeds(ignoreList)
+    local peds = QRCore.Functions.GetPeds(ignoreList)
     local closestDistance = -1
     local closestPed = -1
     for i = 1, #peds, 1 do
