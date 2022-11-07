@@ -116,25 +116,37 @@ RegisterNetEvent('QRCore:Command:GoToMarker', function()
     QRCore.Functions.Notify(Lang:t("success.teleported_waypoint"), "success", 5000)
 end)
 
--- Vehicle Commands
 
-RegisterNetEvent('QRCore:Command:SpawnVehicle', function(vehName)
+-- HORSE / WAGON
+
+RegisterNetEvent('QRCore:Command:SpawnVehicle', function(WagonName)
     local ped = PlayerPedId()
-    local hash = GetHashKey(vehName)
-    local veh = GetVehiclePedIsUsing(ped)
+    local hash = GetHashKey(WagonName)
     if not IsModelInCdimage(hash) then return end
     RequestModel(hash)
     while not HasModelLoaded(hash) do
         Wait(0)
     end
 
-    if IsPedInAnyVehicle(ped) then
-        DeleteVehicle(veh)
+    local vehicle = CreateVehicle(hash, GetEntityCoords(ped), GetEntityHeading(ped), true, false)
+    TaskWarpPedIntoVehicle(ped, vehicle, -1) -- Spawn the player onto "drivers" seat
+	Citizen.InvokeNative(0x283978A15512B2FE, vehicle, true) -- Set random outfit variation / skin
+	NetworkSetEntityInvisibleToNetwork(vehicle, true)
+end)
+
+RegisterNetEvent('QRCore:Command:SpawnHorse', function(HorseName)
+    local ped = PlayerPedId()
+    local hash = GetHashKey(HorseName)
+    if not IsModelInCdimage(hash) then return end
+    RequestModel(hash)
+    while not HasModelLoaded(hash) do
+        Wait(0)
     end
 
-    local vehicle = CreateVehicle(hash, GetEntityCoords(ped), GetEntityHeading(ped), true, false)
-    TaskWarpPedIntoVehicle(ped, vehicle, -1)
-    SetModelAsNoLongerNeeded(hash)
+    local vehicle = CreatePed(hash, GetEntityCoords(ped), GetEntityHeading(ped), true, false)
+    TaskWarpPedIntoVehicle(ped, vehicle, -1) -- Spawn the player onto "drivers" seat
+	Citizen.InvokeNative(0x283978A15512B2FE, vehicle, true) -- Set random outfit variation / skin
+	NetworkSetEntityInvisibleToNetwork(vehicle, true)
 end)
 
 RegisterNetEvent('QRCore:Command:DeleteVehicle', function()
