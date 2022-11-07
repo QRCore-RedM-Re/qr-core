@@ -181,14 +181,19 @@ QRCore.Commands.Add('closeserver', Lang:t("command.closeserver.help"), {{ name =
     end
 end, 'admin')
 
--- Vehicle
-
-QRCore.Commands.Add('car', Lang:t("command.car.help"), {{ name = Lang:t("command.car.params.model.name"), help = Lang:t("command.car.params.model.help") }}, true, function(source, args)
-    TriggerClientEvent('QRCore:Command:SpawnVehicle', source, args[1])
-end, 'admin')
-
+-- HORSES / WAGONS
 QRCore.Commands.Add('dv', Lang:t("command.dv.help"), {}, false, function(source)
     TriggerClientEvent('QRCore:Command:DeleteVehicle', source)
+end, 'admin')
+
+QRCore.Commands.Add('wagon', Lang:t("command.spawnwagon.help"), { { name = 'model', help = 'Model name of the wagon' } }, true, function(source, args)
+    local src = source
+    TriggerClientEvent('QRCore:Command:SpawnVehicle', src, args[1])
+end, 'admin')
+
+QRCore.Commands.Add('horse', Lang:t("command.spawnhorse.help"), { { name = 'model', help = 'Model name of the horse' } }, true, function(source, args)
+    local src = source
+    TriggerClientEvent('QRCore:Command:SpawnHorse', src, args[1])
 end, 'admin')
 
 -- Money
