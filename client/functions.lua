@@ -211,7 +211,7 @@ function QRCore.Functions.GetClosestPed(coords, ignoreList)
         end
     end
     return closestPed, closestDistance
-end)
+end
 
 function QRCore.Functions.IsWearingGloves()
     local ped = PlayerPedId()
