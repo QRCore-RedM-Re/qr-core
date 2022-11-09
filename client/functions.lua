@@ -196,21 +196,22 @@ function QRCore.Functions.GetClosestPed(coords, ignoreList)
     else
         coords = GetEntityCoords(ped)
     end
-    ignoreList = ignoreList or {}
+    local ignoreList = ignoreList or {}
     local peds = QRCore.Functions.GetPeds(ignoreList)
     local closestDistance = -1
     local closestPed = -1
     for i = 1, #peds, 1 do
         local pedCoords = GetEntityCoords(peds[i])
         local distance = #(pedCoords - coords)
-
-        if closestDistance == -1 or closestDistance > distance then
-            closestPed = peds[i]
-            closestDistance = distance
+        if peds[i] ~= ped then
+            if closestDistance == -1 or closestDistance > distance then
+                closestPed = peds[i]
+                closestDistance = distance
+            end
         end
     end
     return closestPed, closestDistance
-end
+end)
 
 function QRCore.Functions.IsWearingGloves()
     local ped = PlayerPedId()
