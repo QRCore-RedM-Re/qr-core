@@ -74,6 +74,8 @@ local Translations = {
             },
         },
         dv = { help = 'Delete Vehicle (Admin Only)' },
+		spawnwagon = { help = 'Spawn a Wagon (Admin Only)' },
+		spawnhorse = { help = 'Spawn a Horse (Admin Only)' },
         givemoney = {
             help = 'Give A Player Money (Admin Only)',
             params = {
