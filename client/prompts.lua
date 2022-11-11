@@ -1,7 +1,7 @@
 local Prompts = {}
 local PromptGroups = {}
 
-function QRCore.Prompts.createPrompt(name, coords, key, text, options)
+local function createPrompt(name, coords, key, text, options)
     if (Prompts[name] == nil) then
         Prompts[name] = {}
         Prompts[name].name = name
@@ -16,7 +16,7 @@ function QRCore.Prompts.createPrompt(name, coords, key, text, options)
     end
 end
 
-function QRCore.Prompts.CreatePromptGroup(group, label, coords, prompts)
+local function createPromptGroup(group, label, coords, prompts)
     if (PromptGroups[group] == nil) then
         PromptGroups[group] = {}
         PromptGroups[group].coords = coords
@@ -30,20 +30,20 @@ function QRCore.Prompts.CreatePromptGroup(group, label, coords, prompts)
     end
 end
 
-function QRCore.Prompts.getPrompt()
+local function getPrompt()
     if Prompts then 
     return Prompts
     end
 end
 
-function QRCore.Prompts.getPromptGroup()
+local function getPromptGroup()
     if PromptGroups then 
     return PromptGroups
     end
 end
 
 
-function QRCore.Prompts.deletePrompt(name)
+local function deletePrompt(name)
     if Prompts then
         Citizen.InvokeNative(0x8A0FB4D03A630D21, Prompts[name].prompt, false)
         Citizen.InvokeNative(0x71215ACCFDE075EE, Prompts[name].prompt, false)
@@ -51,7 +51,7 @@ function QRCore.Prompts.deletePrompt(name)
     end
 end
 
-function QRCore.Prompts.deletePromptGroup(name)
+local function deletePromptGroup(name)
     if PromptGroups then
         Citizen.InvokeNative(0x8A0FB4D03A630D21, PromptGroups[name].prompt, false)
         Citizen.InvokeNative(0x71215ACCFDE075EE, PromptGroups[name].prompt, false)
@@ -60,7 +60,7 @@ function QRCore.Prompts.deletePromptGroup(name)
 end
 
 
-function QRCore.Prompts.executeOptions(options)
+local function executeOptions(options)
     if (options.type == 'client') then
         if (options.args == nil) then
             TriggerEvent(options.event)
@@ -76,7 +76,7 @@ function QRCore.Prompts.executeOptions(options)
     end
 end
 
-function QRCore.Prompts.etupPrompt(prompt)
+local function setupPrompt(prompt)
     local str = CreateVarString(10, 'LITERAL_STRING', prompt.text)
     prompt.prompt = Citizen.InvokeNative(0x04F97DE45A519419, Citizen.ReturnResultAnyway())
     Citizen.InvokeNative(0xB5352B7494A08258, prompt.prompt, prompt.key)
@@ -87,7 +87,7 @@ function QRCore.Prompts.etupPrompt(prompt)
     Citizen.InvokeNative(0xF7AA2696A22AD8B9, prompt.prompt)
 end
 
-function QRCore.Prompts.setupPromptGroup(prompt)
+local function setupPromptGroup(prompt)
     for k,v in pairs(prompt.prompts) do
         local str = CreateVarString(10, 'LITERAL_STRING', v.text)
         v.prompt = Citizen.InvokeNative(0x04F97DE45A519419, Citizen.ReturnResultAnyway())
@@ -197,3 +197,11 @@ CreateThread(function()
         --Citizen.InvokeNative(0xFC094EF26DD153FA, 3)
     end
 end)
+
+
+exports('createPrompt', createPrompt)
+exports('createPromptGroup', createPromptGroup)
+exports('getPrompt', getPrompt)
+exports('getPromptGroup',getPromptGroup)
+exports('deletePrompt', deletePrompt)
+exports('deletePromptGroup',deletePromptGroup)
