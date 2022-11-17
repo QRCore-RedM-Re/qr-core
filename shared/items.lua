@@ -21,7 +21,9 @@ QRShared.Items = {
 	['lab']				= {['name'] = 'lab',			['label'] = 'Lab',				['weight'] = 500,	['type'] = 'item',	['image'] = 'animal_dog_lab.png',					['unique'] = true,		['useable'] = true,		['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'Lab'},
 	['poodle']			= {['name'] = 'poodle',			['label'] = 'Poodle',			['weight'] = 500,	['type'] = 'item',	['image'] = 'animal_dog_poodle.png',				['unique'] = true,		['useable'] = true,		['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'Poodle'},
 	['street']			= {['name'] = 'street',			['label'] = 'Street',			['weight'] = 500,	['type'] = 'item',	['image'] = 'animal_dog_street.png',				['unique'] = true,		['useable'] = true,		['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'Street'},
-
+	['gold_ore']		= {['name'] = 'gold_ore',		['label'] = 'Gold Ore',			['weight'] = 500,	['type'] = 'item',	['image'] = 'gold_ore.png',				            ['unique'] = true,		['useable'] = true,		['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'Gold ore'},
+	['goldpanner']		= {['name'] = 'goldpanner',		['label'] = 'Gold Panner',		['weight'] = 500,	['type'] = 'item',	['image'] = 'goldpanner.png',				        ['unique'] = true,		['useable'] = true,		['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'Gold Panner'},
+	
 	-- to support indian tobacco
 	['indtobaccoseed']	= {['name'] = 'indtobaccoseed',	['label'] = 'Indian Seed',		['weight'] = 0,		['type'] = 'item',	['image'] = 'indtobaccoseed.png',	['unique'] = false,		['useable'] = true,		['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'indian tobacco seed'},
 	['indtobacco']		= {['name'] = 'indtobacco',		['label'] = 'Indian Tobacco',	['weight'] = 10,	['type'] = 'item',	['image'] = 'indtobacco.png',		['unique'] = false,		['useable'] = true,		['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'indian tobacco'},
