@@ -313,12 +313,12 @@ QRCore.Commands.Add("removelevel", "Remove A Player Level (Admin Only)", {{name=
 	if Player then
 		if Player.PlayerData.metadata["levels"][tostring(args[2])] then
 			Player.Functions.RemoveXp(tostring(args[2]), tonumber(args[3]))
-			TriggerClientEvent('QBCore:Notify', source, Lang:t('info.xp_removed'), 'primary')
+			TriggerClientEvent('QRCore:Notify', source, Lang:t('info.xp_removed'), 'primary')
 		else
-			TriggerClientEvent('QBCore:Notify', source, Lang:t('error.no_skill'), 'error')
+			TriggerClientEvent('QRCore:Notify', source, Lang:t('error.no_skill'), 'error')
 		end
 	else
-		TriggerClientEvent('QBCore:Notify', source, Lang:t('error.not_online'), 'error')
+		TriggerClientEvent('QRCore:Notify', source, Lang:t('error.not_online'), 'error')
 	end
 end, 'admin')
 
@@ -327,9 +327,9 @@ QRCore.Commands.Add("level", "Check Which Level You Are", {{name="skill", help="
 	local Level = Player.PlayerData.metadata["levels"][tostring(args[1])]
 	if Player then
 		if Level then
-			TriggerClientEvent('QBCore:Notify', source, Lang:t('info.level_info', {value = Level, value2 = tostring(args[1])}), 'primary')
+			TriggerClientEvent('QRCore:Notify', source, Lang:t('info.level_info', {value = Level, value2 = tostring(args[1])}), 'primary')
 		else
-			TriggerClientEvent('QBCore:Notify', source, Lang:t('error.no_skill'), 'error')
+			TriggerClientEvent('QRCore:Notify', source, Lang:t('error.no_skill'), 'error')
 		end
 	end
 end, 'user')
