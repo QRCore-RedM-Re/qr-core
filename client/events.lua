@@ -9,8 +9,9 @@ RegisterNetEvent('QRCore:Client:OnPlayerLoaded', function()
         SetRelationshipBetweenGroups(5, `PLAYER`, `PLAYER`)
     end
     if QRConfig.Player.RevealMap then
-		SetMinimapHideFow(true)
-	end
+        SetMinimapHideFow(true)
+    end
+    NetworkSetFriendlyFireOption(true)
 end)
 
 RegisterNetEvent('QRCore:Client:OnPlayerUnload', function()
