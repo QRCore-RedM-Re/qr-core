@@ -45,7 +45,6 @@ local Translations = {
             },
         },
         tpm = { help = 'TP To Marker (Admin Only)' },
-        togglepvp = { help = 'Toggle PVP on the server (Admin Only)' },
         addpermission = {
             help = 'Give Player Permissions (God Only)',
             params = {

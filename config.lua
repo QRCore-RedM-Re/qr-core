@@ -25,7 +25,6 @@ QRConfig.Server.ClosedReason = "Server Closed" -- Reason message to display when
 QRConfig.Server.Uptime = 0 -- Time the server has been up.
 QRConfig.Server.Whitelist = false -- Enable or disable whitelist on the server
 QRConfig.Server.WhitelistPermission = 'admin' -- Permission that's able to enter the server when the whitelist is on
-QRConfig.Server.PVP = true -- Enable or disable pvp on the server (Ability to shoot other players)
 QRConfig.Server.Discord = "" -- Discord invite link
 QRConfig.Server.CheckDuplicateLicense = true -- Check for duplicate rockstar license on join
 QRConfig.Server.Permissions = { 'god', 'admin', 'mod' } -- Add as many groups as you want here after creating them in your server.cfg

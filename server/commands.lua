@@ -119,11 +119,6 @@ QRCore.Commands.Add('tpm', Lang:t("command.tpm.help"), {}, false, function(sourc
     TriggerClientEvent('QRCore:Command:GoToMarker', source)
 end, 'admin')
 
-QRCore.Commands.Add('togglepvp', Lang:t("command.togglepvp.help"), {}, false, function()
-    QRConfig.Server.PVP = not QRConfig.Server.PVP
-    TriggerClientEvent('QRCore:Client:PvpHasToggled', -1, QRConfig.Server.PVP)
-end, 'admin')
-
 -- Permissions
 
 QRCore.Commands.Add('addpermission', Lang:t("command.addpermission.help"), { { name = Lang:t("command.addpermission.params.id.name"), help = Lang:t("command.addpermission.params.id.help") }, { name = Lang:t("command.addpermission.params.permission.name"), help = Lang:t("command.addpermission.params.permission.help") } }, true, function(source, args)
