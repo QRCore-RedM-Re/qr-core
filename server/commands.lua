@@ -363,26 +363,46 @@ QRCore.Commands.Add('ooc', Lang:t("command.ooc.help"), {}, false, function(sourc
 end, 'user')
 
 -- Me command
-
 QRCore.Commands.Add('me', Lang:t("command.me.help"), {{name = Lang:t("command.me.params.message.name"), help = Lang:t("command.me.params.message.help")}}, false, function(source, args)
-    if #args < 1 then TriggerClientEvent('QRCore:Notify', source, Lang:t('error.missing_args2'), 'error') return end
-    local ped = GetPlayerPed(source)
-    local pCoords = GetEntityCoords(ped)
-    local msg = table.concat(args, ' '):gsub('[~<].-[>~]', '')
-    local Players = QRCore.Functions.GetPlayers()
-    for i=1, #Players do
-        local Player = Players[i]
-        local target = GetPlayerPed(Player)
-        local tCoords = GetEntityCoords(target)
-        if target == ped or #(pCoords - tCoords) < 20 then
-            TriggerClientEvent('QRCore:Command:ShowMe3D', Player, source, msg)
-        end
+    local text = ''
+    for i = 1,#args do
+        text = text .. ' ' .. args[i]
     end
+    text = text .. ' '
+   TriggerClientEvent('QRCore:triggerDisplay', -1, text, source , "me")
+   TriggerClientEvent("sendProximityMessage", -1, source, "Citizen [" .. source .. "]", text, { 255, 255, 255 })
+end, 'user')
+
+QRCore.Commands.Add('do', Lang:t("command.me.help"), {{name = Lang:t("command.me.params.message.name"), help = Lang:t("command.me.params.message.help")}}, false, function(source, args)
+    local text = ''
+    for i = 1,#args do
+        text = text .. ' ' .. args[i]
+    end
+    text = text .. ' '
+   TriggerClientEvent('QRCore:triggerDisplay', -1, text, source , "do")
+   TriggerClientEvent("sendProximityMessage", -1, source, "Citizen [" .. source .. "]", text, { 145, 209, 144 })
+end, 'user')
+
+QRCore.Commands.Add('try', Lang:t("command.me.help"), {{name = Lang:t("command.me.params.message.name"), help = Lang:t("command.me.params.message.help")}}, false, function(source, args)
+    local text = ''
+    local random = math.random(1,2)
+    for i = 1,#args do
+        text = text .. ' ' .. args[i]
+    end
+    text = text .. ' '
+    if random == 1 then
+		text = 'He succeeded in trying'..text
+	else
+		text = 'He has failed trying '..text
+	end
+   TriggerClientEvent('QRCore:triggerDisplay', -1, text, source , "try")
+   TriggerClientEvent("sendProximityMessage", -1, source, "Citizen [" .. source .. "]", text, { 32, 151, 247 })
 end, 'user')
 
 -- IDs
-
 QRCore.Commands.Add("id", "Check Your ID #", {}, false, function(source)
+    local src = source
+	local Player = QRCore.Functions.GetPlayer(src)
 	TriggerClientEvent('QRCore:Notify', source, "ID: "..source, 'primary')
 end, 'user')
 
