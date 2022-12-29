@@ -94,69 +94,50 @@ function QRCore.Player.CheckPlayerData(source, PlayerData)
 	PlayerData.charinfo.account = PlayerData.charinfo.account or QRCore.Functions.CreateAccountNumber()
 	-- Metadata
 	PlayerData.metadata = PlayerData.metadata or {}
-	PlayerData.metadata["hunger"] = PlayerData.metadata["hunger"] or 100
-	PlayerData.metadata["thirst"] = PlayerData.metadata["thirst"] or 100
-	PlayerData.metadata["stress"] = PlayerData.metadata["stress"] or 0
-	PlayerData.metadata["isdead"] = PlayerData.metadata["isdead"] or false
-	PlayerData.metadata["inlaststand"] = PlayerData.metadata["inlaststand"] or false
-	PlayerData.metadata["armor"] = PlayerData.metadata["armor"] or 0
-	PlayerData.metadata["ishandcuffed"] = PlayerData.metadata["ishandcuffed"] or false
-	PlayerData.metadata["tracker"] = PlayerData.metadata["tracker"] or false
-	PlayerData.metadata["injail"] = PlayerData.metadata["injail"] or 0
-	PlayerData.metadata["jailitems"] = PlayerData.metadata["jailitems"] or {}
-	PlayerData.metadata["status"] = PlayerData.metadata["status"] or {}
-	PlayerData.metadata["phone"] = PlayerData.metadata["phone"] or {}
-	PlayerData.metadata["fitbit"] = PlayerData.metadata["fitbit"] or {}
-	PlayerData.metadata["commandbinds"] = PlayerData.metadata["commandbinds"] or {}
-	PlayerData.metadata["bloodtype"] = PlayerData.metadata["bloodtype"]
+	PlayerData.metadata.hunger = PlayerData.metadata.hunger or 100
+	PlayerData.metadata.thirst = PlayerData.metadata.thirst or 100
+	PlayerData.metadata.stress = PlayerData.metadata.stress or 0
+	PlayerData.metadata.isdead = PlayerData.metadata.isdead or false
+	PlayerData.metadata.inlaststand = PlayerData.metadata.inlaststand or false
+	PlayerData.metadata.armor = PlayerData.metadata.armor or 0
+	PlayerData.metadata.ishandcuffed = PlayerData.metadata.ishandcuffed or false
+	PlayerData.metadata.injail = PlayerData.metadata.injail or 0
+	PlayerData.metadata.jailitems = PlayerData.metadata.jailitems or {}
+	PlayerData.metadata.status = PlayerData.metadata.status or {}
+	PlayerData.metadata.commandbinds = PlayerData.metadata.commandbinds or {}
+	PlayerData.metadata.bloodtype = PlayerData.metadata.bloodtype
 		or QRCore.Config.Player.Bloodtypes[math.random(1, #QRCore.Config.Player.Bloodtypes)]
-	PlayerData.metadata["dealerrep"] = PlayerData.metadata["dealerrep"] or 0
-	PlayerData.metadata["craftingrep"] = PlayerData.metadata["craftingrep"] or 0
-	PlayerData.metadata["attachmentcraftingrep"] = PlayerData.metadata["attachmentcraftingrep"] or 0
-	PlayerData.metadata["currentapartment"] = PlayerData.metadata["currentapartment"] or nil
-	PlayerData.metadata["jobrep"] = PlayerData.metadata["jobrep"] or {}
-	PlayerData.metadata["jobrep"]["tow"] = PlayerData.metadata["jobrep"]["tow"] or 0
-	PlayerData.metadata["jobrep"]["trucker"] = PlayerData.metadata["jobrep"]["trucker"] or 0
-	PlayerData.metadata["jobrep"]["taxi"] = PlayerData.metadata["jobrep"]["taxi"] or 0
-	PlayerData.metadata["jobrep"]["hotdog"] = PlayerData.metadata["jobrep"]["hotdog"] or 0
-	PlayerData.metadata["callsign"] = PlayerData.metadata["callsign"] or "NO CALLSIGN"
-	PlayerData.metadata["fingerprint"] = PlayerData.metadata["fingerprint"] or QRCore.Player.CreateFingerId()
-	PlayerData.metadata["walletid"] = PlayerData.metadata["walletid"] or QRCore.Player.CreateWalletId()
-	PlayerData.metadata["criminalrecord"] = PlayerData.metadata["criminalrecord"]
+	PlayerData.metadata.craftingrep = PlayerData.metadata.craftingrep or 0
+	PlayerData.metadata.attachmentcraftingrep = PlayerData.metadata.attachmentcraftingrep or 0
+	PlayerData.metadata.jobrep = PlayerData.metadata.jobrep or {}
+	PlayerData.metadata.callsign = PlayerData.metadata.callsign or "NO CALLSIGN"
+	PlayerData.metadata.fingerprint = PlayerData.metadata.fingerprint or QRCore.Player.CreateFingerId()
+	PlayerData.metadata.walletid = PlayerData.metadata.walletid or QRCore.Player.CreateWalletId()
+	PlayerData.metadata.criminalrecord = PlayerData.metadata.criminalrecord
 		or {
-			["hasRecord"] = false,
-			["date"] = nil,
+			hasRecord = false,
+			date = nil,
 		}
 
-    PlayerData.metadata['xp'] = PlayerData.metadata['xp'] or {
-		['main'] = 0,
-		['herbalism'] = 0,
-		['mining'] = 0,
-        ['cooking'] = 0,
-        ['crafting'] = 0,
+    PlayerData.metadata.xp = PlayerData.metadata.xp or {
+		main = 0,
+		herbalism = 0,
+		mining = 0,
+        cooking = 0,
+        crafting = 0,
 	}
 
-    PlayerData.metadata['licences'] = PlayerData.metadata['licences'] or {
-        ['weapon'] = false
+    PlayerData.metadata.licences = PlayerData.metadata.licences or {
+        weapon = false
     }
 
-	PlayerData.metadata['levels'] = PlayerData.metadata['levels'] or {
-		['main'] = 0,
-		['herbalism'] = 0,
-		['mining'] = 0,
-        ['cooking'] = 0,
-        ['crafting'] = 0,
+	PlayerData.metadata.levels = PlayerData.metadatalevels or {
+		main = 0,
+		herbalism = 0,
+		mining = 0,
+        cooking = 0,
+        crafting = 0,
 	}
-
-
-    PlayerData.metadata["inside"] = PlayerData.metadata["inside"]
-		or {
-			house = nil,
-			apartment = {
-				apartmentType = nil,
-				apartmentId = nil,
-			},
-		}
 
 	-- Job
 	if PlayerData.job and PlayerData.job.name and not QRCore.Shared.Jobs[PlayerData.job.name] then
@@ -329,8 +310,8 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
     self.Functions.AddXp = function(skill, amount)
 		local skill = skill:lower()
 		local amount = tonumber(amount)
-		if self.PlayerData.metadata['xp'][skill] and amount > 0 then
-			self.PlayerData.metadata['xp'][skill] = self.PlayerData.metadata['xp'][skill] + amount
+		if self.PlayerData.metadata.xp[skill] and amount > 0 then
+			self.PlayerData.metadata.xp[skill] = self.PlayerData.metadata.xp[skill] + amount
 			self.Functions.UpdateLevelData(skill)
 			self.Functions.UpdatePlayerData()
 			TriggerEvent('qr-log:server:CreateLog', 'levels', 'AddXp', 'lightgreen', '**'..GetPlayerName(self.PlayerData.source) .. ' (citizenid: '..self.PlayerData.citizenid..' | id: '..self.PlayerData.source..')** has received: '..amount..'xp in the skill: '..skill..'. Their current xp amount is: '..self.PlayerData.metadata['xp'][skill])
@@ -342,8 +323,8 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
 	self.Functions.RemoveXp = function(skill, amount)
 		local skill = skill:lower()
 		local amount = tonumber(amount)
-		if self.PlayerData.metadata['xp'][skill] and amount > 0 then
-			self.PlayerData.metadata['xp'][skill] = self.PlayerData.metadata['xp'][skill] - amount
+		if self.PlayerData.metadata.xp[skill] and amount > 0 then
+			self.PlayerData.metadata.xp[skill] = self.PlayerData.metadata.xp[skill] - amount
 			self.Functions.UpdateLevelData(skill)
 			self.Functions.UpdatePlayerData()
 			TriggerEvent('qr-log:server:CreateLog', 'levels', 'RemoveXp', 'lightgreen', '**'..GetPlayerName(self.PlayerData.source) .. ' (citizenid: '..self.PlayerData.citizenid..' | id: '..self.PlayerData.source..')** was stripped of: '..amount..'xp in the skill: '..skill..'. Their current xp amount is: '..self.PlayerData.metadata['xp'][skill])
@@ -355,11 +336,11 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
     self.Functions.AddLevel = function(level, amount)
 		local level = level:lower()
 		local amount = tonumber(amount)
-		if self.PlayerData.metadata['levels'][level] and amount > 0 then
-			self.PlayerData.metadata['levels'][level] = self.PlayerData.metadata['levels'][level] + amount
+		if self.PlayerData.metadata.levels[level] and amount > 0 then
+			self.PlayerData.metadata.levels[level] = self.PlayerData.metadata.levels[level] + amount
 			self.Functions.UpdateLevelData(level)
 			self.Functions.UpdatePlayerData()
-			TriggerEvent('qr-log:server:CreateLog', 'levels', 'AddXp', 'lightgreen', '**'..GetPlayerName(self.PlayerData.source) .. ' [CitizenID: '..self.PlayerData.citizenid..' | id: '..self.PlayerData.source..']** got '..level..' levels '..amount..' [current level: '..self.PlayerData.metadata['levels'][level])
+			TriggerEvent('qr-log:server:CreateLog', 'levels', 'AddXp', 'lightgreen', '**'..GetPlayerName(self.PlayerData.source) .. ' [CitizenID: '..self.PlayerData.citizenid..' | id: '..self.PlayerData.source..']** got '..level..' levels '..amount..' [current level: '..self.PlayerData.metadata.levels[level])
 			return true
 		end
 		return false
@@ -368,11 +349,11 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
 	self.Functions.RemoveLevel = function(level, amount)
 		local level = level:lower()
 		local amount = tonumber(amount)
-		if self.PlayerData.metadata['levels'][level] and amount > 0 then
-			self.PlayerData.metadata['levels'][level] = self.PlayerData.metadata['levels'][level] - amount
+		if self.PlayerData.metadata.levels[level] and amount > 0 then
+			self.PlayerData.metadata.levels[level] = self.PlayerData.metadata.levels[level] - amount
 			self.Functions.UpdateLevelData(level)
 			self.Functions.UpdatePlayerData()
-			TriggerEvent('qr-log:server:CreateLog', 'levels', 'RemoveXp', 'lightgreen', '**'..GetPlayerName(self.PlayerData.source) .. ' [CitizenID: '..self.PlayerData.citizenid..' | id: '..self.PlayerData.source..']** lost '..level..' levels '..amount..' current level: '..self.PlayerData.metadata['levels'][level])
+			TriggerEvent('qr-log:server:CreateLog', 'levels', 'RemoveXp', 'lightgreen', '**'..GetPlayerName(self.PlayerData.source) .. ' [CitizenID: '..self.PlayerData.citizenid..' | id: '..self.PlayerData.source..']** lost '..level..' levels '..amount..' current level: '..self.PlayerData.metadata.levels[level])
 			return true
 		end
 		return false
@@ -796,12 +777,12 @@ function QRCore.Player.DeleteCharacter(source, citizenid)
 		local query = "DELETE FROM %s WHERE citizenid = ?"
 		local tableCount = #playertables
 		local queries = table.create(tableCount, 0)
-        
+
 		for i = 1, tableCount do
 			local v = playertables[i]
 			queries[i] = { query = query:format(v.table), values = { citizenid } }
 		end
-        
+
 		MySQL.transaction(queries, function(result2)
 			if result2 then
 				TriggerEvent(
