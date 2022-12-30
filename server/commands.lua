@@ -364,12 +364,15 @@ end, 'user')
 
 -- Me command
 
-QBCore.Commands.Add('me', 'message', false, function(source, args)
-	local Player = QBCore.Functions.GetPlayer(tonumber(args[1]))
-	local text = table.concat(args[2], ' ')
-	TriggerClientEvent('QRCore:triggerDisplay', -1, text, Player.PlayerData.source)
-    TriggerEvent("qb-log:server:CreateLog", "me", "Me", "white", "**"..GetPlayerName(Player.PlayerData.source).."** (CitizenID: "..Player.PlayerData.citizenid.." | ID: "..Player.PlayerData.source..")** " ..Player.PlayerData.charinfo.firstname.." "..Player.PlayerData.charinfo.lastname.. " **" ..text, false)
-end, "user")
+QRCore.Commands.Add('me', Lang:t("command.me.help"), {{name = Lang:t("command.me.params.message.name"), help = Lang:t("command.me.params.message.help")}}, false, function(source, args)
+    local text = ''
+    for i = 1,#args do
+        text = text .. ' ' .. args[i]
+    end
+    text = text .. ' '
+   TriggerClientEvent('QRCore:triggerDisplay', -1, text, source , "me")
+   TriggerClientEvent("sendProximityMessage", -1, source, "Citizen [" .. source .. "]", text, { 255, 255, 255 })
+end, 'user')
 
 QRCore.Commands.Add('do', Lang:t("command.me.help"), {{name = Lang:t("command.me.params.message.name"), help = Lang:t("command.me.params.message.help")}}, false, function(source, args)
     local text = ''
