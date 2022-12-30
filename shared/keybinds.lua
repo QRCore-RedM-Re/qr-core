@@ -68,7 +68,7 @@ QRShared.Keybinds = {
     ['UP'] = 0x6319DB71,
     ['LEFT'] = 0xA65EBAB4,
     ['RIGHT'] = 0xDEB34313,
-	
+
 	-- other
 	["HorseCommandFlee"] = 0x4216AF06,
 	["Loot"] = 0x41AC83D1,

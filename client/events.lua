@@ -1,7 +1,6 @@
 -- Player load and unload handling
 -- New method for checking if logged in across all scripts (optional)
 -- if LocalPlayer.state['isLoggedIn'] then
-local RDisplaying = 0
 local time = 7000 -- Duration of the display of the text : 1000ms = 1sec
 
 
@@ -21,12 +20,12 @@ end)
 
 RegisterNetEvent('QRCore:Command:TeleportToPlayer', function(coords) -- #MoneSuer | Fixed Teleport Command
     local ped = PlayerPedId()
-    SetEntityCoords(ped, coords.x, coords.y, coords.z) 
+    SetEntityCoords(ped, coords.x, coords.y, coords.z)
 end)
 
 RegisterNetEvent('QRCore:Command:TeleportToCoords', function(x, y, z, h) -- #MoneSuer | Fixed Teleport Command
     local ped = PlayerPedId()
-    SetEntityCoords(ped, x, y, z) 
+    SetEntityCoords(ped, x, y, z)
 end)
 
 RegisterNetEvent('QRCore:Command:GoToMarker', function()

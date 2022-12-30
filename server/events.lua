@@ -124,8 +124,8 @@ RegisterNetEvent('QRCore:UpdatePlayer', function()
     local src = source
     local Player = QRCore.Functions.GetPlayer(src)
     if not Player then return end
-    local newHunger = Player.PlayerData.metadata['hunger'] - QRCore.Config.Player.HungerRate
-    local newThirst = Player.PlayerData.metadata['thirst'] - QRCore.Config.Player.ThirstRate
+    local newHunger = Player.PlayerData.metadata.hunger - QRCore.Config.Player.HungerRate
+    local newThirst = Player.PlayerData.metadata.thirst - QRCore.Config.Player.ThirstRate
     if newHunger <= 0 then
         newHunger = 0
     end
@@ -148,7 +148,7 @@ RegisterNetEvent('QRCore:Server:SetMetaData', function(meta, data)
         end
     end
     Player.Functions.SetMetaData(meta, data)
-    TriggerClientEvent('hud:client:UpdateNeeds', src, Player.PlayerData.metadata['hunger'], Player.PlayerData.metadata['thirst'])
+    TriggerClientEvent('hud:client:UpdateNeeds', src, Player.PlayerData.metadata.hunger, Player.PlayerData.metadata.thirst)
 end)
 
 RegisterNetEvent('QRCore:ToggleDuty', function()
