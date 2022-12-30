@@ -27,7 +27,7 @@ QRShared.Items = {
 	['street']			= {['name'] = 'street',			['label'] = 'Street',			['weight'] = 500,	['type'] = 'item',	['image'] = 'animal_dog_street.png',				['unique'] = true,		['useable'] = true,		['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'Street'},
 	['gold_ore']		= {['name'] = 'gold_ore',		['label'] = 'Gold Ore',			['weight'] = 500,	['type'] = 'item',	['image'] = 'gold_ore.png',				            ['unique'] = true,		['useable'] = true,		['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'Gold ore'},
 	['goldpanner']		= {['name'] = 'goldpanner',		['label'] = 'Gold Panner',		['weight'] = 500,	['type'] = 'item',	['image'] = 'goldpanner.png',				        ['unique'] = true,		['useable'] = true,		['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'Gold Panner'},
-	
+
 	-- to support indian tobacco
 	['indtobaccoseed']	= {['name'] = 'indtobaccoseed',	['label'] = 'Indian Seed',		['weight'] = 0,		['type'] = 'item',	['image'] = 'indtobaccoseed.png',	['unique'] = false,		['useable'] = true,		['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'indian tobacco seed'},
 	['indtobacco']		= {['name'] = 'indtobacco',		['label'] = 'Indian Tobacco',	['weight'] = 10,	['type'] = 'item',	['image'] = 'indtobacco.png',		['unique'] = false,		['useable'] = true,		['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'indian tobacco'},
@@ -41,7 +41,7 @@ QRShared.Items = {
 	['ammo_pistol']		= {['name'] = 'ammo_pistol',	['label'] = 'Pistol (N)',	['weight'] = 200,	['type'] = 'item',	['image'] = 'ammo_bullet_normal.png',	['unique'] = false,	['useable'] = true,	['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'Pistol Ammo'},
 	['ammo_shotgun']	= {['name'] = 'ammo_shotgun',	['label'] = 'Shotgun (N)',	['weight'] = 200,	['type'] = 'item',	['image'] = 'ammo_shotgun.png',			['unique'] = false,	['useable'] = true,	['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'Shotgun Ammo'},
 	['ammo_arrow']		= {['name'] = 'ammo_arrow',		['label'] = 'Arrow (N)',	['weight'] = 200,	['type'] = 'item',	['image'] = 'ammo_arrow.png',			['unique'] = false,	['useable'] = true,	['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'Arrow'},
-	
+
 	-- revolver
 	['weapon_revolver_cattleman'] 				= {['name'] = 'weapon_revolver_cattleman', 				['attachPoint'] = 2,  		['label'] = 'Cattleman',						['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_REVOLVER', 			['image'] = 'weapon_revolver_cattleman.png',				['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Revolver Ammo'},
 	['weapon_revolver_cattleman_mexican'] 		= {['name'] = 'weapon_revolver_cattleman_mexican', 		['attachPoint'] = 2,		['label'] = 'Cattleman Mexican',				['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_REVOLVER', 			['image'] = 'weapon_revolver_cattleman_mexican.png',		['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Revolver Ammo'},
@@ -50,7 +50,7 @@ QRShared.Items = {
 	['weapon_revolver_lemat'] 					= {['name'] = 'weapon_revolver_lemat', 					['attachPoint'] = 2, 		['label'] = 'LeMat',							['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_REVOLVER', 			['image'] = 'weapon_revolver_lemat.png',					['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Revolver Ammo'},
 	['weapon_revolver_navy'] 					= {['name'] = 'weapon_revolver_navy', 					['attachPoint'] = 2,		['label'] = 'Navy',								['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_REVOLVER', 			['image'] = 'weapon_revolver_navy.png',						['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Revolver Ammo'},
 	['weapon_revolver_navy_crossover'] 			= {['name'] = 'weapon_revolver_navy_crossover', 		['attachPoint'] = 2,		['label'] = 'Navy Crossover',					['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_REVOLVER', 			['image'] = 'weapon_revolver_navy_crossover.png',			['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Revolver Ammo'},
-	-- pistol	
+	-- pistol
 	['weapon_pistol_volcanic'] 					= {['name'] = 'weapon_pistol_volcanic', 				['attachPoint'] = 2, 		['label'] = 'Volcanic',							['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_PISTOL',	 			['image'] = 'weapon_pistol_volcanic.png',					['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Pistol Ammo'},
 	['weapon_pistol_m1899'] 					= {['name'] = 'weapon_pistol_m1899', 					['attachPoint'] = 2,		['label'] = 'M1899',							['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_PISTOL',	 			['image'] = 'weapon_pistol_m1899.png',						['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Pistol Ammo'},
 	['weapon_pistol_mauser'] 					= {['name'] = 'weapon_pistol_mauser', 					['attachPoint'] = 2,		['label'] = 'Mauser',							['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_PISTOL',	 			['image'] = 'weapon_pistol_mauser.png',						['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Pistol Ammo'},
