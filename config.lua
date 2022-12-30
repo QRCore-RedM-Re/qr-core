@@ -1,6 +1,6 @@
 QRConfig = {}
 
-QRConfig.MaxPlayers = GetConvarInt('sv_maxclients', 64) -- Gets max players from config file, default 48
+QRConfig.MaxPlayers = GetConvarInt('sv_maxclients', 48) -- Gets max players from config file, default 48
 QRConfig.DefaultSpawn = vector4(-1035.71, -2731.87, 12.86, 0.0)
 QRConfig.UpdateInterval = 5 -- how often to update player data in minutes
 QRConfig.StatusInterval = 5000 -- how often to check hunger/thirst status in milliseconds
