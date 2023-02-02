@@ -12,7 +12,7 @@ end)
 CreateThread(function()
     while true do
         if LocalPlayer.state.isLoggedIn then
-            if (QRCore.PlayerData.metadata['hunger'] <= 0 or QRCore.PlayerData.metadata['thirst'] <= 0) and not QRCore.PlayerData.metadata['isdead'] then
+            if (QRCore.PlayerData.metadata.hunger <= 0 or QRCore.PlayerData.metadata.thirst <= 0) and not QRCore.PlayerData.metadata.isdead then
                 local ped = PlayerPedId()
                 local currentHealth = GetEntityHealth(ped)
                 local decreaseThreshold = math.random(5, 10)

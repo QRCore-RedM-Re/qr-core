@@ -363,6 +363,7 @@ QRCore.Commands.Add('ooc', Lang:t("command.ooc.help"), {}, false, function(sourc
 end, 'user')
 
 -- Me command
+
 QRCore.Commands.Add('me', Lang:t("command.me.help"), {{name = Lang:t("command.me.params.message.name"), help = Lang:t("command.me.params.message.help")}}, false, function(source, args)
     local text = ''
     for i = 1,#args do

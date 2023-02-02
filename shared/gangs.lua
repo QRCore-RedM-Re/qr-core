@@ -4,7 +4,7 @@ QRShared.Gangs = {
 	['none'] = {
 		label = 'No Gang',
 		grades = {
-            ['0'] = {
+            [0] = {
                 name = 'Unaffiliated'
             }
         }
@@ -12,16 +12,16 @@ QRShared.Gangs = {
     ['example'] = {
 		label = "Example Gang",
 		grades = {
-            ['0'] = {
+            [0] = {
                 name = 'Recruit'
             },
-			['1'] = {
+			[1] = {
                 name = 'Enforcer'
             },
-			['2'] = {
+			[2] = {
                 name = 'Shot Caller'
             },
-			['3'] = {
+			[3] = {
                 name = 'Boss',
 				isboss = true
             },
