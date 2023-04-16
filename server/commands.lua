@@ -181,6 +181,10 @@ QRCore.Commands.Add('dv', Lang:t("command.dv.help"), {}, false, function(source)
     TriggerClientEvent('QRCore:Command:DeleteVehicle', source)
 end, 'admin')
 
+QRCore.Commands.Add('dh', 'Delete Horse', {}, false, function(source)
+    TriggerClientEvent('QRCore:Command:DeleteHorse', source)
+end, 'admin')
+
 QRCore.Commands.Add('wagon', Lang:t("command.spawnwagon.help"), { { name = 'model', help = 'Model name of the wagon' } }, true, function(source, args)
     local src = source
     TriggerClientEvent('QRCore:Command:SpawnVehicle', src, args[1])
