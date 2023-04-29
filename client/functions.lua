@@ -49,64 +49,79 @@ function QRCore.Functions.DrawText3D(x, y, z, text)
     ClearDrawOrigin()
 end
 
-function QRCore.Functions.RequestAnimDict(animDict)
-	if HasAnimDictLoaded(animDict) then return end
-	RequestAnimDict(animDict)
-	while not HasAnimDictLoaded(animDict) do
-		Wait(0)
-	end
-end
+QRCore.Functions.RequestAnimDict = lib.requestAnimDict
 
 function QRCore.Functions.PlayAnim(animDict, animName, upperbodyOnly, duration)
     local flags = upperbodyOnly and 16 or 0
     local runTime = duration or -1
     QRCore.Functions.RequestAnimDict(animDict)
-    TaskPlayAnim(PlayerPedId(), animDict, animName, 8.0, 1.0, runTime, flags, 0.0, false, false, true)
+    TaskPlayAnim(cache.ped, animDict, animName, 8.0, 1.0, runTime, flags, 0.0, false, false, true)
     RemoveAnimDict(animDict)
 end
 
-function QRCore.Functions.LoadModel(model)
-    if HasModelLoaded(model) then return end
-	RequestModel(model)
-	while not HasModelLoaded(model) do
-		Wait(0)
-	end
-end
+QRCore.Functions.LoadModel = lib.requestModel
 
-function QRCore.Functions.LoadAnimSet(animSet)
-    if HasAnimSetLoaded(animSet) then return end
-    RequestAnimSet(animSet)
-    while not HasAnimSetLoaded(animSet) do
-        Wait(0)
-    end
-end
+QRCore.Functions.LoadAnimSet = lib.requestAnimSet
 
 RegisterNUICallback('getNotifyConfig', function(_, cb)
     cb(QRCore.Config.Notify)
 end)
 
-function QRCore.Functions.Notify(text, texttype, length)
+---@param text table|string text of the notification
+---@param notifyType? NotificationType|DeprecatedNotificationType informs default styling. Defaults to 'inform'.
+---@param duration? integer milliseconds notification will remain on screen. Defaults to 5000.
+function QRCore.Functions.Notify(text, notifyType, duration)
+    notifyType = notifyType or 'inform'
+    if notifyType == 'primary' then notifyType = 'inform' end
+    duration = duration or 5000
+    local position = QRConfig.NotifyPosition
     if type(text) == "table" then
-        local ttext = text.text or 'Placeholder'
-        local caption = text.caption or 'Placeholder'
-        texttype = texttype or 'primary'
-        length = length or 5000
-        SendNUIMessage({
-            action = 'notify',
-            type = texttype,
-            length = length,
-            text = ttext,
-            caption = caption
-        })
+        local title = text.text or 'Placeholder'
+        local description = text.caption or 'Placeholder'
+        lib.notify({ title = title, description = description, duration = duration, type = notifyType, position = position})
     else
-        texttype = texttype or 'primary'
-        length = length or 5000
-        SendNUIMessage({
-            action = 'notify',
-            type = texttype,
-            length = length,
-            text = text
-        })
+        lib.notify({ description = text, duration = duration, type = notifyType, position = position})
+    end
+end
+
+-- Use Native Notifications --
+function QRCore.Functions.LoadTexture(dict)
+    local callback = false
+    if Citizen.InvokeNative(0x7332461FC59EB7EC, dict) then
+        lib.requestStreamedTextureDict(dict, 100)
+        callback = true
+    end
+    return callback
+end
+
+-- Native Notifications --
+function QRCore.Functions.NativeNotify(id, text, duration, subtext, dict, icon, color)
+    local display = tostring(text) or 'Placeholder'
+	local subdisplay = tostring(subtext) or 'Placeholder'
+	local length = tonumber(duration) or 4000
+	local dictionary = tostring(dict) or 'generic_textures'
+	local image = tostring(icon) or 'tick'
+	local colour = tostring(color) or 'COLOR_WHITE'
+
+    local notifications = {
+        [1] = function() return exports['qr-core']:ShowTooltip(display, length) end,
+        [2] = function() return exports['qr-core']:DisplayRightText(display, length) end,
+        [3] = function() return exports['qr-core']:ShowObjective(display, length) end,
+        [4] = function() return exports['qr-core']:ShowBasicTopNotification(display, length) end,
+        [5] = function() return exports['qr-core']:ShowSimpleCenterText(display, length) end,
+        [6] = function() return exports['qr-core']:ShowLocationNotification(display, subdisplay, length) end,
+        [7] = function() return exports['qr-core']:ShowTopNotification(display, subdisplay, length) end,
+        [8] = function() if not QRCore.Functions.LoadTexture(dictionary) then QRCore.Functions.LoadTexture('generic_textures') end
+            return exports['qr-core']:ShowAdvancedLeftNotification(display, subdisplay, dictionary, image, length) end,
+        [9] = function() if not QRCore.Functions.LoadTexture(dictionary) then QRCore.Functions.LoadTexture('generic_textures') end
+            return exports['qr-core']:ShowAdvancedRightNotification(display, dictionary, image, colour, length) end
+    }
+
+    if not notifications[id] then
+        print('Invalid Notify ID')
+        return nil
+    else
+        return notifications[id]()
     end
 end
 
@@ -190,11 +205,10 @@ function QRCore.Functions.GetPeds(ignoreList)
 end
 
 function QRCore.Functions.GetClosestPed(coords, ignoreList)
-    local ped = PlayerPedId()
     if coords then
         coords = type(coords) == 'table' and vec3(coords.x, coords.y, coords.z) or coords
     else
-        coords = GetEntityCoords(ped)
+        coords = GetEntityCoords(cache.ped)
     end
     local ignoreList = ignoreList or {}
     local peds = QRCore.Functions.GetPeds(ignoreList)
@@ -203,7 +217,7 @@ function QRCore.Functions.GetClosestPed(coords, ignoreList)
     for i = 1, #peds, 1 do
         local pedCoords = GetEntityCoords(peds[i])
         local distance = #(pedCoords - coords)
-        if peds[i] ~= ped then
+        if peds[i] ~= cache.ped then
             if closestDistance == -1 or closestDistance > distance then
                 closestPed = peds[i]
                 closestDistance = distance
@@ -214,9 +228,8 @@ function QRCore.Functions.GetClosestPed(coords, ignoreList)
 end
 
 function QRCore.Functions.IsWearingGloves()
-    local ped = PlayerPedId()
-    local armIndex = GetPedDrawableVariation(ped, 3)
-    local model = GetEntityModel(ped)
+    local armIndex = GetPedDrawableVariation(cache.ped, 3)
+    local model = GetEntityModel(cache.ped)
     if model == `mp_m_freemode_01` then
         if QRCore.Shared.MaleNoGloves[armIndex] then
             return false
@@ -230,81 +243,39 @@ function QRCore.Functions.IsWearingGloves()
 end
 
 function QRCore.Functions.GetClosestPlayer(coords)
-    local ped = PlayerPedId()
-    if coords then
-        coords = type(coords) == 'table' and vec3(coords.x, coords.y, coords.z) or coords
-    else
-        coords = GetEntityCoords(ped)
-    end
-    local closestPlayers = QRCore.Functions.GetPlayersFromCoords(coords)
-    local closestDistance = -1
-    local closestPlayer = -1
-    for i = 1, #closestPlayers, 1 do
-        if closestPlayers[i] ~= PlayerId() and closestPlayers[i] ~= -1 then
-            local pos = GetEntityCoords(GetPlayerPed(closestPlayers[i]))
-            local distance = #(pos - coords)
-
-            if closestDistance == -1 or closestDistance > distance then
-                closestPlayer = closestPlayers[i]
-                closestDistance = distance
-            end
-        end
-    end
-    return closestPlayer, closestDistance
+    coords = type(coords) == 'table' and vec3(coords.x, coords.y, coords.z) or coords or GetEntityCoords(cache.ped)
+    local playerId, _, playerCoords = lib.getClosestPlayer(coords, 50, false)
+    local closestDistance = playerCoords and #(playerCoords - coords) or nil
+    return playerId, closestDistance
 end
 
 function QRCore.Functions.GetPlayersFromCoords(coords, distance)
-    local players = GetActivePlayers()
-    local ped = PlayerPedId()
-    if coords then
-        coords = type(coords) == 'table' and vec3(coords.x, coords.y, coords.z) or coords
-    else
-        coords = GetEntityCoords(ped)
+    coords = type(coords) == 'table' and vec3(coords.x, coords.y, coords.z) or coords or GetEntityCoords(cache.ped)
+    local players = lib.getNearbyPlayers(coords, distance or 5, true)
+
+    -- This is for backwards compatability as beforehand it only returned the PlayerId, where Lib returns PlayerPed, PlayerId and PlayerCoords
+    for i = 1, #players do
+        players[i] = players[i].id
     end
-    distance = distance or 5
-    local closePlayers = {}
-    for _, player in pairs(players) do
-        local target = GetPlayerPed(player)
-        local targetCoords = GetEntityCoords(target)
-        local targetdistance = #(targetCoords - coords)
-        if targetdistance <= distance then
-            closePlayers[#closePlayers + 1] = player
-        end
-    end
-    return closePlayers
+
+    return players
 end
 
 function QRCore.Functions.GetClosestVehicle(coords)
-    local ped = PlayerPedId()
-    local vehicles = GetGamePool('CVehicle')
-    local closestDistance = -1
-    local closestVehicle = -1
-    if coords then
-        coords = type(coords) == 'table' and vec3(coords.x, coords.y, coords.z) or coords
-    else
-        coords = GetEntityCoords(ped)
-    end
-    for i = 1, #vehicles, 1 do
-        local vehicleCoords = GetEntityCoords(vehicles[i])
-        local distance = #(vehicleCoords - coords)
-
-        if closestDistance == -1 or closestDistance > distance then
-            closestVehicle = vehicles[i]
-            closestDistance = distance
-        end
-    end
-    return closestVehicle, closestDistance
+    coords = type(coords) == 'table' and vec3(coords.x, coords.y, coords.z) or coords or GetEntityCoords(cache.ped)
+    local vehicle, vehicleCoords = lib.getClosestVehicle(coords, 50, true)
+    local closestDistance = vehicleCoords and #(vehicleCoords - coords) or nil
+    return vehicle, closestDistance
 end
 
 function QRCore.Functions.GetClosestObject(coords)
-    local ped = PlayerPedId()
     local objects = GetGamePool('CObject')
     local closestDistance = -1
     local closestObject = -1
     if coords then
         coords = type(coords) == 'table' and vec3(coords.x, coords.y, coords.z) or coords
     else
-        coords = GetEntityCoords(ped)
+        coords = GetEntityCoords(cache.ped)
     end
     for i = 1, #objects, 1 do
         local objectCoords = GetEntityCoords(objects[i])
@@ -318,7 +289,7 @@ function QRCore.Functions.GetClosestObject(coords)
 end
 
 function QRCore.Functions.GetClosestBone(entity, list)
-    local playerCoords, bone, coords, distance = GetEntityCoords(PlayerPedId())
+    local playerCoords, bone, coords, distance = GetEntityCoords(cache.ped)
     for _, element in pairs(list) do
         local boneCoords = GetWorldPositionOfEntityBone(entity, element.id or element)
         local boneDistance = #(playerCoords - boneCoords)
@@ -344,7 +315,7 @@ function QRCore.Functions.GetBoneDistance(entity, boneType, boneIndex)
         bone = GetEntityBoneIndexByName(entity, boneIndex)
     end
     local boneCoords = GetWorldPositionOfEntityBone(entity, bone)
-    local playerCoords = GetEntityCoords(PlayerPedId())
+    local playerCoords = GetEntityCoords(cache.ped)
     return #(boneCoords - playerCoords)
 end
 
@@ -361,13 +332,12 @@ end
 -- Vehicle
 
 function QRCore.Functions.SpawnVehicle(model, cb, coords, isnetworked, teleportInto)
-    local ped = PlayerPedId()
     model = type(model) == 'string' and GetHashKey(model) or model
     if not IsModelInCdimage(model) then return end
     if coords then
         coords = type(coords) == 'table' and vec3(coords.x, coords.y, coords.z) or coords
     else
-        coords = GetEntityCoords(ped)
+        coords = GetEntityCoords(cache.ped)
     end
     isnetworked = isnetworked == nil or isnetworked
     QRCore.Functions.LoadModel(model)
@@ -379,7 +349,7 @@ function QRCore.Functions.SpawnVehicle(model, cb, coords, isnetworked, teleportI
     SetVehRadioStation(veh, 'OFF')
     SetVehicleFuelLevel(veh, 100.0)
     SetModelAsNoLongerNeeded(model)
-    if teleportInto then TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1) end
+    if teleportInto then TaskWarpPedIntoVehicle(cache.ped, veh, -1) end
     if cb then cb(veh) end
 end
 
@@ -402,7 +372,7 @@ function QRCore.Functions.SpawnClear(coords, radius)
     if coords then
         coords = type(coords) == 'table' and vec3(coords.x, coords.y, coords.z) or coords
     else
-        coords = GetEntityCoords(PlayerPedId())
+        coords = GetEntityCoords(cache.ped)
     end
     local vehicles = GetGamePool('CVehicle')
     local closeVeh = {}
@@ -417,33 +387,17 @@ function QRCore.Functions.SpawnClear(coords, radius)
     return true
 end
 
-function QRCore.Functions.GetVehicleProperties(vehicle)
-    if DoesEntityExist(vehicle) then
-		-- get vehicle stuff here
-    else
-        return
-    end
-end
+QRCore.Functions.GetVehicleProperties = lib.getVehicleProperties
 
-function QRCore.Functions.SetVehicleProperties(vehicle, props)
-    if DoesEntityExist(vehicle) then
-		-- set vehicle stuff here
-    end
-end
+QRCore.Functions.SetVehicleProperties = lib.setVehicleProperties
 
-function QRCore.Functions.LoadParticleDictionary(dictionary)
-    if HasNamedPtfxAssetLoaded(dictionary) then return end
-    RequestNamedPtfxAsset(dictionary)
-    while not HasNamedPtfxAssetLoaded(dictionary) do
-        Wait(0)
-    end
-end
+QRCore.Functions.LoadParticleDictionary = lib.requestNamedPtfxAsset
 
 function QRCore.Functions.StartParticleAtCoord(dict, ptName, looped, coords, rot, scale, alpha, color, duration)
     if coords then
         coords = type(coords) == 'table' and vec3(coords.x, coords.y, coords.z) or coords
     else
-        coords = GetEntityCoords(PlayerPedId())
+        coords = GetEntityCoords(cache.ped)
     end
     QRCore.Functions.LoadParticleDictionary(dict)
     UseParticleFxAssetNextCall(dict)
@@ -519,7 +473,7 @@ function QRCore.Functions.GetZoneAtCoords(coords)
 end
 
 function QRCore.Functions.GetCardinalDirection(entity)
-    entity = DoesEntityExist(entity) and entity or PlayerPedId()
+    entity = DoesEntityExist(entity) and entity or cache.ped
     if DoesEntityExist(entity) then
         local heading = GetEntityHeading(entity)
         if ((heading >= 0 and heading < 45) or (heading >= 315 and heading < 360)) then
@@ -546,13 +500,35 @@ function QRCore.Functions.GetCurrentTime()
     elseif obj.hour >= 13 then
         obj.ampm = "PM"
         obj.formattedHour = obj.hour - 12
+        obj.hour = obj.formattedHour
     end
 
     if obj.min <= 9 then
         obj.formattedMin = "0" .. obj.min
+        obj.min = obj.formattedMin
     end
 
+    obj.time = (obj.hour..":"..obj.min.." "..obj.ampm)
+
     return obj
+end
+
+function QRCore.Functions.GetTemperature()
+	-- Get Temperatures
+	local UseMetric = ShouldUseMetricTemperature()
+	local temperature
+	local temperatureUnit
+    local playerCoords = GetEntityCoords(cache.ped)
+
+	if UseMetric then
+		temperature = math.floor(GetTemperatureAtCoords(playerCoords))
+		temperatureUnit = 'C'
+	else
+		temperature = math.floor(GetTemperatureAtCoords(playerCoords) * 9/5 + 32)
+		temperatureUnit = 'F'
+	end
+
+	return string.format('%d °%s', temperature, temperatureUnit)
 end
 
 function QRCore.Functions.GetGroundZCoord(coords)
