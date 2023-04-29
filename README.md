@@ -1,4 +1,4 @@
 # qr-core
- 
-# credits
-- original resouce created by : https://github.com/qbcore-redm-framework
+
+# Credits
+- Original Resource: https://github.com/qbcore-redm-framework
