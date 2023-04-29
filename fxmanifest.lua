@@ -6,18 +6,10 @@ description 'qr-core'
 
 shared_scripts {
     'config.lua',
-    'shared/locale.lua',
+    'shared/*.lua',
     'locale/en.lua',
     'locale/*.lua',
-    'shared/main.lua',
-    'shared/items.lua',
-    'shared/jobs.lua',
-    'shared/horse.lua',
-    'shared/vehicles.lua',
-    'shared/gangs.lua',
-    'shared/weapons.lua',
-    'shared/locations.lua',
-	'shared/keybinds.lua'
+    '@ox_lib/init.lua'
 }
 
 client_scripts {
@@ -25,8 +17,10 @@ client_scripts {
     'client/functions.lua',
     'client/loops.lua',
     'client/events.lua',
+    'client/nativenotify.js',
     'client/drawtext.lua',
-	'client/prompts.lua'
+	'client/prompts.lua',
+    'client/zones.lua'
 }
 
 server_scripts {
@@ -38,15 +32,6 @@ server_scripts {
     'server/commands.lua',
     'server/exports.lua',
     'server/debug.lua'
-}
-
-ui_page 'html/index.html'
-
-files {
-    'html/index.html',
-    'html/css/style.css',
-    'html/css/drawtext.css',
-    'html/js/*.js'
 }
 
 dependency 'oxmysql'
