@@ -17,13 +17,11 @@ end)
 -- Teleport Commands
 
 RegisterNetEvent('QRCore:Command:TeleportToPlayer', function(coords) -- #MoneSuer | Fixed Teleport Command
-    local ped = PlayerPedId()
-    SetEntityCoords(ped, coords.x, coords.y, coords.z)
+    SetEntityCoords(cache.ped, coords.x, coords.y, coords.z)
 end)
 
 RegisterNetEvent('QRCore:Command:TeleportToCoords', function(x, y, z, h) -- #MoneSuer | Fixed Teleport Command
-    local ped = PlayerPedId()
-    SetEntityCoords(ped, x, y, z)
+    SetEntityCoords(cache.ped, x, y, z)
 end)
 
 RegisterNetEvent('QRCore:Command:GoToMarker', function()
@@ -42,7 +40,7 @@ RegisterNetEvent('QRCore:Command:GoToMarker', function()
         Wait(0)
     end
 
-    local ped, coords <const> = PlayerPedId(), GetWaypointCoords()
+    local ped, coords <const> = cache.ped, GetWaypointCoords()
     local vehicle = GetVehiclePedIsIn(ped, false)
     local oldCoords <const> = GetEntityCoords(ped)
 
@@ -110,50 +108,66 @@ RegisterNetEvent('QRCore:Command:GoToMarker', function()
 end)
 
 
--- HORSE / WAGON
+-- SPAWN / DELETE | HORSE / WAGON
 
 RegisterNetEvent('QRCore:Command:SpawnVehicle', function(WagonName)
-    local ped = PlayerPedId()
     local hash = GetHashKey(WagonName)
     if not IsModelInCdimage(hash) then return end
+
     RequestModel(hash)
     while not HasModelLoaded(hash) do
         Wait(0)
     end
 
-    local vehicle = CreateVehicle(hash, GetEntityCoords(ped), GetEntityHeading(ped), true, false)
-    TaskWarpPedIntoVehicle(ped, vehicle, -1) -- Spawn the player onto "drivers" seat
+    if cache.vehicle then
+        DeleteVehicle(cache.vehicle)
+        while DoesEntityExist(cache.vehicle) do Wait(100) end
+    elseif cache.mount then
+        DeletePed(cache.mount)
+        while DoesEntityExist(cache.mount) do Wait(100) end
+    end
+
+    local vehicle = CreateVehicle(hash, GetEntityCoords(cache.ped), GetEntityHeading(cache.ped), true, false)
+    Citizen.InvokeNative(0x9587913B9E772D29, vehicle, 0) -- Place horse on ground properly
+    TaskWarpPedIntoVehicle(cache.ped, vehicle, -1) -- Spawn the player onto "drivers" seat
 	Citizen.InvokeNative(0x283978A15512B2FE, vehicle, true) -- Set random outfit variation / skin
 	NetworkSetEntityInvisibleToNetwork(vehicle, true)
 end)
 
 RegisterNetEvent('QRCore:Command:SpawnHorse', function(HorseName)
-    local ped = PlayerPedId()
     local horseModel = QRCore.Shared.Horses[HorseName]['model']
     local hash = GetHashKey(horseModel)
     local hashp = GetHashKey("PLAYER")
     if not IsModelInCdimage(horseModel) then return end
+
     RequestModel(horseModel)
     while not HasModelLoaded(horseModel) do
         Wait(0)
     end
 
-    local Horse = CreatePed(horseModel, GetEntityCoords(ped), GetEntityHeading(ped), true, false)
-    Citizen.InvokeNative(0xADB3F206518799E8, Horse, hashp) -- Relationship
+    if cache.mount then
+        DeletePed(cache.mount)
+        while DoesEntityExist(cache.mount) do Wait(100) end
+    elseif cache.vehicle then
+        DeleteVehicle(cache.vehicle)
+        while DoesEntityExist(cache.vehicle) do Wait(100) end
+    end
+
+    local Horse = CreatePed(horseModel, GetEntityCoords(cache.ped), GetEntityHeading(cache.ped), true, false)
+    Citizen.InvokeNative(0x9587913B9E772D29, Horse, 0) -- Place horse on ground properly
+    Citizen.InvokeNative(0xADB3F206518799E8, Horse, hashp) -- Default Relationship
     Citizen.InvokeNative(0xCC97B29285B1DC3B, Horse, 1) -- Horse Mood
-    Citizen.InvokeNative(0x028F76B6E78246EB, ped, Horse, 0) -- On Saddle
+    Citizen.InvokeNative(0x028F76B6E78246EB, cache.ped, Horse, 0) -- On Saddle
 	Citizen.InvokeNative(0x283978A15512B2FE, Horse, true) -- Set random outfit variation / skin
 	NetworkSetEntityInvisibleToNetwork(Horse, true)
 end)
 
 RegisterNetEvent('QRCore:Command:DeleteVehicle', function()
-    local ped = PlayerPedId()
-    local veh = GetVehiclePedIsUsing(ped)
-    if veh ~= 0 then
-        SetEntityAsMissionEntity(veh, true, true)
-        DeleteVehicle(veh)
+    if cache.vehicle then
+        SetEntityAsMissionEntity(cache.vehicle, true, true)
+        DeleteVehicle(cache.vehicle)
     else
-        local pcoords = GetEntityCoords(ped)
+        local pcoords = GetEntityCoords(cache.ped)
         local vehicles = GetGamePool('CVehicle')
         for _, v in pairs(vehicles) do
             if #(pcoords - GetEntityCoords(v)) <= 5.0 then
@@ -165,14 +179,10 @@ RegisterNetEvent('QRCore:Command:DeleteVehicle', function()
 end)
 
 RegisterNetEvent('QRCore:Command:DeleteHorse', function()
-    local ped = PlayerPedId()
-    local pedcoords = GetEntityCoords(ped)
-    local onmount = Citizen.InvokeNative(0x460BC76A0E10655E, ped)
-    if onmount then
-        local horse = QRCore.Functions.GetClosestPed(GetEntityCoords(ped))
-        DeletePed(horse)
+    if cache.mount then
+        DeletePed(cache.mount)
     else
-        local pcoords = GetEntityCoords(ped)
+        local pcoords = GetEntityCoords(cache.ped)
         local horse = GetGamePool('CPed')
         for _, v in pairs(horse) do
             local horseModel = GetEntityModel(v)
@@ -239,16 +249,16 @@ function Display(mePlayer, text, offset, type, custom)
     local displaying = true
     local _type = type
 
-    Citizen.CreateThread(function()
+    CreateThread(function()
         Wait(time)
         displaying = false
     end)
-    Citizen.CreateThread(function()
+    CreateThread(function()
         RDisplaying = RDisplaying + 1
         while displaying do
             Wait(1)
             local coordsMe = GetPedBoneCoords(GetPlayerPed(mePlayer), 53684, 0.0, 0.0, 0.0)
-            local coords = GetEntityCoords(PlayerPedId(), false)
+            local coords = GetEntityCoords(cache.ped, false)
             local dist = #(coordsMe - coords)
             if dist < 15.0 then
                 DrawText3D(coordsMe['x'], coordsMe['y'], coordsMe['z'] + offset, text, _typ , custom)
