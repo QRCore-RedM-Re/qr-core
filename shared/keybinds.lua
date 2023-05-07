@@ -41,12 +41,12 @@ QRShared.Keybinds = {
     ['MWUP'] = 0x3076E97C,
     -- Modifier Keys
     ['CTRL'] = 0xDB096B85,
-    ['TAB'] = 0xB238FE0B,
+    ['TAB'] = 0xAC4BD4F1,
     ['SHIFT'] = 0x8FFC75D6,
     ['SPACEBAR'] = 0xD9D0E1C0,
     ['ENTER'] = 0xC7B5340A,
     ['BACKSPACE'] = 0x156F7119,
-    ['LALT'] = 0x8AAA0AD4,
+    ['LALT'] = 0xCF8A4ECA,
     ['DEL'] = 0x4AF4D473,
     ['PGUP'] = 0x446258B6,
     ['PGDN'] = 0x3C3DD371,
@@ -69,7 +69,7 @@ QRShared.Keybinds = {
     ['LEFT'] = 0xA65EBAB4,
     ['RIGHT'] = 0xDEB34313,
 
-	-- other
+	-- Others --
 	["HorseCommandFlee"] = 0x4216AF06,
 	["Loot"] = 0x41AC83D1,
 }
