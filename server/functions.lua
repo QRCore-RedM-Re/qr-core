@@ -204,7 +204,7 @@ function PaycheckInterval()
     if next(QRCore.Players) then
         for _, Player in pairs(QRCore.Players) do
             if Player then
-                local payment = QRShared.Jobs[Player.PlayerData.job.name].grades[Player.PlayerData.job.grade.level].payment
+                local payment = QRShared.Jobs[Player.PlayerData.job.name]['grades'][tonumber(Player.PlayerData.job.grade.level)].payment
                 if not payment then payment = Player.PlayerData.job.payment end
                 if Player.PlayerData.job and payment > 0 and (QRShared.Jobs[Player.PlayerData.job.name].offDutyPay or Player.PlayerData.job.onduty) then
                     if QRCore.Config.Money.PayCheckSociety then

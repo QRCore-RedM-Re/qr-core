@@ -204,7 +204,7 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
 
 	function self.Functions.SetJob(job, grade)
 		job = job:lower()
-		grade = tostring(grade) or "0"
+		grade = tonumber(grade) or 0
 		if not QRCore.Shared.Jobs[job] then
 			return false
 		end
@@ -238,7 +238,7 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
 
 	function self.Functions.SetGang(gang, grade)
 		gang = gang:lower()
-		grade = tostring(grade) or "0"
+		grade = tonumber(grade) or 0
 		if not QRCore.Shared.Gangs[gang] then
 			return false
 		end
