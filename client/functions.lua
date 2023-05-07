@@ -67,6 +67,7 @@ RegisterNUICallback('getNotifyConfig', function(_, cb)
     cb(QRCore.Config.Notify)
 end)
 
+---Text box popup for player which dissappears after a set time.
 ---@param text table|string text of the notification
 ---@param notifyType? NotificationType|DeprecatedNotificationType informs default styling. Defaults to 'inform'.
 ---@param duration? integer milliseconds notification will remain on screen. Defaults to 5000.
@@ -147,29 +148,37 @@ function QRCore.Functions.TriggerCallback(name, cb, ...)
     TriggerServerEvent('QRCore:Server:TriggerCallback', name, ...)
 end
 
-function QRCore.Functions.Progressbar(name, label, duration, useWhileDead, canCancel, disableControls, animation, prop, propTwo, onFinish, onCancel)
-    if GetResourceState('progressbar') ~= 'started' then error('progressbar needs to be started in order for QRCore.Functions.Progressbar to work') end
-    exports['progressbar']:Progress({
-        name = name:lower(),
+function QRCore.Functions.Progressbar(_, label, duration, useWhileDead, canCancel, disableControls, animation, prop, propTwo, onFinish, onCancel)
+    if lib.progressBar({
         duration = duration,
         label = label,
         useWhileDead = useWhileDead,
         canCancel = canCancel,
-        controlDisables = disableControls,
-        animation = animation,
-        prop = prop,
-        propTwo = propTwo,
-    }, function(cancelled)
-        if not cancelled then
-            if onFinish then
-                onFinish()
-            end
-        else
-            if onCancel then
-                onCancel()
-            end
+        disable = {
+            move = disableControls?.disableMovement,
+            car = disableControls?.disableCarMovement,
+            combat = disableControls?.disableCombat,
+            mouse = disableControls?.disableMouse,
+        },
+        anim = {
+            dict = animation?.animDict,
+            clip = animation?.anim,
+            flags = animation?.flags
+        },
+        prop = {
+            model = prop?.model,
+            pos = prop?.coords,
+            rot = prop?.rotation,
+        },
+    }) then
+        if onFinish then
+            onFinish()
         end
-    end)
+    else
+        if onCancel then
+            onCancel()
+        end
+    end
 end
 
 -- Getters
