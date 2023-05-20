@@ -2,7 +2,7 @@ QRShared = QRShared or {}
 
 QRShared.ForceJobDefaultDutyAtLogin = true -- true: Force duty state to jobdefaultDuty | false: set duty state from database last saved
 
-QRShared.Jobs = {
+QRJobs = {
 	['unemployed'] = {
 		label = 'Civilian',
 		defaultDuty = true,

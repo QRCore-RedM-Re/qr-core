@@ -1,6 +1,4 @@
-QRShared = QRShared or {}
-
-QRShared.Items = {
+QRItems = {
 	-- Items
  	['water']		= {['name'] = 'water',		['label'] = 'Water',		['weight'] = 500,	['type'] = 'item',	['image'] = 'water.png',		['unique'] = false,	['useable'] = true,	['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'Drinking Water'},
  	['bread']		= {['name'] = 'bread',		['label'] = 'Bread Roll',	['weight'] = 125,	['type'] = 'item',	['image'] = 'bread.png',		['unique'] = false,	['useable'] = true,	['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	['description'] = 'Bread Roll'},
@@ -10,7 +8,7 @@ QRShared.Items = {
 	["boatticket"]	= {["name"] = "boatticket",	["label"] = "Boat Ticket",	["weight"] = 0,		["type"] = "item",	["image"] = "boatticket.png",	['unique'] = false,	['useable'] = false,['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	["description"] = "used for boat travel"},
 	["bandage"]	    = {["name"] = "bandage",	["label"] = "Bandage",	    ["weight"] = 0,		["type"] = "item",	["image"] = "bandage.png",	    ['unique'] = false,	['useable'] = false,['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	["description"] = "used for heal"},
 	["ifaks"]		= {["name"] = "ifaks",		["label"] = "Ifaks",		["weight"] = 100,	["type"] = "item",	["image"] = "ifaks.png",		['unique'] = false,	['useable'] = true,	['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	["description"] = "product  for Ifaks"},
-	["painkillers"]	= {["name"] = "painkillers",["label"] = "Painkillers",	["weight"] = 0,		["type"] = "item",	["image"] = "painkillers.png",	    ['unique'] = false,	['useable'] = false,['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	["description"] = "used for painkillers"},
+	["painkillers"]	= {["name"] = "painkillers",["label"] = "Painkillers",	["weight"] = 0,		["type"] = "item",	["image"] = "painkillers.png",	['unique'] = false,	['useable'] = false,['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	["description"] = "used for painkillers"},
 	["firstaid"]	= {["name"] = "firstaid",	["label"] = "Firstaid",	    ["weight"] = 0,		["type"] = "item",	["image"] = "firstaid.png",	    ['unique'] = false,	['useable'] = false,['shouldClose'] = true,	['combinable'] = nil,	['level'] = 0,	["description"] = "used for firstaid"},
 
 	-- petshop

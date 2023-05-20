@@ -1,7 +1,5 @@
-QRShared = QRShared or {}
-
-QRShared.Weapons = {
-	--revolver
+QRWeapons = {
+	-- Revolvers
 	[`weapon_revolver_cattleman`] 				= {['name'] = 'weapon_revolver_cattleman', 				['attachPoint'] = 2,  		['label'] = 'Cattleman',						['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_REVOLVER', 			['image'] = 'weapon_revolver_cattleman.png',				['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Revolver Ammo'},
 	[`weapon_revolver_cattleman_mexican`] 		= {['name'] = 'weapon_revolver_cattleman_mexican', 		['attachPoint'] = 2,		['label'] = 'Cattleman Mexican',				['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_REVOLVER', 			['image'] = 'weapon_revolver_cattleman_mexican.png',		['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Revolver Ammo'},
 	[`weapon_revolver_doubleaction_gambler`] 	= {['name'] = 'weapon_revolver_doubleaction_gambler', 	['attachPoint'] = 2, 		['label'] = 'Gambler',							['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_REVOLVER', 			['image'] = 'weapon_revolver_doubleaction_gambler.png',		['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Revolver Ammo'},
@@ -9,39 +7,47 @@ QRShared.Weapons = {
 	[`weapon_revolver_lemat`] 					= {['name'] = 'weapon_revolver_lemat', 					['attachPoint'] = 2, 		['label'] = 'LeMat',							['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_REVOLVER', 			['image'] = 'weapon_revolver_lemat.png',					['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Revolver Ammo'},
 	[`weapon_revolver_navy`] 					= {['name'] = 'weapon_revolver_navy', 					['attachPoint'] = 2,		['label'] = 'Navy',								['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_REVOLVER', 			['image'] = 'weapon_revolver_navy.png',						['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Revolver Ammo'},
 	[`weapon_revolver_navy_crossover`] 			= {['name'] = 'weapon_revolver_navy_crossover', 		['attachPoint'] = 2,		['label'] = 'Navy Crossover',					['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_REVOLVER', 			['image'] = 'weapon_revolver_navy_crossover.png',			['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Revolver Ammo'},
-	-- pistol	
+
+	-- Piatols
 	[`weapon_pistol_volcanic`] 					= {['name'] = 'weapon_pistol_volcanic', 				['attachPoint'] = 2, 		['label'] = 'Volcanic',							['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_PISTOL',	 			['image'] = 'weapon_pistol_volcanic.png',					['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Pistol Ammo'},
 	[`weapon_pistol_m1899`] 					= {['name'] = 'weapon_pistol_m1899', 					['attachPoint'] = 2,		['label'] = 'M1899',							['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_PISTOL',	 			['image'] = 'weapon_pistol_m1899.png',						['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Pistol Ammo'},
 	[`weapon_pistol_mauser`] 					= {['name'] = 'weapon_pistol_mauser', 					['attachPoint'] = 2,		['label'] = 'Mauser',							['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_PISTOL',	 			['image'] = 'weapon_pistol_mauser.png',						['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Pistol Ammo'},
 	[`weapon_pistol_semiauto`] 					= {['name'] = 'weapon_pistol_semiauto', 				['attachPoint'] = 2,		['label'] = 'Semi-Auto',						['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_PISTOL',	 			['image'] = 'weapon_pistol_semiauto.png',					['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Pistol Ammo'},
-	-- repeater
+
+	-- Repeaters
 	[`weapon_repeater_carbine`] 				= {['name'] = 'weapon_repeater_carbine', 				['attachPoint'] = 9, 		['label'] = 'Carbine',							['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_REPEATER',	 			['image'] = 'weapon_repeater_carbine.png',					['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Repeater Ammo'},
 	[`weapon_repeater_winchester`] 				= {['name'] = 'weapon_repeater_winchester', 			['attachPoint'] = 9,		['label'] = 'Winchester',						['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_REPEATER',	 			['image'] = 'weapon_repeater_winchester.png',				['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Repeater Ammo'},
 	[`weapon_repeater_henry`] 					= {['name'] = 'weapon_repeater_henry', 					['attachPoint'] = 9,		['label'] = 'Henry',							['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_REPEATER',	 			['image'] = 'weapon_repeater_henry.png',					['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Repeater Ammo'},
 	[`weapon_repeater_evans`] 					= {['name'] = 'weapon_repeater_evans', 					['attachPoint'] = 9,		['label'] = 'Evans',							['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_REPEATER',	 			['image'] = 'weapon_repeater_evans.png',					['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Repeater Ammo'},
-	-- rifle
+
+	-- Rifles
 	[`weapon_rifle_varmint`] 					= {['name'] = 'weapon_rifle_varmint', 					['attachPoint'] = 9,		['label'] = 'Varmint',							['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_RIFLE',	 			['image'] = 'weapon_rifle_varmint.png',						['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Rifle Ammo'},
 	[`weapon_rifle_springfield`] 				= {['name'] = 'weapon_rifle_springfield', 				['attachPoint'] = 9,		['label'] = 'Springfield',						['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_RIFLE',	 			['image'] = 'weapon_rifle_springfield.png',					['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Rifle Ammo'},
 	[`weapon_rifle_boltaction`] 				= {['name'] = 'weapon_rifle_boltaction', 				['attachPoint'] = 9,		['label'] = 'Boltaction',						['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_RIFLE',	 			['image'] = 'weapon_rifle_boltaction.png',					['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Rifle Ammo'},
 	[`weapon_rifle_elephant`] 					= {['name'] = 'weapon_rifle_elephant', 					['attachPoint'] = 9,		['label'] = 'Elephant',							['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_RIFLE',	 			['image'] = 'weapon_rifle_elephant.png',					['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Rifle Ammo'},
-	-- shotgun
+
+	-- Shotguns
 	[`weapon_shotgun_doublebarrel`] 			= {['name'] = 'weapon_shotgun_doublebarrel', 			['attachPoint'] = 9,		['label'] = 'Shotgun',							['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_SHOTGUN',	 			['image'] = 'weapon_shotgun_doublebarrel.png',				['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Shotgun Ammo'},
 	[`weapon_shotgun_doublebarrel_exotic`] 		= {['name'] = 'weapon_shotgun_doublebarrel_exotic', 	['attachPoint'] = 9,		['label'] = 'Exotic Shotgun',					['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_SHOTGUN',	 			['image'] = 'weapon_shotgun_doublebarrel_exotic.png',		['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Shotgun Ammo'},
 	[`weapon_shotgun_sawedoff`] 				= {['name'] = 'weapon_shotgun_sawedoff', 				['attachPoint'] = 9,		['label'] = 'Sawedoff Shotgun',					['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_SHOTGUN',	 			['image'] = 'weapon_shotgun_sawedoff.png',					['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Shotgun Ammo'},
 	[`weapon_shotgun_semiauto`] 				= {['name'] = 'weapon_shotgun_semiauto', 				['attachPoint'] = 9,		['label'] = 'SA Shotgun',						['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_SHOTGUN',	 			['image'] = 'weapon_shotgun_semiauto.png',					['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Shotgun Ammo'},
 	[`weapon_shotgun_pump`] 					= {['name'] = 'weapon_shotgun_pump', 					['attachPoint'] = 9,		['label'] = 'SA Shotgun Pump',					['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_SHOTGUN',	 			['image'] = 'weapon_shotgun_semiauto.png',					['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Shotgun Ammo'},
 	[`weapon_shotgun_repeating`] 				= {['name'] = 'weapon_shotgun_repeating', 				['attachPoint'] = 9,		['label'] = 'SA Shotgun Repeater',				['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_SHOTGUN',	 			['image'] = 'weapon_shotgun_semiauto.png',					['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Shotgun Ammo'},
-	-- sniperrifle
+
+	-- Sniper Rifles
 	[`weapon_sniperrifle_rollingblock`] 		= {['name'] = 'weapon_sniperrifle_rollingblock', 		['attachPoint'] = 10, 		['label'] = 'Rollingblock',						['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_RIFLE',	 			['image'] = 'weapon_sniperrifle_rollingblock.png',			['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Rifle Ammo'},
 	[`weapon_sniperrifle_rollingblock_exotic`] 	= {['name'] = 'weapon_sniperrifle_rollingblock_exotic', ['attachPoint'] = 10, 		['label'] = 'Exotic Rrollingblock',				['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_RIFLE',	 			['image'] = 'weapon_sniperrifle_rollingblock_exotic.png',	['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Rifle Ammo'},
 	[`weapon_sniperrifle_carcano`] 				= {['name'] = 'weapon_sniperrifle_carcano',				['attachPoint'] = 10, 	 	['label'] = 'Carcano',							['weight'] = 1000,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_RIFLE',	 			['image'] = 'weapon_sniperrifle_carcano.png',				['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Rifle Ammo'},
-	-- bow
+
+	-- Bows
 	[`weapon_bow`] 								= {['name'] = 'weapon_bow', 							['attachPoint'] = 7,		['label'] = 'Bow',								['weight'] = 100,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_ARROW',	 			['image'] = 'weapon_bow.png',								['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Arrow Ammo'},
 	[`weapon_bow_improved`] 					= {['name'] = 'weapon_bow_improved', 					['attachPoint'] = 7,		['label'] = 'Improved Bow',						['weight'] = 100,	['type'] = 'weapon', 		['ammotype'] = 'AMMO_ARROW',	 			['image'] = 'weapon_bow_improved.png',						['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Takes Arrow Ammo'},
-	-- lasso
+
+	-- Lassos
 	[`weapon_lasso`] 							= {['name'] = 'weapon_lasso', 							['attachPoint'] = 5, 		['label'] = 'Lasso',							['weight'] = 100,	['type'] = 'weapon', 		['ammotype'] = nil,	 						['image'] = 'weapon_lasso.png',								['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Placeholder'},
 	[`weapon_lasso_reinforced`] 				= {['name'] = 'weapon_lasso_reinforced',  				['attachPoint'] = 5,		['label'] = 'Improved Lasso',					['weight'] = 100,	['type'] = 'weapon', 		['ammotype'] = nil,	 						['image'] = 'weapon_lasso_reinforced.png',					['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Placeholder'},
-	-- melee
+
+	-- Melee
 	[`weapon_melee_knife`] 						= {['name'] = 'weapon_melee_knife', 					['attachPoint'] = 4, 		['label'] = 'Knife',							['weight'] = 100,	['type'] = 'weapon', 		['ammotype'] = nil,	 						['image'] = 'weapon_melee_knife.png',						['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Placeholder'},
 	[`weapon_melee_knife_jawbone`] 				= {['name'] = 'weapon_melee_knife_jawbone', 			['attachPoint'] = 4, 		['label'] = 'Jawbone Knife',					['weight'] = 100,	['type'] = 'weapon', 		['ammotype'] = nil,	 						['image'] = 'weapon_melee_knife_jawbone.png',				['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Placeholder'},
 	[`weapon_melee_hammer`] 					= {['name'] = 'weapon_melee_hammer', 					['attachPoint'] = 13,		['label'] = 'Hammer',							['weight'] = 100,	['type'] = 'weapon', 		['ammotype'] = nil,	 						['image'] = 'weapon_melee_hammer.png',						['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Placeholder'},
@@ -58,7 +64,7 @@ QRShared.Weapons = {
 	[`weapon_melee_hatchet_double_bit`] 		= {['name'] = 'weapon_melee_hatchet_double_bit',		['attachPoint'] = 13, 		['label'] = 'Hatchet Double',					['weight'] = 100,	['type'] = 'weapon', 		['ammotype'] = nil,	 						['image'] = 'weapon_melee_hatchet_double_bit.png',			['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Placeholder'},
 	[`weapon_melee_machete_horror`] 			= {['name'] = 'weapon_melee_machete_horror',			['attachPoint'] = 13, 		['label'] = 'Machete Horror',					['weight'] = 100,	['type'] = 'weapon', 		['ammotype'] = nil,	 						['image'] = 'weapon_melee_machete_horror.png',				['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Placeholder'},
 
-	-- thrown
+	-- Thrown
 	[`weapon_thrown_throwing_knives`] 			= {['name'] = 'weapon_thrown_throwing_knives', 			['attachPoint'] = 6,		['label'] = 'Throwing Knives',					['weight'] = 100,	['type'] = 'weapon', 		['ammotype'] = nil,	 						['image'] = 'weapon_thrown_throwing_knives.png',			['unique'] = false,		['useable'] = true,		['level'] = 0,		['description'] = 'Placeholder'},
 	[`weapon_thrown_tomahawk`] 					= {['name'] = 'weapon_thrown_tomahawk',					['attachPoint'] = 6,		['label'] = 'Throwable Axe',					['weight'] = 100,	['type'] = 'weapon', 		['ammotype'] = nil,	 						['image'] = 'weapon_thrown_tomahawk.png',					['unique'] = false,		['useable'] = true,		['level'] = 0,		['description'] = 'Placeholder'},
 	[`weapon_thrown_tomahawk_ancient`] 			= {['name'] = 'weapon_thrown_tomahawk_ancient', 		['attachPoint'] = 6,		['label'] = 'Throwable Old Axe',				['weight'] = 100,	['type'] = 'weapon', 		['ammotype'] = nil,	 						['image'] = 'weapon_thrown_tomahawk_ancient.png',			['unique'] = false,		['useable'] = true,		['level'] = 0,		['description'] = 'Placeholder'},
@@ -69,10 +75,10 @@ QRShared.Weapons = {
 	[`weapon_thrown_dynamite`]					= {['name'] = 'weapon_thrown_dynamite', 				['attachPoint'] = 6,		['label'] = 'Dynamite',							['weight'] = 100,	['type'] = 'weapon', 		['ammotype'] = nil,	 						['image'] = 'weapon_thrown_dynamite.png',					['unique'] = false,		['useable'] = true,		['level'] = 0,		['description'] = 'Placeholder'},
 	[`weapon_thrown_molotov`]					= {['name'] = 'weapon_thrown_molotov',					['attachPoint'] = 6, 		['label'] = 'Molotov',							['weight'] = 100,	['type'] = 'weapon', 		['ammotype'] = nil,	 						['image'] = 'weapon_thrown_molotov.png',					['unique'] = false,		['useable'] = true,		['level'] = 0,		['description'] = 'Placeholder'},
 	[`weapon_thrown_poisonbottle`]				= {['name'] = 'weapon_thrown_poisonbottle',				['attachPoint'] = 6, 		['label'] = 'Poison Bottle',					['weight'] = 100,	['type'] = 'weapon', 		['ammotype'] = nil,	 						['image'] = 'weapon_thrown_poisonbottle.png',				['unique'] = false,		['useable'] = true,		['level'] = 0,		['description'] = 'Placeholder'},
-	-- kit
+
+	-- Kits
 	[`weapon_kit_metal_detector`]  				= {['name'] = 'weapon_kit_metal_detector',  			['attachPoint'] = 11,  		['label'] = 'Metal Detector',  					['weight'] = 100,  	['type'] = 'weapon',  		['ammotype'] = nil,  						['image'] = 'weapon_kit_metal_detector.png',    			['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Placeholder'},
 	[`weapon_kit_binoculars`]  					= {['name'] = 'weapon_kit_binoculars',  				['attachPoint'] = 11,  		['label'] = 'Binoculars',  						['weight'] = 100,  	['type'] = 'weapon',  		['ammotype'] = nil,  						['image'] = 'weapon_kit_binoculars.png',    				['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Placeholder'},
 	[`weapon_kit_camera_advanced`]  			= {['name'] = 'weapon_kit_camera_advanced',  			['attachPoint'] = 11,  		['label'] = 'Camera Advanced',  				['weight'] = 100,  	['type'] = 'weapon',  		['ammotype'] = nil,  						['image'] = 'weapon_kit_camera_advanced.png',    			['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Placeholder'},
 	[`weapon_kit_binoculars_improved`]  		= {['name'] = 'weapon_kit_binoculars_improved',  		['attachPoint'] = 11,  		['label'] = 'Binoculars Improved',				['weight'] = 100,  	['type'] = 'weapon',  		['ammotype'] = nil,  						['image'] = 'weapon_kit_binoculars_improved.png',    		['unique'] = true,		['useable'] = true,		['level'] = 0,		['description'] = 'Placeholder'},
-
 }
