@@ -36,11 +36,11 @@ local function AddJob(jobName, job)
         return false, "invalid_job_name"
     end
 
-    if QRCore.Shared.Jobs[jobName] then
+    if QRJobs[jobName] then
         return false, "job_exists"
     end
 
-    QRCore.Shared.Jobs[jobName] = job
+    QRJobs[jobName] = job
 
     TriggerClientEvent('QRCore:Client:OnSharedUpdate', -1, 'Jobs', jobName, job)
     TriggerEvent('QRCore:Server:UpdateObject')
@@ -64,14 +64,14 @@ local function AddJobs(jobs)
             break
         end
 
-        if QRCore.Shared.Jobs[key] then
+        if QRJobs[key] then
             message = 'job_exists'
             shouldContinue = false
             errorItem = jobs[key]
             break
         end
 
-        QRCore.Shared.Jobs[key] = value
+        QRJobs[key] = value
     end
 
     if not shouldContinue then return false, message, errorItem end
@@ -89,11 +89,11 @@ local function RemoveJob(jobName)
         return false, "invalid_job_name"
     end
 
-    if not QRCore.Shared.Jobs[jobName] then
+    if not QRJobs[jobName] then
         return false, "job_not_exists"
     end
 
-    QRCore.Shared.Jobs[jobName] = nil
+    QRJobs[jobName] = nil
 
     TriggerClientEvent('QRCore:Client:OnSharedUpdate', -1, 'Jobs', jobName, nil)
     TriggerEvent('QRCore:Server:UpdateObject')
@@ -109,11 +109,11 @@ local function UpdateJob(jobName, job)
         return false, "invalid_job_name"
     end
 
-    if not QRCore.Shared.Jobs[jobName] then
+    if not QRJobs[jobName] then
         return false, "job_not_exists"
     end
 
-    QRCore.Shared.Jobs[jobName] = job
+    QRJobs[jobName] = job
 
     TriggerClientEvent('QRCore:Client:OnSharedUpdate', -1, 'Jobs', jobName, job)
     TriggerEvent('QRCore:Server:UpdateObject')
@@ -129,11 +129,11 @@ local function AddItem(itemName, item)
         return false, "invalid_item_name"
     end
 
-    if QRCore.Shared.Items[itemName] then
+    if QRItems[itemName] then
         return false, "item_exists"
     end
 
-    QRCore.Shared.Items[itemName] = item
+    QRItems[itemName] = item
 
     TriggerClientEvent('QRCore:Client:OnSharedUpdate', -1, 'Items', itemName, item)
     TriggerEvent('QRCore:Server:UpdateObject')
@@ -148,10 +148,10 @@ local function UpdateItem(itemName, item)
     if type(itemName) ~= "string" then
         return false, "invalid_item_name"
     end
-    if not QRCore.Shared.Items[itemName] then
+    if not QRItems[itemName] then
         return false, "item_not_exists"
     end
-    QRCore.Shared.Items[itemName] = item
+    QRItems[itemName] = item
     TriggerClientEvent('QRCore:Client:OnSharedUpdate', -1, 'Items', itemName, item)
     TriggerEvent('QRCore:Server:UpdateObject')
     return true, "success"
@@ -174,14 +174,14 @@ local function AddItems(items)
             break
         end
 
-        if QRCore.Shared.Items[key] then
+        if QRItems[key] then
             message = "item_exists"
             shouldContinue = false
             errorItem = items[key]
             break
         end
 
-        QRCore.Shared.Items[key] = value
+        QRItems[key] = value
     end
 
     if not shouldContinue then return false, message, errorItem end
@@ -199,11 +199,11 @@ local function RemoveItem(itemName)
         return false, "invalid_item_name"
     end
 
-    if not QRCore.Shared.Items[itemName] then
+    if not QRItems[itemName] then
         return false, "item_not_exists"
     end
 
-    QRCore.Shared.Items[itemName] = nil
+    QRItems[itemName] = nil
 
     TriggerClientEvent('QRCore:Client:OnSharedUpdate', -1, 'Items', itemName, nil)
     TriggerEvent('QRCore:Server:UpdateObject')
@@ -219,11 +219,11 @@ local function AddGang(gangName, gang)
         return false, "invalid_gang_name"
     end
 
-    if QRCore.Shared.Gangs[gangName] then
+    if QRGangs[gangName] then
         return false, "gang_exists"
     end
 
-    QRCore.Shared.Gangs[gangName] = gang
+    QRGangs[gangName] = gang
 
     TriggerClientEvent('QRCore:Client:OnSharedUpdate', -1, 'Gangs', gangName, gang)
     TriggerEvent('QRCore:Server:UpdateObject')
@@ -247,14 +247,14 @@ local function AddGangs(gangs)
             break
         end
 
-        if QRCore.Shared.Gangs[key] then
+        if QRGangs[key] then
             message = "gang_exists"
             shouldContinue = false
             errorItem = gangs[key]
             break
         end
 
-        QRCore.Shared.Gangs[key] = value
+        QRGangs[key] = value
     end
 
     if not shouldContinue then return false, message, errorItem end
@@ -272,11 +272,11 @@ local function RemoveGang(gangName)
         return false, "invalid_gang_name"
     end
 
-    if not QRCore.Shared.Gangs[gangName] then
+    if not QRGangs[gangName] then
         return false, "gang_not_exists"
     end
 
-    QRCore.Shared.Gangs[gangName] = nil
+    QRGangs[gangName] = nil
 
     TriggerClientEvent('QRCore:Client:OnSharedUpdate', -1, 'Gangs', gangName, nil)
     TriggerEvent('QRCore:Server:UpdateObject')
@@ -292,11 +292,11 @@ local function UpdateGang(gangName, gang)
         return false, "invalid_gang_name"
     end
 
-    if not QRCore.Shared.Gangs[gangName] then
+    if not QRGangs[gangName] then
         return false, "gang_not_exists"
     end
 
-    QRCore.Shared.Gangs[gangName] = gang
+    QRGangs[gangName] = gang
 
     TriggerClientEvent('QRCore:Client:OnSharedUpdate', -1, 'Gangs', gangName, gang)
     TriggerEvent('QRCore:Server:UpdateObject')

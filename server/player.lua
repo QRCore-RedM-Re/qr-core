@@ -140,7 +140,7 @@ function QRCore.Player.CheckPlayerData(source, PlayerData)
 	}
 
 	-- Job
-	if PlayerData.job and PlayerData.job.name and not QRCore.Shared.Jobs[PlayerData.job.name] then
+	if PlayerData.job and PlayerData.job.name and not QRJobs[PlayerData.job.name] then
 		PlayerData.job = nil
 	end
 	PlayerData.job = PlayerData.job or {}
@@ -149,14 +149,14 @@ function QRCore.Player.CheckPlayerData(source, PlayerData)
 	PlayerData.job.payment = PlayerData.job.payment or 10
 	PlayerData.job.type = PlayerData.job.type or "none"
 	if QRCore.Shared.ForceJobDefaultDutyAtLogin or PlayerData.job.onduty == nil then
-		PlayerData.job.onduty = QRCore.Shared.Jobs[PlayerData.job.name].defaultDuty
+		PlayerData.job.onduty = QRJobs[PlayerData.job.name].defaultDuty
 	end
 	PlayerData.job.isboss = PlayerData.job.isboss or false
 	PlayerData.job.grade = PlayerData.job.grade or {}
 	PlayerData.job.grade.name = PlayerData.job.grade.name or "Freelancer"
 	PlayerData.job.grade.level = PlayerData.job.grade.level or 0
 	-- Gang
-	if PlayerData.gang and PlayerData.gang.name and not QRCore.Shared.Gangs[PlayerData.gang.name] then
+	if PlayerData.gang and PlayerData.gang.name and not QRGangs[PlayerData.gang.name] then
 		PlayerData.gang = nil
 	end
 	PlayerData.gang = PlayerData.gang or {}
@@ -205,15 +205,15 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
 	function self.Functions.SetJob(job, grade)
 		job = job:lower()
 		grade = tonumber(grade) or 0
-		if not QRCore.Shared.Jobs[job] then
+		if not QRJobs[job] then
 			return false
 		end
 		self.PlayerData.job.name = job
-		self.PlayerData.job.label = QRCore.Shared.Jobs[job].label
-		self.PlayerData.job.onduty = QRCore.Shared.Jobs[job].defaultDuty
-		self.PlayerData.job.type = QRCore.Shared.Jobs[job].type or "none"
-		if QRCore.Shared.Jobs[job].grades[grade] then
-			local jobgrade = QRCore.Shared.Jobs[job].grades[grade]
+		self.PlayerData.job.label = QRJobs[job].label
+		self.PlayerData.job.onduty = QRJobs[job].defaultDuty
+		self.PlayerData.job.type = QRJobs[job].type or "none"
+		if QRJobs[job].grades[grade] then
+			local jobgrade = QRJobs[job].grades[grade]
 			self.PlayerData.job.grade = {}
 			self.PlayerData.job.grade.name = jobgrade.name
 			self.PlayerData.job.grade.level = tonumber(grade)
@@ -239,13 +239,13 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
 	function self.Functions.SetGang(gang, grade)
 		gang = gang:lower()
 		grade = tonumber(grade) or 0
-		if not QRCore.Shared.Gangs[gang] then
+		if not QRGangs[gang] then
 			return false
 		end
 		self.PlayerData.gang.name = gang
-		self.PlayerData.gang.label = QRCore.Shared.Gangs[gang].label
-		if QRCore.Shared.Gangs[gang].grades[grade] then
-			local ganggrade = QRCore.Shared.Gangs[gang].grades[grade]
+		self.PlayerData.gang.label = QRGangs[gang].label
+		if QRGangs[gang].grades[grade] then
+			local ganggrade = QRGangs[gang].grades[grade]
 			self.PlayerData.gang.grade = {}
 			self.PlayerData.gang.grade.name = ganggrade.name
 			self.PlayerData.gang.grade.level = tonumber(grade)
@@ -970,5 +970,3 @@ function QRCore.Player.CreateSerialNumber()
 	end
 	return SerialNumber
 end
-
-PaycheckInterval() -- This starts the paycheck system
