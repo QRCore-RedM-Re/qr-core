@@ -199,39 +199,6 @@ function QRCore.Functions.CreateVehicle(source, model, coords, warp)
     return veh
 end
 
--- Paychecks (standalone - don't touch)
-function PaycheckInterval()
-    if next(QRCore.Players) then
-        for _, Player in pairs(QRCore.Players) do
-            if Player then
-                local payment = QRShared.Jobs[Player.PlayerData.job.name]['grades'][tonumber(Player.PlayerData.job.grade.level)].payment
-                if not payment then payment = Player.PlayerData.job.payment end
-                if Player.PlayerData.job and payment > 0 and (QRShared.Jobs[Player.PlayerData.job.name].offDutyPay or Player.PlayerData.job.onduty) then
-                    if QRCore.Config.Money.PayCheckSociety then
-                        local account = exports['qr-management']:GetAccount(Player.PlayerData.job.name)
-                        if account ~= 0 then -- Checks if player is employed by a society
-                            if account < payment then -- Checks if company has enough money to pay society
-                                TriggerClientEvent('QRCore:Notify', Player.PlayerData.source, Lang:t('error.company_too_poor'), 'error')
-                            else
-                                Player.Functions.AddMoney('bank', payment)
-                                exports['qr-management']:RemoveMoney(Player.PlayerData.job.name, payment)
-                                TriggerClientEvent('QRCore:Notify', Player.PlayerData.source, Lang:t('info.received_paycheck', {value = payment}))
-                            end
-                        else
-                            Player.Functions.AddMoney('bank', payment)
-                            TriggerClientEvent('QRCore:Notify', Player.PlayerData.source, Lang:t('info.received_paycheck', {value = payment}))
-                        end
-                    else
-                        Player.Functions.AddMoney('bank', payment)
-                        TriggerClientEvent('QRCore:Notify', Player.PlayerData.source, Lang:t('info.received_paycheck', {value = payment}))
-                    end
-                end
-            end
-        end
-    end
-    SetTimeout(QRCore.Config.Money.PayCheckTimeOut * (60 * 1000), PaycheckInterval)
-end
-
 -- Callback Functions --
 
 -- Client Callback
