@@ -240,11 +240,11 @@ function QRCore.Functions.IsWearingGloves()
     local armIndex = GetPedDrawableVariation(cache.ped, 3)
     local model = GetEntityModel(cache.ped)
     if model == `mp_m_freemode_01` then
-        if QRCore.Shared.MaleNoGloves[armIndex] then
+        if QRConfig.MaleNoGloves[armIndex] then
             return false
         end
     else
-        if QRCore.Shared.FemaleNoGloves[armIndex] then
+        if QRConfig.FemaleNoGloves[armIndex] then
             return false
         end
     end

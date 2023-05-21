@@ -2,8 +2,9 @@ QRConfig = {}
 
 QRConfig.MaxPlayers = GetConvarInt('sv_maxclients', 48) -- Gets max players from config file, default 48
 QRConfig.DefaultSpawn = vector4(-1035.71, -2731.87, 12.86, 0.0)
-QRConfig.UpdateInterval = 5 -- how often to update player data in minutes
-QRConfig.StatusInterval = 5000 -- how often to check hunger/thirst status in milliseconds
+QRConfig.UpdateInterval = 5 -- How often to update player data in minutes
+QRConfig.StatusInterval = 5 -- How often to check hunger/thirst status in seconds
+QRConfig.ShowDoMeTryLength = 7 -- How long to show /me, /do, /try text (Set in Seconds)
 
 QRConfig.Money = {}
 QRConfig.Money.MoneyTypes = { cash = 500, bank = 5000, bloodmoney = 0 } -- type = startamount - Add or remove money types for your server (for ex. blackmoney = 0), remember once added it will not be removed from the database!
@@ -13,6 +14,7 @@ QRConfig.Money.PayCheckSociety = false -- If true paycheck will come from the so
 
 QRConfig.Player = {}
 QRConfig.Player.RevealMap = true
+QRConfig.Player.EnableEagleEye = true
 QRConfig.Player.HungerRate = 4.2 -- Rate at which hunger goes down.
 QRConfig.Player.ThirstRate = 3.8 -- Rate at which thirst goes down.
 QRConfig.Player.Bloodtypes = {
@@ -30,3 +32,22 @@ QRConfig.Server.CheckDuplicateLicense = true -- Check for duplicate rockstar lic
 QRConfig.Server.Permissions = { 'god', 'admin', 'mod' } -- Add as many groups as you want here after creating them in your server.cfg
 
 QRConfig.NotifyPosition = 'top-right' -- 'top' | 'top-right' | 'top-left' | 'bottom' | 'bottom-right' | 'bottom-left'
+
+QRConfig.StarterItems = {
+    ['bread'] 			= { amount = 10, item = 'bread' },
+    ['water_bottle'] 	= { amount = 10, item = 'water_bottle' },
+}
+
+QRConfig.MaleNoGloves = {
+    [0] = true,
+    [1] = true,
+    [2] = true,
+    [3] = true,
+}
+
+QRConfig.FemaleNoGloves = {
+    [0] = true,
+    [1] = true,
+    [2] = true,
+    [3] = true,
+}
