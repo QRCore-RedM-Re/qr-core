@@ -1,5 +1,181 @@
 QRShared = QRShared or {}
 
+-- Keybinds --
+local function GetKeys()
+    return QRKeybinds
+end
+
+QRShared.GetKeys = GetKeys
+exports('GetKeys', GetKeys)
+
+local function GetKey(key)
+    if type(key) == 'string' then
+        if not QRKeybinds[key] then print('KEYBIND DOES NOT EXIST: '..key) return end
+        return QRKeybinds[tostring(key)]
+    elseif type(key) == 'table' then
+        local xKeybinds = {}
+        for x = 1, #key do
+            if not QRKeybinds[key[x]] then print('KEYBIND DOES NOT EXIST: '..key[x]) return end
+            xKeybinds[key[x]] = QRKeybinds[tostring(key[x])]
+        end
+        return xKeybinds
+    end
+end
+
+QRShared.GetKey = GetKey
+exports('GetKey', GetKey)
+
+-- Items --
+local function GetItems()
+    return QRItems
+end
+
+QRShared.GetItems = GetItems
+exports('GetItems', GetItems)
+
+local function GetItem(item)
+    if type(item) == 'string' then
+        if not QRItems[item] then print('ITEM DOES NOT EXIST: '..item) return end
+        return QRItems[item]
+    elseif type(item) == 'table' then
+        local xItems = {}
+        for x = 1, #item do
+            if not QRItems[item[x]] then print('ITEM DOES NOT EXIST: '..item[x]) return end
+            xItems[item[x]] = QRItems[item[x]]
+        end
+        return xItems
+    end
+end
+
+QRShared.GetItem = GetItem
+exports('GetItem', GetItem)
+
+-- Jobs --
+local function GetJobs()
+    return QRJobs
+end
+
+QRShared.GetJobs = GetJobs
+exports('GetJobs', GetJobs)
+
+local function GetJob(job)
+    if type(job) == 'string' then
+        if not QRJobs[job] then print('JOB DOES NOT EXIST: '..job) return end
+        return QRJobs[job]
+    elseif type(job) == 'table' then
+        local xJobs = {}
+        for x = 1, #job do
+            if not QRJobs[job[x]] then print('JOB DOES NOT EXIST: '..job[x]) return end
+            xJobs[job[x]] = QRJobs[job[x]]
+        end
+        return xJobs
+    end
+end
+
+QRShared.GetJob = GetJob
+exports('GetJob', GetJob)
+
+-- Gangs --
+local function GetGangs()
+    return QRGangs
+end
+
+QRShared.GetGangs = GetGangs
+exports('GetGangs', GetGangs)
+
+local function GetGang(gang)
+    if type(gang) == 'string' then
+        if not QRGangs[gang] then print('GANG DOES NOT EXIST: '..gang) return end
+        return QRGangs[gang]
+    elseif type(gang) == 'table' then
+        local xGangs = {}
+        for x = 1, #gang do
+            if not QRGangs[gang[x]] then print('GANG DOES NOT EXIST: '..gang[x]) return end
+            xGangs[gang[x]] = QRGangs[gang[x]]
+        end
+        return xGangs
+    end
+end
+
+QRShared.GetGang = GetGang
+exports('GetGang', GetGang)
+
+-- Horses --
+local function GetHorses()
+    return QRHorses
+end
+
+QRShared.GetHorses = GetHorses
+exports('GetHorses', GetHorses)
+
+local function GetHorse(horse)
+    if type(horse) == 'string' then
+        if not QRHorses[horse] then print('HORSE DOES NOT EXIST: '..horse) return end
+        return QRHorses[horse]
+    elseif type(horse) == 'table' then
+        local xHorses = {}
+        for x = 1, #horse do
+            if not QRHorses[horse[x]] then print('HORSE DOES NOT EXIST: '..horse[x]) return end
+            xHorses[horse[x]] = QRHorses[horse[x]]
+        end
+        return xHorses
+    end
+end
+
+QRShared.GetHorse = GetHorse
+exports('GetHorse', GetHorse)
+
+-- Vehicles --
+local function GetVehicles()
+    return QRVehicles
+end
+
+QRShared.GetVehicles = GetVehicles
+exports('GetVehicles', GetVehicles)
+
+local function GetVehicle(vehicle)
+    if type(vehicle) == 'string' then
+        if not QRVehicles[vehicle] then print('VEHICLE DOES NOT EXIST: '..vehicle) return end
+        return QRVehicles[vehicle]
+    elseif type(vehicle) == 'table' then
+        local xVehicles = {}
+        for x = 1, #vehicle do
+            if not QRVehicles[vehicle[x]] then print('VEHICLE DOES NOT EXIST: '..vehicle[x]) return end
+            xVehicles[vehicle[x]] = QRVehicles[vehicle[x]]
+        end
+        return xVehicles
+    end
+end
+
+QRShared.GetVehicle = GetVehicle
+exports('GetVehicle', GetVehicle)
+
+-- Weapons --
+local function GetWeapons()
+    return QRWeapons
+end
+
+QRShared.GetWeapons = GetWeapons
+exports('GetWeapons', GetWeapons)
+
+local function GetWeapon(weapon)
+    if type(weapon) == 'string' then
+        if not QRWeapons[weapon] then print('WEAPON DOES NOT EXIST: '..weapon) return end
+        return QRWeapons[weapon]
+    elseif type(weapon) == 'table' then
+        local xWeapons = {}
+        for x = 1, #weapon do
+            if not QRWeapons[weapon[x]] then print('WEAPON DOES NOT EXIST: '..weapon[x]) return end
+            xWeapons[weapon[x]] = QRWeapons[weapon[x]]
+        end
+        return xWeapons
+    end
+end
+
+QRShared.GetWeapon = GetWeapon
+exports('GetWeapon', GetWeapon)
+
+-- Other Shared Functions --
 local StringCharset = {}
 local NumberCharset = {}
 
@@ -75,88 +251,7 @@ function QRShared.SetDefaultVehicleExtras(vehicle, config)
     end
 end
 
-QRShared.StarterItems = {
-    ['bread'] 			= { amount = 10, item = 'bread' },
-    ['water_bottle'] 	= { amount = 10, item = 'water_bottle' },
-}
-
-QRShared.MaleNoGloves = {
-    [0] = true,
-    [1] = true,
-    [2] = true,
-    [3] = true,
-    [4] = true,
-    [5] = true,
-    [6] = true,
-    [7] = true,
-    [8] = true,
-    [9] = true,
-    [10] = true,
-    [11] = true,
-    [12] = true,
-    [13] = true,
-    [14] = true,
-    [15] = true,
-    [18] = true,
-    [26] = true,
-    [52] = true,
-    [53] = true,
-    [54] = true,
-    [55] = true,
-    [56] = true,
-    [57] = true,
-    [58] = true,
-    [59] = true,
-    [60] = true,
-    [61] = true,
-    [62] = true,
-    [112] = true,
-    [113] = true,
-    [114] = true,
-    [118] = true,
-    [125] = true,
-    [132] = true
-}
-
-QRShared.FemaleNoGloves = {
-    [0] = true,
-    [1] = true,
-    [2] = true,
-    [3] = true,
-    [4] = true,
-    [5] = true,
-    [6] = true,
-    [7] = true,
-    [8] = true,
-    [9] = true,
-    [10] = true,
-    [11] = true,
-    [12] = true,
-    [13] = true,
-    [14] = true,
-    [15] = true,
-    [19] = true,
-    [59] = true,
-    [60] = true,
-    [61] = true,
-    [62] = true,
-    [63] = true,
-    [64] = true,
-    [65] = true,
-    [66] = true,
-    [67] = true,
-    [68] = true,
-    [69] = true,
-    [70] = true,
-    [71] = true,
-    [129] = true,
-    [130] = true,
-    [131] = true,
-    [135] = true,
-    [142] = true,
-    [149] = true,
-    [153] = true,
-    [157] = true,
-    [161] = true,
-    [165] = true
-}
+-- Backwards Compatability --
+QRShared.StarterItems = QRConfig.StarterItems
+QRShared.MaleNoGloves = QRConfig.MaleNoGloves
+QRShared.FemaleNoGloves = QRConfig.FemaleNoGloves
