@@ -117,6 +117,11 @@ local Translations = {
             },
         },
     },
+    loading = {
+        text1 = 'Welcome to QR-Core',
+        text2 = 'Enjoy your time!',
+        text3 = 'Don\'t squat with your spurs on!'
+    }
 }
 
 Lang = Lang or Locale:new({

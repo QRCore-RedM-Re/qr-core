@@ -31,6 +31,7 @@ server_scripts {
     'server/events.lua',
     'server/commands.lua',
     'server/exports.lua',
+    'server/loops.lua',
     'server/debug.lua'
 }
 

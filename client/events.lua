@@ -1,29 +1,97 @@
 -- Player load and unload handling
 -- New method for checking if logged in across all scripts (optional)
 -- if LocalPlayer.state['isLoggedIn'] then
-local time = 7000 -- Duration of the display of the text : 1000ms = 1sec
 
+-- Player Spawned --
+AddEventHandler('playerSpawned', function()
+    Wait(2000)
+    Citizen.InvokeNative(0x1E5B70E53DB661E5, 0, 0, 0, Lang:t("loading.text1"), Lang:t("loading.text2"), Lang:t("loading.text3")) -- Hide the Homie Arthur + Fun Loading Screen Text :)
+    DisplayRadar(false) -- Hide Radar
+    SetMinimapHideFow(false) -- Hide Map
+    Wait(5000) -- Give it a few seconds...
+    ShutdownLoadingScreen() -- Stop Loading Screen
+    Citizen.InvokeNative(0xA63FCAD3A6FEC6D2, cache.ped, QRConfig.Player.EnableEagleEye) -- Enable Eagle Eye
+    TriggerEvent("qr-multicharacter:client:chooseChar")
+end)
 
+-- Player Load / Unload --
 RegisterNetEvent('QRCore:Client:OnPlayerLoaded', function()
-    ShutdownLoadingScreenNui()
     LocalPlayer.state:set('isLoggedIn', true, false)
-    if QRConfig.Player.RevealMap then SetMinimapHideFow(true) end
+    if QRConfig.Player.RevealMap then
+        SetMinimapHideFow(true)
+        DisplayRadar(true)
+    end
 end)
 
 RegisterNetEvent('QRCore:Client:OnPlayerUnload', function()
     LocalPlayer.state:set('isLoggedIn', false, false)
 end)
 
--- Teleport Commands
+-- Player Data --
+RegisterNetEvent('QRCore:Player:SetPlayerData', function(val)
+    QRCore.PlayerData = val
+end)
 
-RegisterNetEvent('QRCore:Command:TeleportToPlayer', function(coords) -- #MoneSuer | Fixed Teleport Command
+RegisterNetEvent('QRCore:Player:UpdatePlayerData', function()
+    TriggerServerEvent('QRCore:UpdatePlayer')
+end)
+
+-- Notify --
+RegisterNetEvent('QRCore:Notify', function(text, type, length)
+    QRCore.Functions.Notify(text, type, length)
+end)
+
+-- This event is exploitable and should not be used. It has been deprecated, and will be removed soon.
+RegisterNetEvent('QRCore:Client:UseItem', function(item)
+    QRCore.Debug(string.format("%s triggered QRCore:Client:UseItem by ID %s with the following data. This event is deprecated due to exploitation, and will be removed soon. Check qr-inventory for the right use on this event.", GetInvokingResource(), GetPlayerServerId(PlayerId())))
+    QRCore.Debug(item)
+end)
+
+-- Client Callback
+RegisterNetEvent('QRCore:Client:TriggerClientCallback', function(name, ...)
+    QRCore.Functions.TriggerClientCallback(name, function(...)
+        TriggerServerEvent('QRCore:Server:TriggerClientCallback', name, ...)
+    end, ...)
+end)
+
+-- Server Callback
+RegisterNetEvent('QRCore:Client:TriggerCallback', function(name, ...)
+    if QRCore.ServerCallbacks[name] then
+        QRCore.ServerCallbacks[name](...)
+        QRCore.ServerCallbacks[name] = nil
+    end
+end)
+
+-- Listen to Shared Being Updated --
+RegisterNetEvent('QRCore:Client:OnSharedUpdate', function(tableName, key, value)
+    QRCore.Shared[tableName][key] = value
+    TriggerEvent('QRCore:Client:UpdateObject')
+end)
+
+RegisterNetEvent('QRCore:Client:OnSharedUpdateMultiple', function(tableName, values)
+    for key, value in pairs(values) do
+        QRCore.Shared[tableName][key] = value
+    end
+    TriggerEvent('QRCore:Client:UpdateObject')
+end)
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------- COMMAND EVENTS -----------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
+
+-- Teleport to Plyer --
+RegisterNetEvent('QRCore:Command:TeleportToPlayer', function(coords)
     SetEntityCoords(cache.ped, coords.x, coords.y, coords.z)
 end)
 
-RegisterNetEvent('QRCore:Command:TeleportToCoords', function(x, y, z, h) -- #MoneSuer | Fixed Teleport Command
+-- Teleport to Coords Command --
+RegisterNetEvent('QRCore:Command:TeleportToCoords', function(x, y, z, h)
     SetEntityCoords(cache.ped, x, y, z)
+    SetEntityHeading(cache.ped, h or GetEntityHeading(cache.ped))
 end)
 
+-- Teleport to Waypoint --
 RegisterNetEvent('QRCore:Command:GoToMarker', function()
     local PlayerPedId = PlayerPedId
     local GetEntityCoords = GetEntityCoords
@@ -36,9 +104,7 @@ RegisterNetEvent('QRCore:Command:GoToMarker', function()
 
     --Fade screen to hide how clients get teleported.
     DoScreenFadeOut(650)
-    while not IsScreenFadedOut() do
-        Wait(0)
-    end
+    while not IsScreenFadedOut() do Wait(0) end
 
     local ped, coords <const> = cache.ped, GetWaypointCoords()
     local vehicle = GetVehiclePedIsIn(ped, false)
@@ -107,17 +173,13 @@ RegisterNetEvent('QRCore:Command:GoToMarker', function()
     QRCore.Functions.Notify(Lang:t("success.teleported_waypoint"), "success", 5000)
 end)
 
-
--- SPAWN / DELETE | HORSE / WAGON
-
+-- Spawn Wagon --
 RegisterNetEvent('QRCore:Command:SpawnVehicle', function(WagonName)
     local hash = GetHashKey(WagonName)
     if not IsModelInCdimage(hash) then return end
 
     RequestModel(hash)
-    while not HasModelLoaded(hash) do
-        Wait(0)
-    end
+    while not HasModelLoaded(hash) do Wait(0) end
 
     if cache.vehicle then
         DeleteVehicle(cache.vehicle)
@@ -134,16 +196,15 @@ RegisterNetEvent('QRCore:Command:SpawnVehicle', function(WagonName)
 	NetworkSetEntityInvisibleToNetwork(vehicle, true)
 end)
 
+-- Spawn Horse --
 RegisterNetEvent('QRCore:Command:SpawnHorse', function(HorseName)
-    local horseModel = QRCore.Shared.Horses[HorseName]['model']
+    local horseModel = QRHorses[HorseName]['model']
     local hash = GetHashKey(horseModel)
     local hashp = GetHashKey("PLAYER")
     if not IsModelInCdimage(horseModel) then return end
 
     RequestModel(horseModel)
-    while not HasModelLoaded(horseModel) do
-        Wait(0)
-    end
+    while not HasModelLoaded(horseModel) do Wait(0) end
 
     if cache.mount then
         DeletePed(cache.mount)
@@ -162,6 +223,7 @@ RegisterNetEvent('QRCore:Command:SpawnHorse', function(HorseName)
 	NetworkSetEntityInvisibleToNetwork(Horse, true)
 end)
 
+-- Delete Wagons --
 RegisterNetEvent('QRCore:Command:DeleteVehicle', function()
     if cache.vehicle then
         SetEntityAsMissionEntity(cache.vehicle, true, true)
@@ -178,6 +240,7 @@ RegisterNetEvent('QRCore:Command:DeleteVehicle', function()
     end
 end)
 
+-- Delete Horse --
 RegisterNetEvent('QRCore:Command:DeleteHorse', function()
     if cache.mount then
         DeletePed(cache.mount)
@@ -195,44 +258,7 @@ RegisterNetEvent('QRCore:Command:DeleteHorse', function()
     end
 end)
 
--- Other stuff
-
-RegisterNetEvent('QRCore:Player:SetPlayerData', function(val)
-    QRCore.PlayerData = val
-end)
-
-RegisterNetEvent('QRCore:Player:UpdatePlayerData', function()
-    TriggerServerEvent('QRCore:UpdatePlayer')
-end)
-
-RegisterNetEvent('QRCore:Notify', function(text, type, length)
-    QRCore.Functions.Notify(text, type, length)
-end)
-
--- This event is exploitable and should not be used. It has been deprecated, and will be removed soon.
-RegisterNetEvent('QRCore:Client:UseItem', function(item)
-    QRCore.Debug(string.format("%s triggered QRCore:Client:UseItem by ID %s with the following data. This event is deprecated due to exploitation, and will be removed soon. Check qr-inventory for the right use on this event.", GetInvokingResource(), GetPlayerServerId(PlayerId())))
-    QRCore.Debug(item)
-end)
-
--- Callback Events --
-
--- Client Callback
-RegisterNetEvent('QRCore:Client:TriggerClientCallback', function(name, ...)
-    QRCore.Functions.TriggerClientCallback(name, function(...)
-        TriggerServerEvent('QRCore:Server:TriggerClientCallback', name, ...)
-    end, ...)
-end)
-
--- Server Callback
-RegisterNetEvent('QRCore:Client:TriggerCallback', function(name, ...)
-    if QRCore.ServerCallbacks[name] then
-        QRCore.ServerCallbacks[name](...)
-        QRCore.ServerCallbacks[name] = nil
-    end
-end)
-
--- Me command
+-- /Me /Do /Try Commands --
 local RDisplaying = 1
 
 RegisterNetEvent('QRCore:triggerDisplay')
@@ -250,7 +276,7 @@ function Display(mePlayer, text, offset, type, custom)
     local _type = type
 
     CreateThread(function()
-        Wait(time)
+        Wait(QRConfig.ShowDoMeTryLength * 1000)
         displaying = false
     end)
     CreateThread(function()
@@ -313,16 +339,3 @@ function DrawText3D(x, y, z, text, me, custom)
         end
     end
 end
-
--- Listen to Shared being updated
-RegisterNetEvent('QRCore:Client:OnSharedUpdate', function(tableName, key, value)
-    QRCore.Shared[tableName][key] = value
-    TriggerEvent('QRCore:Client:UpdateObject')
-end)
-
-RegisterNetEvent('QRCore:Client:OnSharedUpdateMultiple', function(tableName, values)
-    for key, value in pairs(values) do
-        QRCore.Shared[tableName][key] = value
-    end
-    TriggerEvent('QRCore:Client:UpdateObject')
-end)

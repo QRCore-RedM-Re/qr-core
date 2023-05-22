@@ -1,8 +1,4 @@
-QRShared = QRShared or {}
-
--- use QRCore.Shared.Keybinds['J']
-
-QRShared.Keybinds = {
+QRKeybinds = {
     -- Letters
     ['A'] = 0x7065027D,
     ['B'] = 0x4CC0E2FE,

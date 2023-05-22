@@ -1,6 +1,4 @@
-QRShared = QRShared or {}
-
-QRShared.Gangs = {
+QRGangs = {
 	['none'] = {
 		label = 'No Gang',
 		grades = {

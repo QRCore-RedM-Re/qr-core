@@ -1,14 +1,4 @@
-CreateThread(function()
-    while true do
-        local sleep = 0
-        if LocalPlayer.state.isLoggedIn then
-            sleep = (1000 * 60) * QRCore.Config.UpdateInterval
-            TriggerServerEvent('QRCore:UpdatePlayer')
-        end
-        Wait(sleep)
-    end
-end)
-
+-- Update Player Hunger / Thirst --
 CreateThread(function()
     while true do
         if LocalPlayer.state.isLoggedIn then
@@ -18,6 +8,6 @@ CreateThread(function()
                 SetEntityHealth(cache.ped, currentHealth - decreaseThreshold)
             end
         end
-        Wait(QRCore.Config.StatusInterval)
+        Wait(QRCore.Config.StatusInterval * 1000)
     end
 end)

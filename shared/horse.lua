@@ -1,949 +1,1052 @@
-QRShared = QRShared or {}
-
-QRShared.Horses = {
-	['Donkey'] = {
+QRHorses = {
+	['donkey'] = {
 		['name'] = 'Donkey',
-		['model'] = `A_C_Donkey_01`,
-		['price'] = 15,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Donkey_01',
+		['category'] = 'Other',
 		['hash'] = 0x69A37A7B,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 15,
+			['bank'] = 15,
+		}
 	},
-	['Greyovero'] = {
+	['greyovero'] = {
 		['name'] = 'Greyovero',
-		['model'] = `A_C_Horse_AmericanPaint_Greyovero`,
-		['price'] = 425,
-		['category'] = 'horse',
-		['type'] = 'AmericanPaint',
+		['model'] = 'A_C_Horse_AmericanPaint_Greyovero',
+		['category'] = 'American Paint',
 		['hash'] = 0x8AF8EE20,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 25,
+			['bank'] = 25,
+		}
 	},
-	['Overo'] = {
+	['overo'] = {
 		['name'] = 'Overo',
-		['model'] = `A_C_Horse_AmericanPaint_Overo`,
-		['price'] = 140,
-		['category'] = 'horse',
-		['type'] = 'AmericanPaint',
+		['model'] = 'A_C_Horse_AmericanPaint_Overo',
+		['category'] = 'American Paint',
 		['hash'] = 0xE52CB9B2,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 25,
+			['bank'] = 25,
+		}
 	},
-	['SplashedWhite'] = {
-		['name'] = 'SplashedWhite',
-		['model'] = `A_C_Horse_AmericanPaint_SplashedWhite`,
-		['price'] = 130,
-		['category'] = 'horse',
-		['type'] = 'AmericanPaint',
+	['splashedWhite'] = {
+		['name'] = 'Splashed White',
+		['model'] = 'A_C_Horse_AmericanPaint_SplashedWhite',
+		['category'] = 'American Paint',
 		['hash'] = 0x6ADB82FE,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 25,
+			['bank'] = 25,
+		}
 	},
-	['Tobiano'] = {
+	['tobiano'] = {
 		['name'] = 'Tobiano',
-		['model'] = `A_C_Horse_AmericanPaint_Tobiano`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'AmericanPaint',
+		['model'] = 'A_C_Horse_AmericanPaint_Tobiano',
+		['category'] = 'American Paint',
 		['hash'] = 0x9BE270D3,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 10,
+			['bank'] = 10,
+		}
 	},
-	['StandardbredBlack'] = {
-		['name'] = 'StandardbredBlack',
-		['model'] = `A_C_Horse_AmericanStandardbred_Black`,
-		['price'] = 130,
-		['category'] = 'horse',
-		['type'] = 'AmericanStandardbred',
+	['standardbredblack'] = {
+		['name'] = 'Standardbred Black',
+		['model'] = 'A_C_Horse_AmericanStandardbred_Black',
+		['category'] = 'American Standardbred',
 		['hash'] = 0xB57D0193,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 30,
+			['bank'] = 30,
+		}
 	},
-	['StandardbredBuckskin'] = {
-		['name'] = 'StandardbredBuckskin',
-		['model'] = `A_C_Horse_AmericanStandardbred_Buckskin`,
-		['price'] = 130,
-		['category'] = 'horse',
-		['type'] = 'AmericanStandardbred',
+	['standardbredbuckskin'] = {
+		['name'] = 'Standardbred Buckskin',
+		['model'] = 'A_C_Horse_AmericanStandardbred_Buckskin',
+		['category'] = 'American Standardbred',
 		['hash'] = 0xED07737A,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 30,
+			['bank'] = 30,
+		}
 	},
-	['StandardbredPalominoDapple'] = {
-		['name'] = 'StandardbredPalominoDapple',
-		['model'] = `A_C_Horse_AmericanStandardbred_PalominoDapple`,
-		['price'] = 150,
-		['category'] = 'horse',
-		['type'] = 'AmericanStandardbred',
+	['standardbredpalominoDdapple'] = {
+		['name'] = 'Standardbred Palomino Dapple',
+		['model'] = 'A_C_Horse_AmericanStandardbred_PalominoDapple',
+		['category'] = 'American Standardbred',
 		['hash'] = 0x0348B323,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 30,
+			['bank'] = 30,
+		}
 	},
-	['StandardbredSilverTailBuckskin'] = {
-		['name'] = 'StandardbredSilverTailBuckskin',
-		['model'] = `A_C_Horse_AmericanStandardbred_SilverTailBuckskin`,
-		['price'] = 400,
-		['category'] = 'horse',
-		['type'] = 'AmericanStandardbred',
+	['standardbredsilvertailbuckskin'] = {
+		['name'] = 'Standardbred Silvertail Buckskin',
+		['model'] = 'A_C_Horse_AmericanStandardbred_SilverTailBuckskin',
+		['category'] = 'American Standardbred',
 		['hash'] = 0xE4AD6760,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 30,
+			['bank'] = 30,
+		}
 	},
-	['AndalusianDarkBay'] = {
-		['name'] = 'AndalusianDarkBay',
-		['model'] = `A_C_Horse_Andalusian_DarkBay`,
-		['price'] = 500,
-		['category'] = 'horse',
-		['type'] = 'Andalusian',
+	['andalusiandarkBay'] = {
+		['name'] = 'Dark Bay',
+		['model'] = 'A_C_Horse_Andalusian_DarkBay',
+		['category'] = 'Andalusian',
 		['hash'] = 0xE57FC660,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['Perlino'] = {
+	['perlino'] = {
 		['name'] = 'Perlino',
-		['model'] = `A_C_Horse_Andalusian_Perlino`,
-		['price'] = 900,
-		['category'] = 'horse',
-		['type'] = 'Andalusian',
+		['model'] = 'A_C_Horse_Andalusian_Perlino',
+		['category'] = 'Andalusian',
 		['hash'] = 0x2A100154,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['RoseGray'] = {
-		['name'] = 'RoseGray',
-		['model'] = `A_C_Horse_Andalusian_RoseGray`,
-		['price'] = 440,
-		['category'] = 'horse',
-		['type'] = 'Andalusian',
+	['rosegray'] = {
+		['name'] = 'Rose Gray',
+		['model'] = 'A_C_Horse_Andalusian_RoseGray',
+		['category'] = 'Andalusian',
 		['hash'] = 0x2C80A080,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['BlackSnowflake'] = {
-		['name'] = 'BlackSnowflake',
-		['model'] = `A_C_Horse_Appaloosa_BlackSnowflake`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['blacksnowflake'] = {
+		['name'] = 'Black Snowflake',
+		['model'] = 'A_C_Horse_Appaloosa_BlackSnowflake',
+		['category'] = 'Appaloosa',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['Blanket'] = {
+	['blanket'] = {
 		['name'] = 'Blanket',
-		['model'] = `A_C_Horse_Appaloosa_Blanket`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Appaloosa_Blanket',
+		['category'] = 'Appaloosa',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['BrownLeopard'] = {
-		['name'] = 'BrownLeopard',
-		['model'] = `A_C_Horse_Appaloosa_BrownLeopard`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['brownleopard'] = {
+		['name'] = 'Brown Leopard',
+		['model'] = 'A_C_Horse_Appaloosa_BrownLeopard',
+		['category'] = 'Appaloosa',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['FewSpottedPC'] = {
-		['name'] = 'FewSpottedPC',
-		['model'] = `A_C_Horse_Appaloosa_FewSpotted_PC`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['fewspottedpc'] = {
+		['name'] = 'Few SpottedPC',
+		['model'] = 'A_C_Horse_Appaloosa_FewSpotted_PC',
+		['category'] = 'Appaloosa',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['Leopard'] = {
+	['leopard'] = {
 		['name'] = 'Leopard',
-		['model'] = `A_C_Horse_Appaloosa_Leopard`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Appaloosa_Leopard',
+		['category'] = 'Appaloosa',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['LeopardBlanket'] = {
-		['name'] = 'LeopardBlanket',
-		['model'] = `A_C_Horse_Appaloosa_LeopardBlanket`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['leopardblanket'] = {
+		['name'] = 'Leopard Blanket',
+		['model'] = 'A_C_Horse_Appaloosa_LeopardBlanket',
+		['category'] = 'Appaloosa',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['ArabianBlack'] = {
-		['name'] = 'ArabianBlack',
-		['model'] = `A_C_Horse_Arabian_Black`,
-		['price'] = 5000,
-		['category'] = 'horse',
-		['type'] = 'Arabian',
+	['arabianblack'] = {
+		['name'] = 'Arabian Black',
+		['model'] = 'A_C_Horse_Arabian_Black',
+		['category'] = 'Arabian',
 		['hash'] = 0x88D6A59E,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
-	['ArabianGrey'] = {
-		['name'] = 'ArabianGrey',
-		['model'] = `A_C_Horse_Arabian_Grey`,
-		['price'] = 5000,
-		['category'] = 'horse',
-		['type'] = 'Arabian',
+	['arabiangrey'] = {
+		['name'] = 'Arabian Grey',
+		['model'] = 'A_C_Horse_Arabian_Grey',
+		['category'] = 'Arabian',
 		['hash'] = 0x05052866,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
-	['ArabianRedChestnut'] = {
-		['name'] = 'ArabianRedChestnut',
-		['model'] = `A_C_Horse_Arabian_RedChestnut`,
-		['price'] = 1000,
-		['category'] = 'horse',
-		['type'] = 'Arabian',
+	['arabianredchestnut'] = {
+		['name'] = 'Red Chestnut',
+		['model'] = 'A_C_Horse_Arabian_RedChestnut',
+		['category'] = 'Arabian',
 		['hash'] = 0x5933FD24,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
-	['RedChestnutPC'] = {
-		['name'] = 'RedChestnutPC',
-		['model'] = `A_C_Horse_Arabian_RedChestnut_PC`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'Arabian',
+	['redchestnutpc'] = {
+		['name'] = 'Red Chestnut PC',
+		['model'] = 'A_C_Horse_Arabian_RedChestnut_PC',
+		['category'] = 'Arabian',
 		['hash'] = 0xA52D4FC0,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
-	['RoseGreyBay'] = {
-		['name'] = 'RoseGreyBay',
-		['model'] = `A_C_Horse_Arabian_RoseGreyBay`,
-		['price'] = 3000,
-		['category'] = 'horse',
-		['type'] = 'Arabian',
+	['rosegreybay'] = {
+		['name'] = 'Rose Grey Bay',
+		['model'] = 'A_C_Horse_Arabian_RoseGreyBay',
+		['category'] = 'Arabian',
 		['hash'] = 0xE7F3880C,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
-	['WarpedBrindlePC'] = {
-		['name'] = 'WarpedBrindlePC',
-		['model'] = `A_C_Horse_Arabian_WarpedBrindle_PC`,
-		['price'] = 1000,
-		['category'] = 'horse',
-		['type'] = 'Arabian',
+	['warpedvrindlepc'] = {
+		['name'] = 'Warped BrindlePC',
+		['model'] = 'A_C_Horse_Arabian_WarpedBrindle_PC',
+		['category'] = 'Arabian',
 		['hash'] = 0x5DFCD1F9,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
-	['ArabianWhite'] = {
-		['name'] = 'ArabianWhite',
-		['model'] = `A_C_Horse_Arabian_White`,
-		['price'] = 3000,
-		['category'] = 'horse',
-		['type'] = 'Arabian',
+	['arabianwhite'] = {
+		['name'] = 'Arabian White',
+		['model'] = 'A_C_Horse_Arabian_White',
+		['category'] = 'Arabian',
 		['hash'] = 0xC8DA3400,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
-	['ArdennesBayRoan'] = {
-		['name'] = 'ArdennesBayRoan',
-		['model'] = `A_C_Horse_Ardennes_BayRoan`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['ardennesbayroan'] = {
+		['name'] = 'Ardennes Bay Roan',
+		['model'] = 'A_C_Horse_Ardennes_BayRoan',
+		['category'] = 'Ardennes',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['IronGreyRoan'] = {
-		['name'] = 'IronGreyRoan',
-		['model'] = `A_C_Horse_Ardennes_IronGreyRoan`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['irongreyroan'] = {
+		['name'] = 'Iron Grey Roan',
+		['model'] = 'A_C_Horse_Ardennes_IronGreyRoan',
+		['category'] = 'Ardennes',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['StrawberryRoan'] = {
-		['name'] = 'StrawberryRoan',
-		['model'] = `A_C_Horse_Ardennes_StrawberryRoan`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['strawberryroan'] = {
+		['name'] = 'Strawberry Roan',
+		['model'] = 'A_C_Horse_Ardennes_StrawberryRoan',
+		['category'] = 'Ardennes',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['BlondChestnut'] = {
-		['name'] = 'BlondChestnut',
-		['model'] = `A_C_Horse_Belgian_BlondChestnut`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['blondchestnut'] = {
+		['name'] = 'Blond Chestnut',
+		['model'] = 'A_C_Horse_Belgian_BlondChestnut',
+		['category'] = 'Belgian Draft',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['MealyChestnut'] = {
-		['name'] = 'MealyChestnut',
-		['model'] = `A_C_Horse_Belgian_MealyChestnut`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['mealychestnut'] = {
+		['name'] = 'Mealy Chestnut',
+		['model'] = 'A_C_Horse_Belgian_MealyChestnut',
+		['category'] = 'Belgian Draft',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['WarVets'] = {
-		['name'] = 'WarVets',
-		['model'] = `A_C_Horse_Buell_WarVets`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['warvets'] = {
+		['name'] = 'War Vets',
+		['model'] = 'A_C_Horse_Buell_WarVets',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['ChocolateRoan'] = {
-		['name'] = 'ChocolateRoan',
-		['model'] = `A_C_Horse_DutchWarmblood_ChocolateRoan`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['chocolateroan'] = {
+		['name'] = 'Chocolate Roan',
+		['model'] = 'A_C_Horse_DutchWarmblood_ChocolateRoan',
+		['category'] = 'Dutch Warmblood',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['SealBrown'] = {
-		['name'] = 'SealBrown',
-		['model'] = `A_C_Horse_DutchWarmblood_SealBrown`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['sealbrown'] = {
+		['name'] = 'Seal Brown',
+		['model'] = 'A_C_Horse_DutchWarmblood_SealBrown',
+		['category'] = 'Dutch Warmblood',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['SootyBuckskin'] = {
-		['name'] = 'SootyBuckskin',
-		['model'] = `A_C_Horse_DutchWarmblood_SootyBuckskin`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['sootybuckskin'] = {
+		['name'] = 'Sooty Buckskin',
+		['model'] = 'A_C_Horse_DutchWarmblood_SootyBuckskin',
+		['category'] = 'Dutch Warmblood',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['EagleFlies'] = {
-		['name'] = 'EagleFlies',
-		['model'] = `A_C_Horse_EagleFlies`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['eagleflies'] = {
+		['name'] = 'Eagle Flies',
+		['model'] = 'A_C_Horse_EagleFlies',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['Bill'] = {
+	['bill'] = {
 		['name'] = 'Bill',
-		['model'] = `A_C_Horse_Gang_Bill`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Gang_Bill',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['Charles'] = {
+	['charles'] = {
 		['name'] = 'Charles',
-		['model'] = `A_C_Horse_Gang_Charles`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Gang_Charles',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['CharlesEndlessSummer'] = {
-		['name'] = 'CharlesEndlessSummer',
-		['model'] = `A_C_Horse_Gang_Charles_EndlessSummer`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['charlesendlesssummer'] = {
+		['name'] = 'Charles Endless Summer',
+		['model'] = 'A_C_Horse_Gang_Charles_EndlessSummer',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['Dutch'] = {
+	['dutch'] = {
 		['name'] = 'Dutch',
-		['model'] = `A_C_Horse_Gang_Dutch`,
-		['price'] = 1000,
-		['category'] = 'horse',
-		['type'] = 'other',
+		['model'] = 'A_C_Horse_Gang_Dutch',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['Hosea'] = {
+	['hosea'] = {
 		['name'] = 'Hosea',
-		['model'] = `A_C_Horse_Gang_Hosea`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Gang_Hosea',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['Javier'] = {
+	['javier'] = {
 		['name'] = 'Javier',
-		['model'] = `A_C_Horse_Gang_Javier`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Gang_Javier',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['John'] = {
+	['john'] = {
 		['name'] = 'John',
-		['model'] = `A_C_Horse_Gang_John`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Gang_John',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['Karen'] = {
+	['karen'] = {
 		['name'] = 'Karen',
-		['model'] = `A_C_Horse_Gang_Karen`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Gang_Karen',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['Kieran'] = {
+	['kieran'] = {
 		['name'] = 'Kieran',
-		['model'] = `A_C_Horse_Gang_Kieran`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Gang_Kieran',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['Lenny'] = {
+	['lenny'] = {
 		['name'] = 'Lenny',
-		['model'] = `A_C_Horse_Gang_Lenny`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Gang_Lenny',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['Micah'] = {
+	['micah'] = {
 		['name'] = 'Micah',
-		['model'] = `A_C_Horse_Gang_Micah`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Gang_Micah',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['Sadie'] = {
+	['sadie'] = {
 		['name'] = 'Sadie',
-		['model'] = `A_C_Horse_Gang_Sadie`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Gang_Sadie',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['SadieEndlessSummer'] = {
-		['name'] = 'SadieEndlessSummer',
-		['model'] = `A_C_Horse_Gang_Sadie_EndlessSummer`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['sadieendlesssummer'] = {
+		['name'] = 'Sadie Endless Summer',
+		['model'] = 'A_C_Horse_Gang_Sadie_EndlessSummer',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['Sean'] = {
+	['sean'] = {
 		['name'] = 'Sean',
-		['model'] = `A_C_Horse_Gang_Sean`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Gang_Sean',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['Trelawney'] = {
+	['trelawney'] = {
 		['name'] = 'Trelawney',
-		['model'] = `A_C_Horse_Gang_Trelawney`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Gang_Trelawney',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['Uncle'] = {
+	['uncle'] = {
 		['name'] = 'Uncle',
-		['model'] = `A_C_Horse_Gang_Uncle`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Gang_Uncle',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['UncleEndlessSummer'] = {
-		['name'] = 'UncleEndlessSummer',
-		['model'] = `A_C_Horse_Gang_Uncle_EndlessSummer`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['uncleendlesssummer'] = {
+		['name'] = 'Uncle Endless Summer',
+		['model'] = 'A_C_Horse_Gang_Uncle_EndlessSummer',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['DarkDappleGrey'] = {
-		['name'] = 'DarkDappleGrey',
-		['model'] = `A_C_Horse_HungarianHalfbred_DarkDappleGrey`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['darkdapplegrey'] = {
+		['name'] = 'Dark Dapple Grey',
+		['model'] = 'A_C_Horse_HungarianHalfbred_DarkDappleGrey',
+		['category'] = 'Hungarian Halfbred',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 60,
+			['bank'] = 60,
+		}
 	},
-	['HungarianHalfbredFlaxenChestnut'] = {
-		['name'] = 'HungarianHalfbredFlaxenChestnut',
-		['model'] = `A_C_Horse_HungarianHalfbred_FlaxenChestnut`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['hungarianhalfbredflaxenchestnut'] = {
+		['name'] = 'Hungarian Halfbred Flaxen Chestnut',
+		['model'] = 'A_C_Horse_HungarianHalfbred_FlaxenChestnut',
+		['category'] = 'Hungarian Halfbred',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 60,
+			['bank'] = 60,
+		}
 	},
-	['LiverChestnut'] = {
-		['name'] = 'LiverChestnut',
-		['model'] = `A_C_Horse_HungarianHalfbred_LiverChestnut`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['liverchestnut'] = {
+		['name'] = 'Liver Chestnut',
+		['model'] = 'A_C_Horse_HungarianHalfbred_LiverChestnut',
+		['category'] = 'Hungarian Halfbred',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 60,
+			['bank'] = 60,
+		}
 	},
-	['PiebaldTobiano'] = {
-		['name'] = 'PiebaldTobiano',
-		['model'] = `A_C_Horse_HungarianHalfbred_PiebaldTobiano`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['piebaldtobiano'] = {
+		['name'] = 'Piebald Tobiano',
+		['model'] = 'A_C_Horse_HungarianHalfbred_PiebaldTobiano',
+		['category'] = 'Hungarian Halfbred',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 60,
+			['bank'] = 60,
+		}
 	},
-	['JohnEndlessSummer'] = {
-		['name'] = 'JohnEndlessSummer',
-		['model'] = `A_C_Horse_John_EndlessSummer`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['johnendlesssummer'] = {
+		['name'] = 'John Endless Summer',
+		['model'] = 'A_C_Horse_John_EndlessSummer',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 60,
+			['bank'] = 60,
+		}
 	},
-	['KentuckySaddleBlack'] = {
-		['name'] = 'KentuckySaddleBlack',
-		['model'] = `A_C_Horse_KentuckySaddle_Black`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['kentuckysaddleblack'] = {
+		['name'] = 'Kentucky Saddle Black',
+		['model'] = 'A_C_Horse_KentuckySaddle_Black',
+		['category'] = 'Kentucky Saddle',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 25,
+			['bank'] = 25,
+		}
 	},
-	['ButterMilkBuckskinPC'] = {
-		['name'] = 'ButterMilkBuckskinPC',
-		['model'] = `A_C_Horse_KentuckySaddle_ButterMilkBuckskin_PC`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['buttermilkbuckskinpc'] = {
+		['name'] = 'Butter Milk BuckskinPC',
+		['model'] = 'A_C_Horse_KentuckySaddle_ButterMilkBuckskin_PC',
+		['category'] = 'Kentucky Saddle',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 25,
+			['bank'] = 25,
+		}
 	},
-	['ChestnutPinto'] = {
-		['name'] = 'ChestnutPinto',
-		['model'] = `A_C_Horse_KentuckySaddle_ChestnutPinto`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['chestnutpinto'] = {
+		['name'] = 'Chestnut Pinto',
+		['model'] = 'A_C_Horse_KentuckySaddle_ChestnutPinto',
+		['category'] = 'Kentucky Saddle',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 25,
+			['bank'] = 25,
+		}
 	},
-	['SaddleGrey'] = {
-		['name'] = 'SaddleGrey',
-		['model'] = `A_C_Horse_KentuckySaddle_Grey`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['saddlegrey'] = {
+		['name'] = 'Saddle Grey',
+		['model'] = 'A_C_Horse_KentuckySaddle_Grey',
+		['category'] = 'Kentucky Saddle',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 25,
+			['bank'] = 25,
+		}
 	},
-	['SilverBay'] = {
-		['name'] = 'SilverBay',
-		['model'] = `A_C_Horse_KentuckySaddle_SilverBay`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['silverbay'] = {
+		['name'] = 'Silver Bay',
+		['model'] = 'A_C_Horse_KentuckySaddle_SilverBay',
+		['category'] = 'Kentucky Saddle',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 25,
+			['bank'] = 25,
+		}
 	},
-	['AmberChampagne'] = {
-		['name'] = 'AmberChampagne',
-		['model'] = `A_C_Horse_MissouriFoxTrotter_AmberChampagne`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['amberchampagne'] = {
+		['name'] = 'Amber Champagne',
+		['model'] = 'A_C_Horse_MissouriFoxTrotter_AmberChampagne',
+		['category'] = 'Missouri Fox Trotter',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 25,
+			['bank'] = 25,
+		}
 	},
-	['SableChampagne'] = {
-		['name'] = 'SableChampagne',
-		['model'] = `A_C_Horse_MissouriFoxTrotter_SableChampagne`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['sablechampagne'] = {
+		['name'] = 'Sable Champagne',
+		['model'] = 'A_C_Horse_MissouriFoxTrotter_SableChampagne',
+		['category'] = 'Missouri Fox Trotter',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 25,
+			['bank'] = 25,
+		}
 	},
-	['SilverDapplePinto'] = {
-		['name'] = 'SilverDapplePinto',
-		['model'] = `A_C_Horse_MissouriFoxTrotter_SilverDapplePinto`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['silverdapplepinto'] = {
+		['name'] = 'Silver Dapple Pinto',
+		['model'] = 'A_C_Horse_MissouriFoxTrotter_SilverDapplePinto',
+		['category'] = 'Missouri Fox Trotter',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 25,
+			['bank'] = 25,
+		}
 	},
-	['Bay'] = {
+	['bay'] = {
 		['name'] = 'Bay',
-		['model'] = `A_C_Horse_Morgan_Bay`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Morgan_Bay',
+		['category'] = 'Morgan',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 25,
+			['bank'] = 25,
+		}
 	},
-	['MorganBayRoan'] = {
-		['name'] = 'MorganBayRoan',
-		['model'] = `A_C_Horse_Morgan_BayRoan`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['morganbayroan'] = {
+		['name'] = 'Morgan Bay Roan',
+		['model'] = 'A_C_Horse_Morgan_BayRoan',
+		['category'] = 'Morgan',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 25,
+			['bank'] = 25,
+		}
 	},
-	['MorganFlaxenChestnut'] = {
-		['name'] = 'MorganFlaxenChestnut',
-		['model'] = `A_C_Horse_Morgan_FlaxenChestnut`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['morganflaxenchestnut'] = {
+		['name'] = 'Morgan Flaxen Chestnut',
+		['model'] = 'A_C_Horse_Morgan_FlaxenChestnut',
+		['category'] = 'Morgan',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 25,
+			['bank'] = 25,
+		}
 	},
-	['LiverChestnutPC'] = {
-		['name'] = 'LiverChestnutPC',
-		['model'] = `A_C_Horse_Morgan_LiverChestnut_PC`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['liverchestnutpc'] = {
+		['name'] = 'Liver ChestnutPC',
+		['model'] = 'A_C_Horse_Morgan_LiverChestnut_PC',
+		['category'] = 'Morgan',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 25,
+			['bank'] = 25,
+		}
 	},
-	['Palomino'] = {
+	['palomino'] = {
 		['name'] = 'Palomino',
-		['model'] = `A_C_Horse_Morgan_Palomino`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Morgan_Palomino',
+		['category'] = 'Morgan',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 25,
+			['bank'] = 25,
+		}
 	},
-	['Mangy'] = {
+	['mangy'] = {
 		['name'] = 'Mangy',
-		['model'] = `A_C_Horse_MP_Mangy_Backup`,
-		['price'] = 15,
-		['category'] = 'horse',
-		['type'] = 'other',
+		['model'] = 'A_C_Horse_MP_Mangy_Backup',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 10,
+			['bank'] = 10,
+		}
 	},
-	['Mange'] = {
+	['mange'] = {
 		['name'] = 'Mange',
-		['model'] = `A_C_Horse_MurfreeBrood_Mange_01`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_MurfreeBrood_Mange_01',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 10,
+			['bank'] = 10,
+		}
 	},
-	['Mange2'] = {
+	['mange2'] = {
 		['name'] = 'Mange2',
-		['model'] = `A_C_Horse_MurfreeBrood_Mange_02`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_MurfreeBrood_Mange_02',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 10,
+			['bank'] = 10,
+		}
 	},
-	['Mange3'] = {
+	['mange3'] = {
 		['name'] = 'Mange3',
-		['model'] = `A_C_Horse_MurfreeBrood_Mange_03`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_MurfreeBrood_Mange_03',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 10,
+			['bank'] = 10,
+		}
 	},
-	['GoldenDun'] = {
-		['name'] = 'GoldenDun',
-		['model'] = `A_C_Horse_Mustang_GoldenDun`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['goldendun'] = {
+		['name'] = 'Golden Dun',
+		['model'] = 'A_C_Horse_Mustang_GoldenDun',
+		['category'] = 'Mustang',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 45,
+			['bank'] = 45,
+		}
 	},
-	['GrulloDun'] = {
-		['name'] = 'GrulloDun',
-		['model'] = `A_C_Horse_Mustang_GrulloDun`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['grullodun'] = {
+		['name'] = 'Grullo Dun',
+		['model'] = 'A_C_Horse_Mustang_GrulloDun',
+		['category'] = 'Mustang',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 45,
+			['bank'] = 45,
+		}
 	},
-	['TigerStripedBay'] = {
-		['name'] = 'TigerStripedBay',
-		['model'] = `A_C_Horse_Mustang_TigerStripedBay`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['tigerstripedbay'] = {
+		['name'] = 'Tiger Striped Bay',
+		['model'] = 'A_C_Horse_Mustang_TigerStripedBay',
+		['category'] = 'Mustang',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 45,
+			['bank'] = 45,
+		}
 	},
-	['WildBay'] = {
-		['name'] = 'WildBay',
-		['model'] = `A_C_Horse_Mustang_WildBay`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['wildbay'] = {
+		['name'] = 'Wild Bay',
+		['model'] = 'A_C_Horse_Mustang_WildBay',
+		['category'] = 'Mustang',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 45,
+			['bank'] = 45,
+		}
 	},
-	['BlueRoan'] = {
-		['name'] = 'BlueRoan',
-		['model'] = `A_C_Horse_Nokota_BlueRoan`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['blueroan'] = {
+		['name'] = 'Blue Roan',
+		['model'] = 'A_C_Horse_Nokota_BlueRoan',
+		['category'] = 'Nokota',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 30,
+			['bank'] = 30,
+		}
 	},
-	['ReverseDappleRoan'] = {
-		['name'] = 'ReverseDappleRoan',
-		['model'] = `A_C_Horse_Nokota_ReverseDappleRoan`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['reversedappleroan'] = {
+		['name'] = 'Reverse Dapple Roan',
+		['model'] = 'A_C_Horse_Nokota_ReverseDappleRoan',
+		['category'] = 'Nokota',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 30,
+			['bank'] = 30,
+		}
 	},
-	['WhiteRoan'] = {
-		['name'] = 'WhiteRoan',
-		['model'] = `A_C_Horse_Nokota_WhiteRoan`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['whiteroan'] = {
+		['name'] = 'White Roan',
+		['model'] = 'A_C_Horse_Nokota_WhiteRoan',
+		['category'] = 'Nokota',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 30,
+			['bank'] = 30,
+		}
 	},
-	['ShireDarkBay'] = {
-		['name'] = 'ShireDarkBay',
-		['model'] = `A_C_Horse_Shire_DarkBay`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['shiredarkbay'] = {
+		['name'] = 'Shire Dark Bay',
+		['model'] = 'A_C_Horse_Shire_DarkBay',
+		['category'] = 'Shire',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 30,
+			['bank'] = 30,
+		}
 	},
-	['LightGrey'] = {
-		['name'] = 'LightGrey',
-		['model'] = `A_C_Horse_Shire_LightGrey`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['lightgrey'] = {
+		['name'] = 'Light Grey',
+		['model'] = 'A_C_Horse_Shire_LightGrey',
+		['category'] = 'Shire',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 30,
+			['bank'] = 30,
+		}
 	},
-	['RavenBlack'] = {
-		['name'] = 'RavenBlack',
-		['model'] = `A_C_Horse_Shire_RavenBlack`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['ravenblack'] = {
+		['name'] = 'Raven Black',
+		['model'] = 'A_C_Horse_Shire_RavenBlack',
+		['category'] = 'Shire',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 30,
+			['bank'] = 30,
+		}
 	},
-	['SuffolkPunchRedChestnut'] = {
-		['name'] = 'SuffolkPunchRedChestnut',
-		['model'] = `A_C_Horse_SuffolkPunch_RedChestnut`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['suffolkpunchredchestnut'] = {
+		['name'] = 'Suffolk Punch Red Chestnut',
+		['model'] = 'A_C_Horse_SuffolkPunch_RedChestnut',
+		['category'] = 'Suffolk Punch',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 30,
+			['bank'] = 30,
+		}
 	},
-	['PunchSorrel'] = {
-		['name'] = 'PunchSorrel',
-		['model'] = `A_C_Horse_SuffolkPunch_Sorrel`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['punchsorrel'] = {
+		['name'] = 'Suffolk Punch Sorrel',
+		['model'] = 'A_C_Horse_SuffolkPunch_Sorrel',
+		['category'] = 'Suffolk Punch',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 30,
+			['bank'] = 30,
+		}
 	},
-	['BlackRabicano'] = {
-		['name'] = 'BlackRabicano',
-		['model'] = `A_C_Horse_TennesseeWalker_BlackRabicano`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['blackrabicano'] = {
+		['name'] = 'Black Rabicano',
+		['model'] = 'A_C_Horse_TennesseeWalker_BlackRabicano',
+		['category'] = 'Tennessee Walker',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['Chestnut'] = {
+	['chestnut'] = {
 		['name'] = 'Chestnut',
-		['model'] = `A_C_Horse_TennesseeWalker_Chestnut`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_TennesseeWalker_Chestnut',
+		['category'] = 'Tennessee Walker',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['DappleBay'] = {
-		['name'] = 'DappleBay',
-		['model'] = `A_C_Horse_TennesseeWalker_DappleBay`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['dapplebay'] = {
+		['name'] = 'Dapple Bay',
+		['model'] = 'A_C_Horse_TennesseeWalker_DappleBay',
+		['category'] = 'Tennessee Walker',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['FlaxenRoan'] = {
-		['name'] = 'FlaxenRoan',
-		['model'] = `A_C_Horse_TennesseeWalker_FlaxenRoan`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['flaxenroan'] = {
+		['name'] = 'Flaxen Roan',
+		['model'] = 'A_C_Horse_TennesseeWalker_FlaxenRoan',
+		['category'] = 'Tennessee Walker',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['GoldPalominoPC'] = {
-		['name'] = 'GoldPalominoPC',
-		['model'] = `A_C_Horse_TennesseeWalker_GoldPalomino_PC`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['goldpalominopc'] = {
+		['name'] = 'Gold PalominoPC',
+		['model'] = 'A_C_Horse_TennesseeWalker_GoldPalomino_PC',
+		['category'] = 'Tennessee Walker',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['MahoganyBay'] = {
-		['name'] = 'MahoganyBay',
-		['model'] = `A_C_Horse_TennesseeWalker_MahoganyBay`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['mahoganybay'] = {
+		['name'] = 'Mahogany Bay',
+		['model'] = 'A_C_Horse_TennesseeWalker_MahoganyBay',
+		['category'] = 'Tennessee Walker',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['RedRoan'] = {
-		['name'] = 'RedRoan',
-		['model'] = `A_C_Horse_TennesseeWalker_RedRoan`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['redroan'] = {
+		['name'] = 'Red Roan',
+		['model'] = 'A_C_Horse_TennesseeWalker_RedRoan',
+		['category'] = 'Tennessee Walker',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 40,
+			['bank'] = 40,
+		}
 	},
-	['BlackChestnut'] = {
-		['name'] = 'BlackChestnut',
-		['model'] = `A_C_Horse_Thoroughbred_BlackChestnut`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['blackchestnut'] = {
+		['name'] = 'Black Chestnut',
+		['model'] = 'A_C_Horse_Thoroughbred_BlackChestnut',
+		['category'] = 'Thoroughbred',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
-	['BloodBay'] = {
-		['name'] = 'BloodBay',
-		['model'] = `A_C_Horse_Thoroughbred_BloodBay`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['bloodbay'] = {
+		['name'] = 'Blood Bay',
+		['model'] = 'A_C_Horse_Thoroughbred_BloodBay',
+		['category'] = 'Thoroughbred',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
-	['Brindle'] = {
+	['brindle'] = {
 		['name'] = 'Brindle',
-		['model'] = `A_C_Horse_Thoroughbred_Brindle`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Thoroughbred_Brindle',
+		['category'] = 'Thoroughbred',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
-	['DappleGrey'] = {
-		['name'] = 'DappleGrey',
-		['model'] = `A_C_Horse_Thoroughbred_DappleGrey`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['dapplegrey'] = {
+		['name'] = 'Dapple Grey',
+		['model'] = 'A_C_Horse_Thoroughbred_DappleGrey',
+		['category'] = 'Thoroughbred',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
-	['ReverseDappleBlack'] = {
-		['name'] = 'ReverseDappleBlack',
-		['model'] = `A_C_Horse_Thoroughbred_ReverseDappleBlack`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['reversedappleblack'] = {
+		['name'] = 'Reverse Dapple Black',
+		['model'] = 'A_C_Horse_Thoroughbred_ReverseDappleBlack',
+		['category'] = 'Thoroughbred',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
-	['TurkomanDarkBay'] = {
-		['name'] = 'TurkomanDarkBay',
-		['model'] = `A_C_Horse_Turkoman_DarkBay`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+	['turkomandarkbay'] = {
+		['name'] = 'Turkoman Dark Bay',
+		['model'] = 'A_C_Horse_Turkoman_DarkBay',
+		['category'] = 'Turkoman',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
-	['Gold'] = {
+	['gold'] = {
 		['name'] = 'Gold',
-		['model'] = `A_C_Horse_Turkoman_Gold`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Turkoman_Gold',
+		['category'] = 'Turkoman',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
-	['Silver'] = {
+	['silver'] = {
 		['name'] = 'Silver',
-		['model'] = `A_C_Horse_Turkoman_Silver`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Turkoman_Silver',
+		['category'] = 'Turkoman',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
-	['Winter2'] = {
+	['winter2'] = {
 		['name'] = 'Winter2',
-		['model'] = `A_C_Horse_Winter02_01`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'A_C_Horse_Winter02_01',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
-	['Mule'] = {
+	['mule'] = {
 		['name'] = 'Mule',
-		['model'] = `A_C_HorseMule_01`,
-		['price'] = 15,
-		['category'] = 'horse',
-		['type'] = 'other',
+		['model'] = 'A_C_HorseMule_01',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
-	['MulePainted'] = {
-		['name'] = 'MulePainted',
-		['model'] = `A_C_HorseMulePainted_01`,
-		['price'] = 15,
-		['category'] = 'horse',
-		['type'] = 'other',
+	['mulepainted'] = {
+		['name'] = 'Mule Painted',
+		['model'] = 'A_C_HorseMulePainted_01',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
-	['Horse'] = {
+	['horse'] = {
 		['name'] = 'Horse',
-		['model'] = `P_C_Horse_01`,
-		['price'] = 10,
-		['category'] = 'horse',
-		['type'] = 'horse',
+		['model'] = 'P_C_Horse_01',
+		['category'] = 'Other',
 		['hash'] = 0x8AF8EE209,
-		['shop'] = '',
+		['price'] = {
+			['cash'] = 50,
+			['bank'] = 50,
+		}
 	},
 }
