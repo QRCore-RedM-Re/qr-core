@@ -17,7 +17,6 @@ function QRCore.Functions.HasItem(items, amount)
 end
 
 -- Utility
-
 function QRCore.Functions.DrawText(x, y, width, height, scale, r, g, b, a, text)
     -- Use local function instead
     SetTextFont(4)
@@ -214,26 +213,10 @@ function QRCore.Functions.GetPeds(ignoreList)
 end
 
 function QRCore.Functions.GetClosestPed(coords, ignoreList)
-    if coords then
-        coords = type(coords) == 'table' and vec3(coords.x, coords.y, coords.z) or coords
-    else
-        coords = GetEntityCoords(cache.ped)
-    end
-    local ignoreList = ignoreList or {}
-    local peds = QRCore.Functions.GetPeds(ignoreList)
-    local closestDistance = -1
-    local closestPed = -1
-    for i = 1, #peds, 1 do
-        local pedCoords = GetEntityCoords(peds[i])
-        local distance = #(pedCoords - coords)
-        if peds[i] ~= cache.ped then
-            if closestDistance == -1 or closestDistance > distance then
-                closestPed = peds[i]
-                closestDistance = distance
-            end
-        end
-    end
-    return closestPed, closestDistance
+    coords = type(coords) == 'table' and vec3(coords.x, coords.y, coords.z) or coords or GetEntityCoords(cache.ped)
+    local ped, pedCoords = lib.getClosestPed(coords, 50)
+    local closestDistance = pedCoords and #(pedCoords - coords) or nil
+    return ped, closestDistance
 end
 
 function QRCore.Functions.IsWearingGloves()
@@ -278,22 +261,9 @@ function QRCore.Functions.GetClosestVehicle(coords)
 end
 
 function QRCore.Functions.GetClosestObject(coords)
-    local objects = GetGamePool('CObject')
-    local closestDistance = -1
-    local closestObject = -1
-    if coords then
-        coords = type(coords) == 'table' and vec3(coords.x, coords.y, coords.z) or coords
-    else
-        coords = GetEntityCoords(cache.ped)
-    end
-    for i = 1, #objects, 1 do
-        local objectCoords = GetEntityCoords(objects[i])
-        local distance = #(objectCoords - coords)
-        if closestDistance == -1 or closestDistance > distance then
-            closestObject = objects[i]
-            closestDistance = distance
-        end
-    end
+    coords = type(coords) == 'table' and vec3(coords.x, coords.y, coords.z) or coords or GetEntityCoords(cache.ped)
+    local closestObject, objectCoords = lib.getClosestObject(coords, 50)
+    local closestDistance = objectCoords and #(objectCoords - coords) or nil
     return closestObject, closestDistance
 end
 
@@ -547,8 +517,7 @@ function QRCore.Functions.GetGroundZCoord(coords)
     if retval then
         return vector3(coords.x, coords.y, groundZ)
     else
-        print('Couldn\'t find Ground Z Coordinates given 3D Coordinates')
-        print(coords)
+        print('Couldn\'t find Ground Z Coordinates given 3D Coordinates', coords)
         return coords
     end
 end
