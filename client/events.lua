@@ -5,11 +5,10 @@
 -- Player Spawned --
 AddEventHandler('playerSpawned', function()
     Wait(2000)
-    Citizen.InvokeNative(0x1E5B70E53DB661E5, 0, 0, 0, Lang:t("loading.text1"), Lang:t("loading.text2"), Lang:t("loading.text3")) -- Hide the Homie Arthur + Fun Loading Screen Text :)
+    Citizen.InvokeNative(0x1E5B70E53DB661E5, 0, 0, 0, Lang:t("loading.text1"), Lang:t("loading.text2"), Lang:t("loading.text3")) -- Loading Screen Text
+    ShutdownLoadingScreen() -- Stop Loading Screen
     DisplayRadar(false) -- Hide Radar
     SetMinimapHideFow(false) -- Hide Map
-    Wait(5000) -- Give it a few seconds...
-    ShutdownLoadingScreen() -- Stop Loading Screen
     Citizen.InvokeNative(0xA63FCAD3A6FEC6D2, cache.ped, QRConfig.Player.EnableEagleEye) -- Enable Eagle Eye
     TriggerEvent("qr-multicharacter:client:chooseChar")
 end)
@@ -178,8 +177,7 @@ RegisterNetEvent('QRCore:Command:SpawnVehicle', function(WagonName)
     local hash = GetHashKey(WagonName)
     if not IsModelInCdimage(hash) then return end
 
-    RequestModel(hash)
-    while not HasModelLoaded(hash) do Wait(0) end
+    lib.requestModel(hash)
 
     if cache.vehicle then
         DeleteVehicle(cache.vehicle)
@@ -203,8 +201,7 @@ RegisterNetEvent('QRCore:Command:SpawnHorse', function(HorseName)
     local hashp = GetHashKey("PLAYER")
     if not IsModelInCdimage(horseModel) then return end
 
-    RequestModel(horseModel)
-    while not HasModelLoaded(horseModel) do Wait(0) end
+    lib.requestModel(horseModel)
 
     if cache.mount then
         DeletePed(cache.mount)
@@ -230,30 +227,28 @@ RegisterNetEvent('QRCore:Command:DeleteVehicle', function()
         DeleteVehicle(cache.vehicle)
     else
         local pcoords = GetEntityCoords(cache.ped)
-        local vehicles = GetGamePool('CVehicle')
-        for _, v in pairs(vehicles) do
-            if #(pcoords - GetEntityCoords(v)) <= 5.0 then
-                SetEntityAsMissionEntity(v, true, true)
-                DeleteVehicle(v)
-            end
-        end
+        local vehicle, dist = QRCore.Functions.GetClosestVehicle(pcoords)
+        if not vehicle or dist > 10 then return end
+
+        SetEntityAsMissionEntity(vehicle, true, true)
+        DeleteVehicle(vehicle)
     end
 end)
 
 -- Delete Horse --
 RegisterNetEvent('QRCore:Command:DeleteHorse', function()
     if cache.mount then
+        SetEntityAsMissionEntity(cache.mount, true, true)
         DeletePed(cache.mount)
     else
         local pcoords = GetEntityCoords(cache.ped)
-        local horse = GetGamePool('CPed')
-        for _, v in pairs(horse) do
-            local horseModel = GetEntityModel(v)
-            if #(GetEntityCoords(v) - pcoords) <= 5.0 and not IsPedAPlayer(v) and (Citizen.InvokeNative(0x772A1969F649E902, horseModel) == 1) then
-                SetEntityAsMissionEntity(v, true, true)
-				DeletePed(v)
-				SetEntityAsNoLongerNeeded(v)
-            end
+        local ped, dist = QRCore.Functions.GetClosestPed(pcoords)
+        if not ped or dist > 10 then return end
+
+        local model = GetEntityModel(ped)
+        if not IsPedAPlayer(ped) and Citizen.InvokeNative(0x772A1969F649E902, model) == 1 then
+            SetEntityAsMissionEntity(ped, true, true)
+            DeletePed(ped)
         end
     end
 end)
@@ -265,9 +260,7 @@ RegisterNetEvent('QRCore:triggerDisplay')
 AddEventHandler('QRCore:triggerDisplay', function(text, source, type, custom)
     local offset = 0.4 + (RDisplaying * 0.14)
     local target = GetPlayerFromServerId(source)
-    if target == -1 then
-        return
-    end
+    if target == -1 then return end
     Display(GetPlayerFromServerId(source), text, offset, type, custom)
 end)
 
