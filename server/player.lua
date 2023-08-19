@@ -373,12 +373,9 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
 		reason = reason or "unknown"
 		moneytype = moneytype:lower()
 		amount = tonumber(amount)
-		if amount < 0 then
-			return
-		end
-		if not self.PlayerData.money[moneytype] then
-			return false
-		end
+		if amount < 0 then return end
+		if not self.PlayerData.money[moneytype] then return false end
+
 		self.PlayerData.money[moneytype] = self.PlayerData.money[moneytype] + amount
 
 		if not self.Offline then
@@ -432,8 +429,6 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
 				)
 			end
 			TriggerClientEvent("hud:client:OnMoneyChange", self.PlayerData.source, moneytype, amount, false)
-			TriggerClientEvent("QRCore:Client:OnMoneyChange", self.PlayerData.source, moneytype, amount, "add", reason)
-			TriggerEvent("QRCore:Server:OnMoneyChange", self.PlayerData.source, moneytype, amount, "add", reason)
 		end
 
 		return true
@@ -443,12 +438,9 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
 		reason = reason or "unknown"
 		moneytype = moneytype:lower()
 		amount = tonumber(amount)
-		if amount < 0 then
-			return
-		end
-		if not self.PlayerData.money[moneytype] then
-			return false
-		end
+		if amount < 0 then return end
+		if not self.PlayerData.money[moneytype] then return false end
+
 		for _, mtype in pairs(QRCore.Config.Money.DontAllowMinus) do
 			if mtype == moneytype then
 				if (self.PlayerData.money[moneytype] - amount) < 0 then
@@ -509,18 +501,6 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
 				)
 			end
 			TriggerClientEvent("hud:client:OnMoneyChange", self.PlayerData.source, moneytype, amount, true)
-			if moneytype == "bank" then
-				TriggerClientEvent("qr-phone:client:RemoveBankMoney", self.PlayerData.source, amount)
-			end
-			TriggerClientEvent(
-				"QRCore:Client:OnMoneyChange",
-				self.PlayerData.source,
-				moneytype,
-				amount,
-				"remove",
-				reason
-			)
-			TriggerEvent("QRCore:Server:OnMoneyChange", self.PlayerData.source, moneytype, amount, "remove", reason)
 		end
 
 		return true
@@ -530,12 +510,8 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
 		reason = reason or "unknown"
 		moneytype = moneytype:lower()
 		amount = tonumber(amount)
-		if amount < 0 then
-			return false
-		end
-		if not self.PlayerData.money[moneytype] then
-			return false
-		end
+		if amount < 0 then return false end
+		if not self.PlayerData.money[moneytype] then return false end
 		local difference = amount - self.PlayerData.money[moneytype]
 		self.PlayerData.money[moneytype] = amount
 
@@ -563,15 +539,7 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
 					.. " reason: "
 					.. reason
 			)
-			TriggerClientEvent(
-				"hud:client:OnMoneyChange",
-				self.PlayerData.source,
-				moneytype,
-				math.abs(difference),
-				difference < 0
-			)
-			TriggerClientEvent("QRCore:Client:OnMoneyChange", self.PlayerData.source, moneytype, amount, "set", reason)
-			TriggerEvent("QRCore:Server:OnMoneyChange", self.PlayerData.source, moneytype, amount, "set", reason)
+			TriggerClientEvent("hud:client:OnMoneyChange", self.PlayerData.source, moneytype, math.abs(difference), difference < 0)
 		end
 
 		return true
@@ -614,9 +582,7 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
 	end
 
 	function self.Functions.Logout()
-		if self.Offline then
-			return
-		end -- Unsupported for Offline Players
+		if self.Offline then return end -- Unsupported for Offline Players
 		QRCore.Player.Logout(self.PlayerData.source)
 	end
 
@@ -658,9 +624,7 @@ function QRCore.Functions.AddPlayerMethod(ids, methodName, handler)
 				v.Functions.AddMethod(methodName, handler)
 			end
 		else
-			if not QRCore.Players[ids] then
-				return
-			end
+			if not QRCore.Players[ids] then return end
 
 			QRCore.Players[ids].Functions.AddMethod(methodName, handler)
 		end
@@ -687,9 +651,7 @@ function QRCore.Functions.AddPlayerField(ids, fieldName, data)
 				v.Functions.AddField(fieldName, data)
 			end
 		else
-			if not QRCore.Players[ids] then
-				return
-			end
+			if not QRCore.Players[ids] then return end
 
 			QRCore.Players[ids].Functions.AddField(fieldName, data)
 		end
@@ -840,37 +802,27 @@ end
 -- Inventory Backwards Compatibility
 
 function QRCore.Player.SaveInventory(source)
-	if GetResourceState("qr-inventory") == "missing" then
-		return
-	end
+	if GetResourceState("qr-inventory") == "missing" then return end
 	exports["qr-inventory"]:SaveInventory(source, false)
 end
 
 function QRCore.Player.SaveOfflineInventory(PlayerData)
-	if GetResourceState("qr-inventory") == "missing" then
-		return
-	end
+	if GetResourceState("qr-inventory") == "missing" then return end
 	exports["qr-inventory"]:SaveInventory(PlayerData, true)
 end
 
 function QRCore.Player.GetTotalWeight(items)
-	if GetResourceState("qr-inventory") == "missing" then
-		return
-	end
+	if GetResourceState("qr-inventory") == "missing" then return end
 	return exports["qr-inventory"]:GetTotalWeight(items)
 end
 
 function QRCore.Player.GetSlotsByItem(items, itemName)
-	if GetResourceState("qr-inventory") == "missing" then
-		return
-	end
+	if GetResourceState("qr-inventory") == "missing" then return end
 	return exports["qr-inventory"]:GetSlotsByItem(items, itemName)
 end
 
 function QRCore.Player.GetFirstSlotByItem(items, itemName)
-	if GetResourceState("qr-inventory") == "missing" then
-		return
-	end
+	if GetResourceState("qr-inventory") == "missing" then return end
 	return exports["qr-inventory"]:GetFirstSlotByItem(items, itemName)
 end
 
@@ -906,20 +858,6 @@ function QRCore.Functions.CreateAccountNumber()
 		end
 	end
 	return AccountNumber
-end
-
-function QRCore.Functions.CreatePhoneNumber()
-	local UniqueFound = false
-	local PhoneNumber = nil
-	while not UniqueFound do
-		PhoneNumber = math.random(100, 999) .. math.random(1000000, 9999999)
-		local query = "%" .. PhoneNumber .. "%"
-		local result = MySQL.prepare.await("SELECT COUNT(*) as count FROM players WHERE charinfo LIKE ?", { query })
-		if result == 0 then
-			UniqueFound = true
-		end
-	end
-	return PhoneNumber
 end
 
 function QRCore.Player.CreateFingerId()
