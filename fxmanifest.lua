@@ -38,3 +38,5 @@ server_scripts {
 dependency 'oxmysql'
 
 lua54 'yes'
+
+loadscreen_manual_shutdown 'yes'
