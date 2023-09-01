@@ -90,7 +90,6 @@ function QRCore.Player.CheckPlayerData(source, PlayerData)
 	PlayerData.charinfo.gender = PlayerData.charinfo.gender or 0
 	PlayerData.charinfo.backstory = PlayerData.charinfo.backstory or "placeholder backstory"
 	PlayerData.charinfo.nationality = PlayerData.charinfo.nationality or "USA"
-	PlayerData.charinfo.phone = PlayerData.charinfo.phone or QRCore.Functions.CreatePhoneNumber()
 	PlayerData.charinfo.account = PlayerData.charinfo.account or QRCore.Functions.CreateAccountNumber()
 	-- Metadata
 	PlayerData.metadata = PlayerData.metadata or {}
@@ -105,21 +104,27 @@ function QRCore.Player.CheckPlayerData(source, PlayerData)
 	PlayerData.metadata.jailitems = PlayerData.metadata.jailitems or {}
 	PlayerData.metadata.status = PlayerData.metadata.status or {}
 	PlayerData.metadata.commandbinds = PlayerData.metadata.commandbinds or {}
-	PlayerData.metadata.bloodtype = PlayerData.metadata.bloodtype
-		or QRCore.Config.Player.Bloodtypes[math.random(1, #QRCore.Config.Player.Bloodtypes)]
+	PlayerData.metadata.bloodtype = PlayerData.metadata.bloodtype or QRCore.Config.Player.Bloodtypes[math.random(1, #QRCore.Config.Player.Bloodtypes)]
 	PlayerData.metadata.craftingrep = PlayerData.metadata.craftingrep or 0
 	PlayerData.metadata.attachmentcraftingrep = PlayerData.metadata.attachmentcraftingrep or 0
 	PlayerData.metadata.jobrep = PlayerData.metadata.jobrep or {}
 	PlayerData.metadata.callsign = PlayerData.metadata.callsign or "NO CALLSIGN"
 	PlayerData.metadata.fingerprint = PlayerData.metadata.fingerprint or QRCore.Player.CreateFingerId()
 	PlayerData.metadata.walletid = PlayerData.metadata.walletid or QRCore.Player.CreateWalletId()
-	PlayerData.metadata.criminalrecord = PlayerData.metadata.criminalrecord
-		or {
-			hasRecord = false,
-			date = nil,
-		}
+	PlayerData.metadata.criminalrecord = PlayerData.metadata.criminalrecord or {
+		hasRecord = false,
+		date = nil,
+	}
 
     PlayerData.metadata.xp = PlayerData.metadata.xp or {
+		main = 0,
+		herbalism = 0,
+		mining = 0,
+        cooking = 0,
+        crafting = 0,
+	}
+
+    PlayerData.metadata.levels = PlayerData.metadata.levels or {
 		main = 0,
 		herbalism = 0,
 		mining = 0,
@@ -131,34 +136,21 @@ function QRCore.Player.CheckPlayerData(source, PlayerData)
         weapon = false
     }
 
-	PlayerData.metadata.levels = PlayerData.metadatalevels or {
-		main = 0,
-		herbalism = 0,
-		mining = 0,
-        cooking = 0,
-        crafting = 0,
-	}
-
 	-- Job
-	if PlayerData.job and PlayerData.job.name and not QRJobs[PlayerData.job.name] then
-		PlayerData.job = nil
-	end
+	if PlayerData.job and PlayerData.job.name and not QRJobs[PlayerData.job.name] then PlayerData.job = nil end
 	PlayerData.job = PlayerData.job or {}
 	PlayerData.job.name = PlayerData.job.name or "unemployed"
 	PlayerData.job.label = PlayerData.job.label or "Civilian"
 	PlayerData.job.payment = PlayerData.job.payment or 10
 	PlayerData.job.type = PlayerData.job.type or "none"
-	if QRCore.Shared.ForceJobDefaultDutyAtLogin or PlayerData.job.onduty == nil then
-		PlayerData.job.onduty = QRJobs[PlayerData.job.name].defaultDuty
-	end
+	if QRCore.Shared.ForceJobDefaultDutyAtLogin or PlayerData.job.onduty == nil then PlayerData.job.onduty = QRJobs[PlayerData.job.name].defaultDuty end
 	PlayerData.job.isboss = PlayerData.job.isboss or false
 	PlayerData.job.grade = PlayerData.job.grade or {}
 	PlayerData.job.grade.name = PlayerData.job.grade.name or "Freelancer"
 	PlayerData.job.grade.level = PlayerData.job.grade.level or 0
+
 	-- Gang
-	if PlayerData.gang and PlayerData.gang.name and not QRGangs[PlayerData.gang.name] then
-		PlayerData.gang = nil
-	end
+	if PlayerData.gang and PlayerData.gang.name and not QRGangs[PlayerData.gang.name] then PlayerData.gang = nil end
 	PlayerData.gang = PlayerData.gang or {}
 	PlayerData.gang.name = PlayerData.gang.name or "none"
 	PlayerData.gang.label = PlayerData.gang.label or "No Gang Affiliaton"
@@ -166,11 +158,11 @@ function QRCore.Player.CheckPlayerData(source, PlayerData)
 	PlayerData.gang.grade = PlayerData.gang.grade or {}
 	PlayerData.gang.grade.name = PlayerData.gang.grade.name or "none"
 	PlayerData.gang.grade.level = PlayerData.gang.grade.level or 0
+
 	-- Other
 	PlayerData.position = PlayerData.position or QRConfig.DefaultSpawn
-	PlayerData.items = GetResourceState("qr-inventory") ~= "missing"
-			and exports["qr-inventory"]:LoadInventory(PlayerData.source, PlayerData.citizenid)
-		or {}
+	PlayerData.items = GetResourceState("qr-inventory") ~= "missing" and exports["qr-inventory"]:LoadInventory(PlayerData.source, PlayerData.citizenid) or {}
+
 	return QRCore.Player.CreatePlayer(PlayerData, Offline)
 end
 
@@ -195,9 +187,7 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
 	self.Offline = Offline
 
 	function self.Functions.UpdatePlayerData()
-		if self.Offline then
-			return
-		end -- Unsupported for Offline Players
+		if self.Offline then return end -- Unsupported for Offline Players
 		TriggerEvent("QRCore:Player:SetPlayerData", self.PlayerData)
 		TriggerClientEvent("QRCore:Player:SetPlayerData", self.PlayerData.source, self.PlayerData)
 	end
@@ -544,8 +534,6 @@ function QRCore.Player.CreatePlayer(PlayerData, Offline)
 
 		return true
 	end
-
-
 
 	function self.Functions.GetMoney(moneytype)
 		if not moneytype then
