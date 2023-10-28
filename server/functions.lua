@@ -57,15 +57,6 @@ function QRCore.Functions.GetOfflinePlayerByCitizenId(citizenid)
     return QRCore.Player.GetOfflinePlayer(citizenid)
 end
 
-function QRCore.Functions.GetPlayerByPhone(number)
-    for src in pairs(QRCore.Players) do
-        if QRCore.Players[src].PlayerData.charinfo.phone == number then
-            return QRCore.Players[src]
-        end
-    end
-    return nil
-end
-
 function QRCore.Functions.GetPlayers()
     local sources = {}
     for k in pairs(QRCore.Players) do
